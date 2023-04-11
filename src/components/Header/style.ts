@@ -19,7 +19,10 @@ export const HeaderTitle = styled.span`
 `;
 
 export const HeaderTitleAccent = styled.span`
-  color: #1d253f;
+  background: linear-gradient(to right, #0b0d0d, #4529e6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.2rem;
 `;
 
 export const HeaderRight = styled.div`
@@ -43,9 +46,8 @@ export const HeaderButton = styled.button`
 `;
 
 export const HeaderButtonPrimary = styled(HeaderButton)`
-  background-color: #1d253f;
-  color: #fff;
-
+  background-color: #fdfdfd;
+  border: 2px solid gray;
   &:hover {
     background-color: #0d1221;
   }
@@ -65,7 +67,7 @@ export const HeaderUserIcon = styled.div`
   height: 2.5rem;
   margin-right: 0.5rem;
   border-radius: 50%;
-  background-color: #1d253f;
+  background-color: #5126ea;
   color: #fff;
   font-size: 1.25rem;
   font-weight: bold;

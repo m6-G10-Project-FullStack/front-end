@@ -12,7 +12,17 @@ import {
   HeaderUserName,
 } from "./style";
 
-const Header = ({ isLoggedIn, user }) => {
+export interface iUserProps {
+  initials: string;
+  name: string;
+}
+
+export interface iHeaderProps {
+  isLoggedIn: boolean;
+  user: iUserProps;
+}
+
+const Header = ({ isLoggedIn, user }: iHeaderProps) => {
   return (
     <HeaderContainer>
       <HeaderLeft>
@@ -28,7 +38,7 @@ const Header = ({ isLoggedIn, user }) => {
           </HeaderUser>
         ) : (
           <>
-            <HeaderButton>Fazer login</HeaderButton>
+            <HeaderButton>Fazer Login</HeaderButton>
             <HeaderButtonPrimary>Cadastrar</HeaderButtonPrimary>
           </>
         )}
