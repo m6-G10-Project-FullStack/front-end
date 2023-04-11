@@ -12,6 +12,8 @@ import {
   HeaderUserName,
 } from "./style";
 
+//mudar o local das inferfaces depois
+
 export interface iUserProps {
   initials: string;
   name: string;
