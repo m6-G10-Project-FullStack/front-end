@@ -6,7 +6,7 @@ interface iContainerProps {
 }
 
 export const DefaultContainer = styled.button<iContainerProps>`
-  padding: 3px 12px;
+  padding: 12px 0px;
   width: ${(props) => (props.size === "small" ? "fit-content" : "274px")};
   border: none;
   border-radius: 4px;
@@ -172,7 +172,7 @@ export const DefaultContainer = styled.button<iContainerProps>`
   }}
 
   @media (min-width: 768px) {
-    padding: 6px 18px;
+    padding: 12px 18px;
     font-size: var(--body-1);
   }
 `;
