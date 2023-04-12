@@ -3,6 +3,7 @@ import { Div } from "../src/components/Footer/style";
 
 import React from "react";
 import { Header } from "../src/components/Header";
+import CommentInput from "../src/components/CommentInput";
 
 export default function Home() {
   const user = {
@@ -11,9 +12,14 @@ export default function Home() {
   };
   const isLoggedIn = true;
 
+  const handleCommentSubmit = (comment: string) => {
+    console.log(`Comment submitted: ${comment}`);
+  };
   return (
     <>
-      <Header isLoggedIn={isLoggedIn} user={user} />
+      <div>
+        <CommentInput user={user} />
+      </div>
     </>
   );
 }

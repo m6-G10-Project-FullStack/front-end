@@ -49,7 +49,6 @@ export const HeaderButtonPrimary = styled(HeaderButton)`
   background-color: #fdfdfd;
   border: 2px solid gray;
   &:hover {
-    background-color: ;
   }
 `;
 
