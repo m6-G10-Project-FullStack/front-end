@@ -57,6 +57,7 @@ export const GlobalStyles = createGlobalStyle`
   --heading-3: 32px;
   --heading-4: 28px;
   --heading-5: 24px;
+  --heading-6: 20px;
 
   // Texts
   --body-1: 16px;
