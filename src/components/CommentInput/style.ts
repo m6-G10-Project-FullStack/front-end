@@ -11,6 +11,16 @@ export const InputContainer = styled.div`
   margin-top: 10px;
 `;
 
+export const InfoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 3px;
+`;
+
+export const UserName = styled.p`
+  display: flex;
+`;
+
 export const AvatarCircle = styled.div`
   display: flex;
   justify-content: center;

@@ -6,8 +6,10 @@ import {
   CommentButton,
   CommentButtonDiv,
   CommentInputWrapper,
+  InfoWrapper,
   InputContainer,
   InputField,
+  UserName,
 } from "./style";
 
 interface Props {
@@ -36,7 +38,10 @@ const CommentInput: React.FC<Props> = ({ user }) => {
   return (
     <CommentInputWrapper>
       <InputContainer>
-        <AvatarCircle>{user.initials}</AvatarCircle>
+        <InfoWrapper>
+          <AvatarCircle>{user.initials}</AvatarCircle>
+          <UserName>{user.name}</UserName>
+        </InfoWrapper>
         <InputField
           type="text"
           placeholder={`O que você achou, ${user.name}?`}
