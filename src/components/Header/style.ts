@@ -49,7 +49,7 @@ export const HeaderButtonPrimary = styled(HeaderButton)`
   background-color: #fdfdfd;
   border: 2px solid gray;
   &:hover {
-    background-color: #0d1221;
+    background-color: ;
   }
 `;
 
@@ -75,4 +75,34 @@ export const HeaderUserIcon = styled.div`
 
 export const HeaderUserName = styled.span`
   font-weight: bold;
+`;
+
+export const DropdownMenu = styled.div`
+  position: absolute;
+  top: 3.5rem;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 12rem;
+  padding: 0.5rem 0;
+  background-color: #fff;
+  border: 1px solid #dcdcdc;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+`;
+
+export const DropdownMenuItem = styled.button`
+  display: flex;
+  justify-content: flex-start;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: #1d253f;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
 `;

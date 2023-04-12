@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   HeaderButton,
   HeaderButtonPrimary,
@@ -10,9 +10,9 @@ import {
   HeaderUser,
   HeaderUserIcon,
   HeaderUserName,
+  DropdownMenu,
+  DropdownMenuItem,
 } from "./style";
-
-//mudar o local das inferfaces depois
 
 export interface iUserProps {
   initials: string;
@@ -24,7 +24,13 @@ export interface iHeaderProps {
   user: iUserProps;
 }
 
-const Header = ({ isLoggedIn, user }: iHeaderProps) => {
+export const Header = ({ isLoggedIn, user }: iHeaderProps) => {
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
   return (
     <HeaderContainer>
       <HeaderLeft>
@@ -34,9 +40,17 @@ const Header = ({ isLoggedIn, user }: iHeaderProps) => {
       </HeaderLeft>
       <HeaderRight>
         {isLoggedIn ? (
-          <HeaderUser>
+          <HeaderUser onClick={toggleDropdown}>
             <HeaderUserIcon>{user.initials}</HeaderUserIcon>
             <HeaderUserName>{user.name}</HeaderUserName>
+            {showDropdown && (
+              <DropdownMenu>
+                <DropdownMenuItem>Editar Perfil</DropdownMenuItem>
+                <DropdownMenuItem>Editar endereço</DropdownMenuItem>
+                <DropdownMenuItem>Meus Anúncios</DropdownMenuItem>
+                <DropdownMenuItem>Sair</DropdownMenuItem>
+              </DropdownMenu>
+            )}
           </HeaderUser>
         ) : (
           <>
@@ -48,5 +62,3 @@ const Header = ({ isLoggedIn, user }: iHeaderProps) => {
     </HeaderContainer>
   );
 };
-
-export default Header;
