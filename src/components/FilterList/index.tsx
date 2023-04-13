@@ -10,7 +10,7 @@ interface iProps {
   listaCombustivel: string[];
 }
 
-export const List = ({
+export const FilterList = ({
   listaMarcas,
   listaAnos,
   listaCores,
@@ -102,7 +102,7 @@ export const List = ({
   };
 
   return (
-    <>
+    <styled.Section>
       <styled.Div>
         <h4>Marca</h4>
         {marca.length > 0 ? (
@@ -250,6 +250,6 @@ export const List = ({
           Ver anúncios
         </Button>
       </styled.divButton>
-    </>
+    </styled.Section>
   );
 };

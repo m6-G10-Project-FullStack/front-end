@@ -7,6 +7,8 @@ import { Footer } from "../src/components/Footer";
 import { Banner, CarSection, Container, Pagination } from "./style";
 
 import { CarCard } from "../src/components/CarCard";
+import { Header } from "../src/components/Header";
+import { FilterList } from "../src/components/FilterList";
 
 export default function Home() {
   const [carList, setCarList] = useState([
@@ -161,7 +163,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
-      {/* <Header /> */}
+      <Header
+        isLoggedIn={false}
+        user={{ initials: "RA", name: "Róger Aguiar" }}
+      />
 
       <main>
         <Banner image={Image}>
@@ -171,14 +176,13 @@ export default function Home() {
           </div>
         </Banner>
         <Container>
-          <Button
-            size="big"
-            variant="brand-2"
-            clickFunction={() => console.log("oi")}
-          >
-            Filtros
-          </Button>
-          {/* <FilterList /> */}
+          <FilterList
+            listaAnos={[]}
+            listaCombustivel={[]}
+            listaCores={[]}
+            listaMarcas={[]}
+            listaModelos={[]}
+          />
           <CarSection>
             {carList.length ? (
               carList.map((car, i) => (

@@ -8,7 +8,7 @@ interface iContainerProps {
 export const DefaultContainer = styled.button<iContainerProps>`
   padding: 12px 0px;
   width: ${(props) => (props.size === "small" ? "fit-content" : "274px")};
-  border: none;
+  border: 2px solid transparent;
   border-radius: 4px;
   cursor: pointer;
   font-family: var(--font-family);
@@ -68,12 +68,37 @@ export const DefaultContainer = styled.button<iContainerProps>`
 
       case "gray-3":
         return `
-        background-color: var(--gray-5);
+        background-color: var(--gray-6);
         color: var(--white-fixed);
         
         &:hover {
           background-color: var(--white-fixed);
           color: var(--gray-0);
+          transition: 0.4s;
+        }
+        `;
+
+      case "gray-4":
+        return `
+        background-color: var(--gray-10);
+        color: var(--gray-0);
+        
+        &:hover {
+          background-color: var(--gray-0);
+          color: var(--white-fixed);
+          transition: 0.4s;
+        }
+        `;
+
+      case "gray-border":
+        return `
+        border: 2px solid var(--gray-4);
+        background-color: var(--gray-10);
+        color: var(--gray-0);
+        
+        &:hover {
+          background-color: var(--gray-4);
+          color: var(--white-fixed);
           transition: 0.4s;
         }
         `;
