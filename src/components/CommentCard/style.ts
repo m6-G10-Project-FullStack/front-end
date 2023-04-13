@@ -6,7 +6,6 @@ interface iDivProps {
 
 export const Container = styled.div`
   width: 100%;
-  max-width: 283px;
   display: flex;
   flex-direction: column;
   align-content: center;
