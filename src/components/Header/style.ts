@@ -1,11 +1,16 @@
 import styled from "styled-components";
 
 export const HeaderContainer = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 101;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
   padding: 1rem;
-  background-color: #f0f0f0;
+  background-color: var(--gray-10);
 `;
 
 export const HeaderLeft = styled.div`
@@ -28,6 +33,7 @@ export const HeaderTitleAccent = styled.span`
 export const HeaderRight = styled.div`
   display: flex;
   align-items: center;
+  gap: 16px;
 `;
 
 export const HeaderButton = styled.button`

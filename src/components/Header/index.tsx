@@ -13,6 +13,7 @@ import {
   DropdownMenu,
   DropdownMenuItem,
 } from "./style";
+import { Button } from "../Button";
 
 export interface iUserProps {
   initials: string;
@@ -54,8 +55,20 @@ export const Header = ({ isLoggedIn, user }: iHeaderProps) => {
           </HeaderUser>
         ) : (
           <>
-            <HeaderButton>Fazer Login</HeaderButton>
-            <HeaderButtonPrimary>Cadastrar</HeaderButtonPrimary>
+            <Button
+              size="small"
+              variant="gray-4"
+              clickFunction={() => console.log("logou")}
+            >
+              Fazer Login
+            </Button>
+            <Button
+              size="small"
+              variant="gray-border"
+              clickFunction={() => console.log("cadastrou")}
+            >
+              Cadastrar
+            </Button>
           </>
         )}
       </HeaderRight>

@@ -82,7 +82,6 @@ export const Container = styled.section`
   max-width: 100%;
   height: 500px;
   display: flex;
-  align-items: center;
   flex-direction: column-reverse;
   gap: 64px;
 
