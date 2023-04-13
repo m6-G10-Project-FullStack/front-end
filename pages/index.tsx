@@ -6,6 +6,8 @@ import { Button } from "../src/components/Button";
 import { Footer } from "../src/components/Footer";
 import { Banner, CarSection, Container, Pagination } from "./style";
 
+import { CarCard } from "../src/components/CarCard";
+
 export default function Home() {
   const [carList, setCarList] = useState([
     {
@@ -13,84 +15,130 @@ export default function Home() {
       name: "Fiat uno",
       img: Image,
       description: "Card de test",
-      author: "Róger Aguiar",
+      seller: "Róger Aguiar",
+      km: 1,
+      year: 2019,
+      price: 10000,
     },
     {
-      id: 1,
+      id: 0,
       name: "Fiat uno",
       img: Image,
       description: "Card de test",
-      author: "Róger Aguiar",
+      seller: "Róger Aguiar",
+      km: 1,
+      year: 2019,
+      price: 10000,
     },
     {
-      id: 2,
+      id: 0,
       name: "Fiat uno",
       img: Image,
       description: "Card de test",
-      author: "Róger Aguiar",
+      seller: "Róger Aguiar",
+      km: 1,
+      year: 2019,
+      price: 10000,
     },
     {
-      id: 3,
+      id: 0,
       name: "Fiat uno",
       img: Image,
       description: "Card de test",
-      author: "Róger Aguiar",
+      seller: "Róger Aguiar",
+      km: 1,
+      year: 2019,
+      price: 10000,
     },
     {
-      id: 4,
+      id: 0,
       name: "Fiat uno",
       img: Image,
       description: "Card de test",
-      author: "Róger Aguiar",
+      seller: "Róger Aguiar",
+      km: 1,
+      year: 2019,
+      price: 10000,
     },
     {
-      id: 5,
+      id: 0,
       name: "Fiat uno",
       img: Image,
       description: "Card de test",
-      author: "Róger Aguiar",
+      seller: "Róger Aguiar",
+      km: 1,
+      year: 2019,
+      price: 10000,
     },
     {
-      id: 6,
+      id: 0,
       name: "Fiat uno",
       img: Image,
       description: "Card de test",
-      author: "Róger Aguiar",
+      seller: "Róger Aguiar",
+      km: 1,
+      year: 2019,
+      price: 10000,
     },
     {
-      id: 7,
+      id: 0,
       name: "Fiat uno",
       img: Image,
       description: "Card de test",
-      author: "Róger Aguiar",
+      seller: "Róger Aguiar",
+      km: 1,
+      year: 2019,
+      price: 10000,
     },
     {
-      id: 8,
+      id: 0,
       name: "Fiat uno",
       img: Image,
       description: "Card de test",
-      author: "Róger Aguiar",
+      seller: "Róger Aguiar",
+      km: 1,
+      year: 2019,
+      price: 10000,
     },
     {
-      id: 9,
+      id: 0,
       name: "Fiat uno",
       img: Image,
       description: "Card de test",
-      author: "Róger Aguiar",
+      seller: "Róger Aguiar",
+      km: 1,
+      year: 2019,
+      price: 10000,
     },
     {
-      id: 10,
+      id: 0,
       name: "Fiat uno",
       img: Image,
       description: "Card de test",
-      author: "Róger Aguiar",
+      seller: "Róger Aguiar",
+      km: 1,
+      year: 2019,
+      price: 10000,
     },
     {
-      id: 11,
+      id: 0,
       name: "Fiat uno",
       img: Image,
       description: "Card de test",
-      author: "Róger Aguiar",
+      seller: "Róger Aguiar",
+      km: 1,
+      year: 2019,
+      price: 10000,
+    },
+    {
+      id: 0,
+      name: "Fiat uno",
+      img: Image,
+      description: "Card de test",
+      seller: "Róger Aguiar",
+      km: 1,
+      year: 2019,
+      price: 10000,
     },
   ]);
 
@@ -133,10 +181,17 @@ export default function Home() {
           {/* <FilterList /> */}
           <CarSection>
             {carList.length ? (
-              carList.map((car) => (
-                <li key={car.id} className="card">
-                  <p>{car.name}</p>
-                </li>
+              carList.map((car, i) => (
+                <CarCard
+                  carName={car.name}
+                  carImg={car.img}
+                  carDescription={car.description}
+                  carSeller={car.seller}
+                  carKm={car.km}
+                  carYear={car.year}
+                  carPrice={car.price}
+                  key={i}
+                />
               ))
             ) : (
               <li className="advice">Não existem anúncios no momento!</li>

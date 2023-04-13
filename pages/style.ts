@@ -105,13 +105,12 @@ export const CarSection = styled.ul`
 
   li {
     height: 390px;
-    min-width: 200px;
+    min-width: 312px;
   }
 
   @media (min-width: 768px) {
-    width: 60%;
-    gap: unset;
-    justify-content: space-between;
+    width: calc((312px * 3) + 24px);
+    gap: 6;
     overflow-x: hidden;
     flex-wrap: wrap;
   }
