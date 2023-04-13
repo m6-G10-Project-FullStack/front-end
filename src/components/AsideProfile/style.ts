@@ -1,7 +1,10 @@
 import styled from "styled-components";
 
-
 export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 240px;
   background-color: white;
   border-radius: 5px;
   padding: 20px;
@@ -22,21 +25,21 @@ export const AvatarCircle = styled.div`
 `;
 
 export const Name = styled.div`
-  font-size: 18px;
+  font-size: 15px;
   font-weight: bold;
   margin-bottom: 10px;
 `;
 
 export const Description = styled.div`
-  font-size: 14px;
+  font-size: 12px;
   margin-bottom: 20px;
 `;
 
 export const Button = styled.button`
-  background-color: #007aff;
+  background-color: black;
   color: white;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 13px;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;

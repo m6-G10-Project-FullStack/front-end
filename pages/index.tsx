@@ -4,6 +4,7 @@ import { Div } from "../src/components/Footer/style";
 import React from "react";
 import { Header } from "../src/components/Header";
 import CommentInput from "../src/components/CommentInput";
+import AsideProfile from "../src/components/AsideProfile";
 
 export default function Home() {
   const user = {
@@ -18,7 +19,8 @@ export default function Home() {
   return (
     <>
       <div>
-        <CommentInput user={user} />
+        <AsideProfile user={user} />
+        {/* <CommentInput user={user} /> */}
       </div>
     </>
   );
