@@ -5,16 +5,15 @@ import { Button } from "../../src/components/Button";
 import { CommentCard } from "../../src/components/CommentCard";
 import CommentInput from "../../src/components/CommentInput";
 import { MainStyled } from "./style";
-const CardPage = () => {
-  /*  const handleInitials = () => {
-        const arr = carSeller.split(" ");
-    
-        return arr[0][0] + arr[1][0];
-      }; */
+import { AsidePhotos } from "../../src/components/AsidePhotos";
+import { photos } from "./dataFotos";
+import AsideProfile from "../../src/components/AsideProfile";
 
+const CardPage = () => {
   const user = {
     name: "Roberto",
     initials: "RS",
+    description: "Vendedor especialido em carros de luxo.",
   };
 
   return (
@@ -69,10 +68,10 @@ const CardPage = () => {
       </section>
       <aside>
         <div>
-          <p>Fotos</p>
+          <AsidePhotos photos={photos} />
         </div>
         <div>
-          <p>Dados Vendedor</p>
+          <AsideProfile user={user} />
         </div>
       </aside>
     </MainStyled>

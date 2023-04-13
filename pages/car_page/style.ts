@@ -104,5 +104,12 @@ export const MainStyled = styled.main`
   aside {
     display: flex;
     flex-direction: column;
+    width: 440px;
+    position: absolute;
+    width: 440px;
+    height: 377px;
+    left: 979px;
+    top: 120px;
+    gap: 15px;
   }
 `;
