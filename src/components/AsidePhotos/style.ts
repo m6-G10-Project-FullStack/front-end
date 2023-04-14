@@ -1,13 +1,11 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 100%;
-  max-width: 351px;
   background: var(--gray-10);
   border-radius: 4px;
   padding: 12px;
   @media (min-width: 768px) {
-    max-width: 440px;
+    width: 100%;
   }
   h3 {
     padding-top: 36px;
@@ -27,6 +25,12 @@ export const Container = styled.div`
     padding-bottom: 36px;
     background: var(--gray-10);
     border-radius: 4px;
+
+    @media (min-width: 768px) {
+      width: 100%;
+      display: flex;
+      padding-top: 10px;
+    }
     .gray-div-car-photos {
       display: flex;
       justify-content: center;

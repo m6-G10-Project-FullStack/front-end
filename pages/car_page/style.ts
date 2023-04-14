@@ -3,8 +3,9 @@ import styled from "styled-components";
 export const MainStyled = styled.main`
   margin: 0 auto;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: center;
   box-sizing: border-box;
   gap: 15px;
   background: linear-gradient(
@@ -13,13 +14,26 @@ export const MainStyled = styled.main`
     #f1f3f5 31.26%,
     #f1f3f5 100%
   );
-  border-radius: 8px;
+
+  @media (max-width: 1149px) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
   .section-global {
     display: flex;
     flex-direction: column;
-    margin: 120px 667px 20px 181px;
+    margin: 120px 50px 20px 181px;
     gap: 10px;
+    box-sizing: border-box;
+
+    @media (max-width: 1149px) {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 5px 5px 5px 5px;
+    }
+
     .section-car {
       display: flex;
       box-sizing: border-box;
@@ -69,6 +83,8 @@ export const MainStyled = styled.main`
     .section-description {
       box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
       display: flex;
+      width: 751px;
+
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
@@ -79,6 +95,8 @@ export const MainStyled = styled.main`
     }
 
     .section-comment {
+      width: 751px;
+
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -90,6 +108,7 @@ export const MainStyled = styled.main`
     }
 
     .section-inputComment {
+      width: 751px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -103,13 +122,26 @@ export const MainStyled = styled.main`
 
   aside {
     display: flex;
+    align-content: flex-start;
     flex-direction: column;
     width: 440px;
-    position: absolute;
-    width: 440px;
-    height: 377px;
-    left: 979px;
-    top: 120px;
+    height: 100%;
+    justify-content: flex-start;
     gap: 15px;
+
+    .div-aside {
+      display: flex;
+      flex-direction: column;
+      margin-top: 120px;
+      @media (max-width: 1149px) {
+        display: flex;
+        margin: 5px 5px 5px 5px;
+      }
+    }
+    @media (max-width: 1149px) {
+      width: 100%;
+      display: flex;
+      margin: 10px 25px 15px 25px;
+    }
   }
 `;
