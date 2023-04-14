@@ -17,6 +17,7 @@ export const FilterList = ({
   listaModelos,
   listaCombustivel,
 }: iProps) => {
+  const [isOpen, setIsOpen] = useState(true);
   const [marca, setMarca] = useState("");
   const [modelo, setModelo] = useState("");
   const [cor, setCor] = useState("");
@@ -91,7 +92,7 @@ export const FilterList = ({
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const charCode = event.key ? event.key.charCodeAt(0) : event.key;
-    console.log(charCode);
+
     if (
       (charCode as number) > 31 &&
       ((charCode as number) < 48 || (charCode as number) > 57) &&
@@ -102,154 +103,169 @@ export const FilterList = ({
   };
 
   return (
-    <styled.Section>
-      <styled.Div>
-        <h4>Marca</h4>
-        {marca.length > 0 ? (
-          <ul>
-            {filtredMarcas.map((marca) => (
-              <li onClick={handleClickMarcas} key={marca}>
-                {marca}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <ul>
-            {listaMarcas.map((marca) => (
-              <li onClick={handleClickMarcas} key={marca}>
-                {marca}
-              </li>
-            ))}
-          </ul>
-        )}
-      </styled.Div>
-      <styled.Div>
-        <h4>Modelo</h4>
-        {modelo.length > 0 ? (
-          <ul>
-            {filtredModelos.map((modelo) => (
-              <li onClick={handleClickModelos} key={modelo}>
-                {modelo}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <ul>
-            {listaModelos.map((modelo) => (
-              <li onClick={handleClickModelos} key={modelo}>
-                {modelo}
-              </li>
-            ))}
-          </ul>
-        )}
-      </styled.Div>
-      <styled.Div>
-        <h4>Cor</h4>
-        {cor.length > 0 ? (
-          <ul>
-            {filtredCor.map((cor) => (
-              <li onClick={handleClickCor} key={cor}>
-                {cor}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <ul>
-            {listaCores.map((cor) => (
-              <li onClick={handleClickCor} key={cor}>
-                {cor}
-              </li>
-            ))}
-          </ul>
-        )}
-      </styled.Div>
-      <styled.Div>
-        <h4>Ano</h4>
-        {filtredAno.length > 0 ? (
-          <ul>
-            {filtredAno.map((ano) => (
-              <li onClick={handleClickAno} key={ano}>
-                {ano}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <ul>
-            {listaAnos.map((ano) => (
-              <li onClick={handleClickAno} key={ano}>
-                {ano}
-              </li>
-            ))}
-          </ul>
-        )}
-      </styled.Div>
-      <styled.Div>
-        <h4>Combustível</h4>
-        {filtredCombustivel.length > 0 ? (
-          <ul>
-            {filtredCombustivel.map((combustivel) => (
-              <li onClick={handleClickCombustivel} key={combustivel}>
-                {combustivel}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <ul>
-            {listaCombustivel.map((combustivel) => (
-              <li onClick={handleClickCombustivel} key={combustivel}>
-                {combustivel}
-              </li>
-            ))}
-          </ul>
-        )}
-      </styled.Div>
-      <styled.Div>
-        <h4>Km</h4>
-        <div className="div-inputs">
-          <input
-            type="text"
-            id="minKm"
-            placeholder="Mínima"
-            onKeyDown={handleKeyPress}
-            onChange={handleMinKmInput}
-          />
-          <input
-            type="text"
-            id="maxKm"
-            placeholder="Máxima"
-            onKeyDown={handleKeyPress}
-            onChange={handleMaxKmInput}
-          />
-        </div>
-      </styled.Div>
-      <styled.Div>
-        <h4>Preço</h4>
-        <div className="div-inputs">
-          <input
-            type="text"
-            id="minPrice"
-            placeholder="Mínima"
-            onKeyDown={handleKeyPress}
-            onChange={handleMinPriceInput}
-          />
-          <input
-            type="text"
-            id="maxPrice"
-            placeholder="Máxima"
-            onKeyDown={handleKeyPress}
-            onChange={handleMaxPriceInput}
-          />
-        </div>
-      </styled.Div>
-      <styled.divButton>
+    <>
+      {isOpen ? (
+        <styled.Section>
+          <styled.mobileClose onClick={() => setIsOpen(false)} type="button">
+            x
+          </styled.mobileClose>
+          <styled.Div>
+            <h4>Marca</h4>
+            {marca.length > 0 ? (
+              <ul>
+                {filtredMarcas.map((marca) => (
+                  <li onClick={handleClickMarcas} key={marca}>
+                    {marca}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <ul>
+                {listaMarcas.map((marca) => (
+                  <li onClick={handleClickMarcas} key={marca}>
+                    {marca}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </styled.Div>
+          <styled.Div>
+            <h4>Modelo</h4>
+            {modelo.length > 0 ? (
+              <ul>
+                {filtredModelos.map((modelo) => (
+                  <li onClick={handleClickModelos} key={modelo}>
+                    {modelo}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <ul>
+                {listaModelos.map((modelo) => (
+                  <li onClick={handleClickModelos} key={modelo}>
+                    {modelo}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </styled.Div>
+          <styled.Div>
+            <h4>Cor</h4>
+            {cor.length > 0 ? (
+              <ul>
+                {filtredCor.map((cor) => (
+                  <li onClick={handleClickCor} key={cor}>
+                    {cor}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <ul>
+                {listaCores.map((cor) => (
+                  <li onClick={handleClickCor} key={cor}>
+                    {cor}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </styled.Div>
+          <styled.Div>
+            <h4>Ano</h4>
+            {filtredAno.length > 0 ? (
+              <ul>
+                {filtredAno.map((ano) => (
+                  <li onClick={handleClickAno} key={ano}>
+                    {ano}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <ul>
+                {listaAnos.map((ano) => (
+                  <li onClick={handleClickAno} key={ano}>
+                    {ano}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </styled.Div>
+          <styled.Div>
+            <h4>Combustível</h4>
+            {filtredCombustivel.length > 0 ? (
+              <ul>
+                {filtredCombustivel.map((combustivel) => (
+                  <li onClick={handleClickCombustivel} key={combustivel}>
+                    {combustivel}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <ul>
+                {listaCombustivel.map((combustivel) => (
+                  <li onClick={handleClickCombustivel} key={combustivel}>
+                    {combustivel}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </styled.Div>
+          <styled.Div>
+            <h4>Km</h4>
+            <div className="div-inputs">
+              <input
+                type="text"
+                id="minKm"
+                placeholder="Mínima"
+                onKeyDown={handleKeyPress}
+                onChange={handleMinKmInput}
+              />
+              <input
+                type="text"
+                id="maxKm"
+                placeholder="Máxima"
+                onKeyDown={handleKeyPress}
+                onChange={handleMaxKmInput}
+              />
+            </div>
+          </styled.Div>
+          <styled.Div>
+            <h4>Preço</h4>
+            <div className="div-inputs">
+              <input
+                type="text"
+                id="minPrice"
+                placeholder="Mínima"
+                onKeyDown={handleKeyPress}
+                onChange={handleMinPriceInput}
+              />
+              <input
+                type="text"
+                id="maxPrice"
+                placeholder="Máxima"
+                onKeyDown={handleKeyPress}
+                onChange={handleMaxPriceInput}
+              />
+            </div>
+          </styled.Div>
+          <styled.divButton>
+            <Button
+              clickFunction={() => console.log("cliquei")}
+              size="big"
+              variant="brand-2"
+            >
+              Ver anúncios
+            </Button>
+          </styled.divButton>
+        </styled.Section>
+      ) : (
         <Button
-          clickFunction={() => console.log("cliquei")}
+          variant="brand-1"
           size="big"
-          variant="brand-2"
+          clickFunction={() => setIsOpen(true)}
         >
-          Ver anúncios
+          Filtros
         </Button>
-      </styled.divButton>
-    </styled.Section>
+      )}
+    </>
   );
 };
