@@ -6,8 +6,8 @@ interface iBannerProps {
 }
 
 export const Banner = styled.section<iBannerProps>`
-  margin-top: 2.5rem;
-  height: calc(100vh - 2.5rem);
+  margin-top: 78px;
+  height: calc(100vh - 78px);
   position: relative;
   background-image: url(${(props) => props.image.src});
   background-size: cover;
@@ -80,7 +80,7 @@ export const Container = styled.section`
   padding: 0 16px;
   width: 100vw;
   max-width: 100%;
-  height: 500px;
+  height: fit-content;
   display: flex;
   flex-direction: column-reverse;
   gap: 64px;
