@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tipografia */
+
+.heading17 {
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 56px;
+  color: #212529;
+}
+.heading26 {
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 45px;
+  color: #212529;
+}
+.heading36 {
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 40px;
+  color: #212529;
+}
+.heading35 {
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+  color: #212529;
+}
+.heading46 {
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 35px;
+  color: #212529;
+}
+.heading45 {
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 35px;
+  color: #212529;
+}
+.heading56 {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 30px;
+  color: #212529;
+}
+.heading55 {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 30px;
+  color: #212529;
+}
+.heading66 {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 25px;
+  color: #212529;
+}
+.heading65 {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 25px;
+  color: #212529;
+}
+.heading76 {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #212529;
+}
+.heading75 {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #212529;
+}
+.body14 {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 28px;
+  color: #495057;
+}
+.body16 {
+  font-family: "Inter";
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 28px;
+  color: #495057;
+}
+.body24 {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #495057;
+}
+.body25 {
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  color: #495057;
+}
+.button-big-t {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 0px;
+  color: #495057;
+}
+.button-medium-t {
+  font-family: "Inter";
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 0px;
+  color: #495057;
+}
+.input-placeholder {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 0px;
+  color: #495057;
+}
+.input-label {
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #495057;
+}
