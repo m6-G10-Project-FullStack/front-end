@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
-import * as styled from "./style";
 
 interface iModalProps {
   children: ReactNode;
@@ -13,12 +12,15 @@ export const Modal = ({ children, setOpenModal }: iModalProps) => {
   });
 
   return (
-    <styled.ModalDefault>
-      <div className="overlay">
-        <div className="content" ref={modalRef}>
+    <div className="fixed rign-inset w-full h-full z-50">
+      <div className="w-full h-full flex justify-center items-start bg-gray-800">
+        <div
+          className="flex justify-normal h-custom365 w-full px-custom15 py-0 mt-24 relative"
+          ref={modalRef}
+        >
           {children}
         </div>
       </div>
-    </styled.ModalDefault>
+    </div>
   );
 };

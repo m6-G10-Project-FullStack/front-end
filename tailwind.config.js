@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/components/**/*.{ts, tsx}",
-    "./pages/components/**/*.{ts, tsx}",
-  ],
+  content: ["./src/components/**/*.{ts, tsx}", "./pages/**/*.{ts, tsx}"],
   theme: {
     fontFamily: {
       lex: ["Lexend", "sans-serif"],
@@ -57,11 +54,28 @@ module.exports = {
         custom44: "2.75rem",
         custom32: "2rem",
         custom28: "1.75rem",
+        custom22: "1.375rem",
       },
       lineHeight: {
         line56: "3.5rem",
         line45: "2.8rem",
         line0: "0px",
+      },
+      height: {
+        custom365: "365px",
+        custom90: "90px",
+      },
+      padding: {
+        custom15: "15x",
+        custom10: "10px",
+      },
+      maxWidth: {
+        custom344: "344px",
+        custom375: "375px",
+        custom454: "454px",
+      },
+      width: {
+        custom90: "90px",
       },
     },
     plugins: [],

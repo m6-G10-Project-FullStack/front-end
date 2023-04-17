@@ -1,6 +1,5 @@
 import React from "react";
 import CustomImage from "../CustomImage/customImage";
-import * as styled from "./style";
 
 export interface iPhotosAsideProps {
   photos: string[];
@@ -8,11 +7,14 @@ export interface iPhotosAsideProps {
 
 export const AsidePhotos = ({ photos }: iPhotosAsideProps) => {
   return (
-    <styled.Container>
-      <h3>Fotos</h3>
-      <section>
+    <div className="bg-gray10 rounded-s p-3 md:w-full">
+      <h3 className="pt-9 pl-8 heading-66">Fotos</h3>
+      <section className="bg-gray10 rounded-s grid gap-4 grid-cols-3 grid-rows-2 md:pt-custom10 md:w-full">
         {photos.map((photo, index) => (
-          <div className="gray-div-car-photos" key={index}>
+          <div
+            className="flex justify-center items-center w-custom90 h-custom90 bg-gray7"
+            key={index}
+          >
             <CustomImage
               alt="foto do carro em miniatura"
               src={photo}
@@ -22,6 +24,6 @@ export const AsidePhotos = ({ photos }: iPhotosAsideProps) => {
           </div>
         ))}
       </section>
-    </styled.Container>
+    </div>
   );
 };

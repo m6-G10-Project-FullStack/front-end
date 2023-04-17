@@ -1,21 +1,21 @@
-import { DefaultContainer } from "./style";
+// import { DefaultContainer } from "./style";
 
-interface iButtonProps {
-  children: React.ReactNode;
-  clickFunction: () => void;
-  variant: string;
-  size: "small" | "big";
-}
+// interface iButtonProps {
+//   children: React.ReactNode;
+//   clickFunction: () => void;
+//   variant: string;
+//   size: "small" | "big";
+// }
 
-export const Button = ({
-  children,
-  clickFunction,
-  variant,
-  size,
-}: iButtonProps) => {
-  return (
-    <DefaultContainer variant={variant} size={size} onClick={clickFunction}>
-      {children}
-    </DefaultContainer>
-  );
-};
+// export const Button = ({
+//   children,
+//   clickFunction,
+//   variant,
+//   size,
+// }: iButtonProps) => {
+//   return (
+//     <DefaultContainer variant={variant} size={size} onClick={clickFunction}>
+//       {children}
+//     </DefaultContainer>
+//   );
+// };
