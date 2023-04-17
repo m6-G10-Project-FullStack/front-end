@@ -1,5 +1,4 @@
 import CustomImage from "../CustomImage/customImage";
-import * as styled from "./style";
 import imgX from "../../assets/x.png";
 import Image from "next/image";
 
@@ -10,14 +9,17 @@ interface iModalPhotoProps {
 
 export const ModalPhoto = ({ setOpenModal, carImg }: iModalPhotoProps) => {
   return (
-    <styled.Container>
-      <div className="div_title">
-        <h6>Imagem do veículo</h6>
-        <button onClick={() => setOpenModal(false)}>
+    <div className="bg-white w-full max-w-custom344 h-custom365 flex flex-col content-center rounded-lg md:max-w-lg">
+      <div className="flex justify-between px-4 py-8 items-center">
+        <h6 className="heading-75">Imagem do veículo</h6>
+        <button
+          className="border-none cursor-pointer"
+          onClick={() => setOpenModal(false)}
+        >
           <Image src={imgX} alt="botão fechar" width={24} height={24} />
         </button>
       </div>
-      <styled.DivIMG>
+      <div className="flex w-full max-w-custom344 h-60 justify-center items-center md:max-w-full">
         <CustomImage
           src={carImg}
           alt="Imagem do veículo"
@@ -25,7 +27,7 @@ export const ModalPhoto = ({ setOpenModal, carImg }: iModalPhotoProps) => {
           width={260}
           height={239}
         />
-      </styled.DivIMG>
-    </styled.Container>
+      </div>
+    </div>
   );
 };

@@ -50,7 +50,7 @@
   @apply font-inter font-normal text-sm;
 }
 .body-25 {
-  @apply font-inter font-normal text-sm;
+  @apply font-inter font-semibold text-sm;
 }
 .button-big-t {
   @apply font-inter font-semibold text-base leading-line0;

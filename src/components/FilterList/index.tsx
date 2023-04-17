@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import * as styled from "./style";
-import { Button } from "../Button";
+// import { Button } from "../Button";
+import styles from "./Filter.module.css";
+
 
 interface iProps {
   listaMarcas: string[];
@@ -105,114 +106,159 @@ export const FilterList = ({
   return (
     <>
       {isOpen ? (
-        <styled.Section>
-          <styled.mobileClose onClick={() => setIsOpen(false)} type="button">
+        <section className="w-full flex flex-col items-center relative gap-2 md:w-calc-30-64">
+          <button
+            className="absolute top-0 right-0 border-none bg-transparent text-gray3 text-custom22 md:hidden"
+            onClick={() => setIsOpen(false)}
+            type="button"
+          >
             x
-          </styled.mobileClose>
-          <styled.Div>
-            <h4>Marca</h4>
+          </button>
+          <div className={styles.divContainer}>
+            <h4 className="heading-46 mt-8 text-black">Marca</h4>
             {marca.length > 0 ? (
-              <ul>
+              <ul className="pl-custom10 pt-4">
                 {filtredMarcas.map((marca) => (
-                  <li onClick={handleClickMarcas} key={marca}>
+                  <li
+                    className="heading-65 text-gray3 cursor-pointer"
+                    onClick={handleClickMarcas}
+                    key={marca}
+                  >
                     {marca}
                   </li>
                 ))}
               </ul>
             ) : (
-              <ul>
+              <ul className="pl-custom10 pt-4">
                 {listaMarcas.map((marca) => (
-                  <li onClick={handleClickMarcas} key={marca}>
+                  <li
+                    className="heading-65 text-gray3 cursor-pointer"
+                    onClick={handleClickMarcas}
+                    key={marca}
+                  >
                     {marca}
                   </li>
                 ))}
               </ul>
             )}
-          </styled.Div>
-          <styled.Div>
-            <h4>Modelo</h4>
+          </div>
+          <div className="flex flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
+            <h4 className="heading-46 mt-8 text-black">Modelo</h4>
             {modelo.length > 0 ? (
-              <ul>
+              <ul className="pl-custom10 pt-4">
                 {filtredModelos.map((modelo) => (
-                  <li onClick={handleClickModelos} key={modelo}>
+                  <li
+                    className="heading-65 text-gray3 cursor-pointer"
+                    onClick={handleClickModelos}
+                    key={modelo}
+                  >
                     {modelo}
                   </li>
                 ))}
               </ul>
             ) : (
-              <ul>
+              <ul className="pl-custom10 pt-4">
                 {listaModelos.map((modelo) => (
-                  <li onClick={handleClickModelos} key={modelo}>
+                  <li
+                    className="heading-65 text-gray3 cursor-pointer"
+                    onClick={handleClickModelos}
+                    key={modelo}
+                  >
                     {modelo}
                   </li>
                 ))}
               </ul>
             )}
-          </styled.Div>
-          <styled.Div>
-            <h4>Cor</h4>
+          </div>
+          <div className="flex flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
+            <h4 className="heading-46 mt-8 text-black">Cor</h4>
             {cor.length > 0 ? (
-              <ul>
+              <ul className="pl-custom10 pt-4">
                 {filtredCor.map((cor) => (
-                  <li onClick={handleClickCor} key={cor}>
+                  <li
+                    className="heading-65 text-gray3 cursor-pointer"
+                    onClick={handleClickCor}
+                    key={cor}
+                  >
                     {cor}
                   </li>
                 ))}
               </ul>
             ) : (
-              <ul>
+              <ul className="pl-custom10 pt-4">
                 {listaCores.map((cor) => (
-                  <li onClick={handleClickCor} key={cor}>
+                  <li
+                    className="heading-65 text-gray3 cursor-pointer"
+                    onClick={handleClickCor}
+                    key={cor}
+                  >
                     {cor}
                   </li>
                 ))}
               </ul>
             )}
-          </styled.Div>
-          <styled.Div>
-            <h4>Ano</h4>
+          </div>
+          <div className={styles.divContainer}>
+            <h4 className="heading-46 mt-8 text-black">Ano</h4>
             {filtredAno.length > 0 ? (
-              <ul>
+              <ul className="pl-custom10 pt-4">
                 {filtredAno.map((ano) => (
-                  <li onClick={handleClickAno} key={ano}>
+                  <li
+                    className="heading-65 text-gray3 cursor-pointer"
+                    onClick={handleClickAno}
+                    key={ano}
+                  >
                     {ano}
                   </li>
                 ))}
               </ul>
             ) : (
-              <ul>
+              <ul className="pl-custom10 pt-4">
                 {listaAnos.map((ano) => (
-                  <li onClick={handleClickAno} key={ano}>
+                  <li
+                    className="heading-65 text-gray3 cursor-pointer"
+                    onClick={handleClickAno}
+                    key={ano}
+                  >
                     {ano}
                   </li>
                 ))}
               </ul>
             )}
-          </styled.Div>
-          <styled.Div>
-            <h4>Combustível</h4>
+          </div>
+          <div className={styles.divContainer}>
+            <h4 className="heading-46 mt-8 text-black">Combustível</h4>
             {filtredCombustivel.length > 0 ? (
-              <ul>
+              <ul className="pl-custom10 pt-4">
                 {filtredCombustivel.map((combustivel) => (
-                  <li onClick={handleClickCombustivel} key={combustivel}>
+                  <li
+                    className="heading-65 text-gray3 cursor-pointer"
+                    onClick={handleClickCombustivel}
+                    key={combustivel}
+                  >
                     {combustivel}
                   </li>
                 ))}
               </ul>
             ) : (
-              <ul>
+              <ul className="pl-custom10 pt-4">
                 {listaCombustivel.map((combustivel) => (
-                  <li onClick={handleClickCombustivel} key={combustivel}>
+                  <li
+                    className="heading-65 text-gray3 cursor-pointer"
+                    onClick={handleClickCombustivel}
+                    key={combustivel}
+                  >
                     {combustivel}
                   </li>
                 ))}
               </ul>
             )}
-          </styled.Div>
-          <styled.Div>
-            <h4>Km</h4>
-            <div className="div-inputs">
+          </div>
+          <div className={styles.divContainer}>
+            <h4 className="heading-46 mt-8 text-black">Km</h4>
+            <div className="flex gap-6 md:gap-8">
               <input
+                className="mt-6 w-32 h-9 bg-gray5 py-0 px-4 md:w-36"
                 type="text"
                 id="minKm"
                 placeholder="Mínima"
@@ -220,6 +266,7 @@ export const FilterList = ({
                 onChange={handleMinKmInput}
               />
               <input
+                className="mt-6 w-32 h-9 bg-gray5 py-0 px-4 md:w-36"
                 type="text"
                 id="maxKm"
                 placeholder="Máxima"
@@ -227,11 +274,12 @@ export const FilterList = ({
                 onChange={handleMaxKmInput}
               />
             </div>
-          </styled.Div>
-          <styled.Div>
-            <h4>Preço</h4>
+          </div>
+          <div className={styles.divContainer}>
+            <h4 className="heading-46 mt-8 text-black">Preço</h4>
             <div className="div-inputs">
               <input
+                className="mt-6 w-32 h-9 bg-gray5 py-0 px-4 md:w-36 placeholder:text-gray3 heading-76"
                 type="text"
                 id="minPrice"
                 placeholder="Mínima"
@@ -239,6 +287,7 @@ export const FilterList = ({
                 onChange={handleMinPriceInput}
               />
               <input
+                className="mt-6 w-32 h-9 bg-gray5 py-0 px-4 md:w-36  placeholder:text-gray3 placeholder:heading-76"
                 type="text"
                 id="maxPrice"
                 placeholder="Máxima"
@@ -246,25 +295,26 @@ export const FilterList = ({
                 onChange={handleMaxPriceInput}
               />
             </div>
-          </styled.Div>
-          <styled.divButton>
-            <Button
+          </div>
+          <div className="w-full max-w-custom375 mt-10 flex items-center justify-center md:max-w-custom454">
+            {/* <Button
               clickFunction={() => console.log("cliquei")}
               size="big"
               variant="brand-2"
             >
               Ver anúncios
-            </Button>
-          </styled.divButton>
-        </styled.Section>
+            </Button> */}
+          </div>
+        </section>
       ) : (
-        <Button
-          variant="brand-1"
-          size="big"
-          clickFunction={() => setIsOpen(true)}
-        >
-          Filtros
-        </Button>
+        // <Button
+        //   variant="brand-1"
+        //   size="big"
+        //   clickFunction={() => setIsOpen(true)}
+        // >
+        //   Filtros
+        // </Button>
+        <></>
       )}
     </>
   );
