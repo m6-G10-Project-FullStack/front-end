@@ -4,52 +4,52 @@
 
 /* Tipografia */
 
-.heading17 {
+.heading-17 {
   @apply font-lex font-bold text-custom44 leading-line56;
 }
-.heading26 {
+.heading-26 {
   @apply font-lex font-semibold text-4xl leading-line45;
 }
-.heading36 {
+.heading-36 {
   @apply font-lex font-semibold text-custom32 leading-10;
 }
-.heading35 {
+.heading-35 {
   @apply font-lex font-medium text-custom32 leading-10;
 }
-.heading46 {
+.heading-46 {
   @apply font-lex font-semibold text-custom28 leading-9;
 }
-.heading45 {
+.heading-45 {
   @apply font-lex font-medium text-custom28 leading-9;
 }
-.heading56 {
+.heading-56 {
   @apply font-lex font-semibold text-2xl;
 }
-.heading55 {
+.heading-55 {
   @apply font-lex font-medium text-2xl;
 }
-.heading66 {
+.heading-66 {
   @apply font-lex font-semibold text-xl;
 }
-.heading65 {
+.heading-65 {
   @apply font-lex font-medium text-xl;
 }
-.heading76 {
+.heading-76 {
   @apply font-lex font-semibold text-base;
 }
-.heading75 {
+.heading-75 {
   @apply font-lex font-medium text-base;
 }
-.body14 {
+.body-14 {
   @apply font-inter font-normal text-base;
 }
-.body16 {
+.body-16 {
   @apply font-inter font-semibold text-base;
 }
-.body24 {
+.body-24 {
   @apply font-inter font-normal text-sm;
 }
-.body25 {
+.body-25 {
   @apply font-inter font-normal text-sm;
 }
 .button-big-t {
