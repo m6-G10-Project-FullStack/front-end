@@ -1,21 +1,40 @@
-// import { DefaultContainer } from "./style";
+import { PropsWithChildren, ButtonHTMLAttributes } from "react";
 
-// interface iButtonProps {
-//   children: React.ReactNode;
-//   clickFunction: () => void;
-//   variant: string;
-//   size: "small" | "big";
-// }
+import style from "./Button.module.css";
 
-// export const Button = ({
-//   children,
-//   clickFunction,
-//   variant,
-//   size,
-// }: iButtonProps) => {
-//   return (
-//     <DefaultContainer variant={variant} size={size} onClick={clickFunction}>
-//       {children}
-//     </DefaultContainer>
-//   );
-// };
+interface iButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant:
+    | "brand-1"
+    | "border-brand-1"
+    | "brand-2"
+    | "brand-4"
+    | "border-brand-4"
+    | "gray-0"
+    | "gray-1"
+    | "border-gray-4"
+    | "gray-5"
+    | "gray-5-w"
+    | "gray-6"
+    | "gray-10"
+    | "border-gray-10"
+    | "alert-2"
+    | "alert-3"
+    | "success-2"
+    | "success-3"
+    | "disabled";
+}
+
+export const Button = ({
+  children,
+  variant,
+  ...props
+}: PropsWithChildren<iButtonProps>) => {
+  return (
+    <button
+      className={`${style.button} ${style[`button-${variant}`]}`}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
