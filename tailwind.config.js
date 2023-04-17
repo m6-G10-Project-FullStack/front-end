@@ -6,7 +6,8 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      sans: ["Lexend", "sans-serif"],
+      lex: ["Lexend", "sans-serif"],
+      inter: ["Inter", "sans-serif"],
     },
     extend: {
       colors: {
@@ -51,6 +52,16 @@ module.exports = {
         random10: "#6100FF",
         random11: "#5700E3",
         random12: "#30007D",
+      },
+      fontSize: {
+        custom44: "2.75rem",
+        custom32: "2rem",
+        custom28: "1.75rem",
+      },
+      lineHeight: {
+        line56: "3.5rem",
+        line45: "2.8rem",
+        line0: "0px",
       },
     },
     plugins: [],

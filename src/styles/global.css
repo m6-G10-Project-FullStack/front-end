@@ -5,131 +5,62 @@
 /* Tipografia */
 
 .heading17 {
-  font-weight: 700;
-  font-size: 44px;
-  line-height: 56px;
-  color: #212529;
+  @apply font-lex font-bold text-custom44 leading-line56;
 }
 .heading26 {
-  font-weight: 600;
-  font-size: 36px;
-  line-height: 45px;
-  color: #212529;
+  @apply font-lex font-semibold text-4xl leading-line45;
 }
 .heading36 {
-  font-weight: 600;
-  font-size: 32px;
-  line-height: 40px;
-  color: #212529;
+  @apply font-lex font-semibold text-custom32 leading-10;
 }
 .heading35 {
-  font-weight: 500;
-  font-size: 32px;
-  line-height: 40px;
-  color: #212529;
+  @apply font-lex font-medium text-custom32 leading-10;
 }
 .heading46 {
-  font-weight: 600;
-  font-size: 28px;
-  line-height: 35px;
-  color: #212529;
+  @apply font-lex font-semibold text-custom28 leading-9;
 }
 .heading45 {
-  font-weight: 500;
-  font-size: 28px;
-  line-height: 35px;
-  color: #212529;
+  @apply font-lex font-medium text-custom28 leading-9;
 }
 .heading56 {
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 30px;
-  color: #212529;
+  @apply font-lex font-semibold text-2xl;
 }
 .heading55 {
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 30px;
-  color: #212529;
+  @apply font-lex font-medium text-2xl;
 }
 .heading66 {
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 25px;
-  color: #212529;
+  @apply font-lex font-semibold text-xl;
 }
 .heading65 {
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 25px;
-  color: #212529;
+  @apply font-lex font-medium text-xl;
 }
 .heading76 {
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 20px;
-  color: #212529;
+  @apply font-lex font-semibold text-base;
 }
 .heading75 {
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
-  color: #212529;
+  @apply font-lex font-medium text-base;
 }
 .body14 {
-  font-family: "Inter";
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 28px;
-  color: #495057;
+  @apply font-inter font-normal text-base;
 }
 .body16 {
-  font-family: "Inter";
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 28px;
-  color: #495057;
+  @apply font-inter font-semibold text-base;
 }
 .body24 {
-  font-family: "Inter";
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
-  color: #495057;
+  @apply font-inter font-normal text-sm;
 }
 .body25 {
-  font-family: "Inter";
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-  color: #495057;
+  @apply font-inter font-normal text-sm;
 }
 .button-big-t {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 0px;
-  color: #495057;
+  @apply font-inter font-semibold text-base leading-line0;
 }
 .button-medium-t {
-  font-family: "Inter";
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 0px;
-  color: #495057;
+  @apply font-inter font-semibold text-sm leading-line0;
 }
 .input-placeholder {
-  font-family: "Inter";
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 0px;
-  color: #495057;
+  @apply font-inter font-normal text-base leading-line0;
 }
 .input-label {
-  font-family: "Inter";
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-  color: #495057;
+  @apply font-inter font-medium text-sm leading-line0;
 }
