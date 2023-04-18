@@ -1,3 +1,0 @@
-.divContainer {
-  @apply flex flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454;
-}
