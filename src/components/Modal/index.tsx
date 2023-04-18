@@ -9,9 +9,9 @@ interface iModalPhotoProps {
 
 export const ModalPhoto = ({ setOpenModal, carImg }: iModalPhotoProps) => {
   return (
-    <div className="bg-white w-full max-w-custom344 h-custom365 flex flex-col content-center rounded-lg md:max-w-lg">
+    <div className="bg-gray10 w-full max-w-custom344 h-custom365 flex flex-col content-center rounded-lg md:max-w-lg">
       <div className="flex justify-between px-4 py-8 items-center">
-        <h6 className="heading-75">Imagem do veículo</h6>
+        <h6 className="font-lex font-medium text-base">Imagem do veículo</h6>
         <button
           className="border-none cursor-pointer"
           onClick={() => setOpenModal(false)}

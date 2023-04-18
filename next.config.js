@@ -2,7 +2,12 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["th.bing.com", "fotos.jornaldocarro.estadao.com.br"],
+    domains: [
+      "th.bing.com",
+      "fotos.jornaldocarro.estadao.com.br",
+      "pt.vecteezy.com",
+      "image.webmotors.com.br",
+    ],
   },
 };
 
