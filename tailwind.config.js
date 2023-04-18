@@ -1,10 +1,12 @@
-/** @type {import('tailwindcss').Config} */
+/ @type {import('tailwindcss').Config} */;
 module.exports = {
-  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   content: [
-    "./app/**/*.{js, jsx, ts, tsx}",
-    "./src/components/**/*.{js, jsx, ts, tsx}",
-    "./pages/**/*.{js, jsx, ts, tsx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+
+    // Or if using src directory:
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     colors: {
@@ -81,11 +83,6 @@ module.exports = {
       },
       width: {
         custom90: "90px",
-      },
-      "@layer utilities": {
-        // define suas classes personalizadas aqui
-        ".font-lex": { fontFamily: "Lexend" },
-        ".font-inter": { fontFamily: "Inter" },
       },
       plugins: [],
     },
