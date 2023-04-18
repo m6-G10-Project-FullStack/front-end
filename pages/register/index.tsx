@@ -51,7 +51,7 @@ export default function Register() {
       {/* <Button onClick={() => setOpenModal(true)} variant="brand-1">
         Abrir
       </Button> */}
-      <AsidePhotos
+      {/* <AsidePhotos
         setPhoto={setPhoto}
         photos={photos}
         setOpenModal={setOpenModal}
@@ -60,7 +60,7 @@ export default function Register() {
         <Modal setOpenModal={setOpenModal}>
           <ModalPhoto setOpenModal={setOpenModal} carImg={photo} />
         </Modal>
-      )}
+      )} */}
     </>
   );
 }
