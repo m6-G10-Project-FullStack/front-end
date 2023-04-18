@@ -12,10 +12,10 @@ export const Modal = ({ children, setOpenModal }: iModalProps) => {
   });
 
   return (
-    <div className="fixed rign-inset w-full h-full z-50">
-      <div className="w-full h-full flex justify-center items-start bg-gray-800">
+    <div className="fixed top-0 left-0 w-screen h-screen z-50">
+      <div className="w-full h-screen flex justify-center items-star bg-gray2 bg-opacity-50">
         <div
-          className="flex justify-normal h-custom365 w-full px-custom15 py-0 mt-24 relative"
+          className="flex justify-center h-custom365 w-[344px] md:w-[520px] px-custom15 py-0 mt-24 relative"
           ref={modalRef}
         >
           {children}

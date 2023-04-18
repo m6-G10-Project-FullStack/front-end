@@ -57,6 +57,9 @@ module.exports = {
       inter: ["Inter", "sans-serif"],
     },
     extend: {
+      ShadowRoot: {
+        customShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+      },
       fontSize: {
         custom44: "2.75rem",
         custom32: "2rem",
@@ -84,6 +87,7 @@ module.exports = {
       width: {
         custom90: "90px",
       },
+
       plugins: [],
     },
   },

@@ -1,23 +1,55 @@
-// import React from "react";
-// import { AvatarCircle, Button, Container, Description, Name } from "./style";
+import React from "react";
+import { Button } from "../Button";
 
-// interface Props {
-//   user: {
-//     initials: string;
-//     name: string;
-//     description: string;
-//   };
-// }
+interface iAsideProps {
+  initials: string;
+  name: string;
+  description: string;
+  cor:
+    | "random1"
+    | "random2"
+    | "random3"
+    | "random4"
+    | "random5"
+    | "random6"
+    | "random7"
+    | "random8"
+    | "random9"
+    | "random10"
+    | "random11"
+    | "random12";
+}
 
-// const AsideProfile: React.FC<Props> = ({ user }) => {
-//   return (
-//     <Container>
-//       <AvatarCircle>{user.initials}</AvatarCircle>
-//       <Name>{user.name}</Name>
-//       <Description>{user.description}</Description>
-//       <Button>Ver todos anúncios</Button>
-//     </Container>
-//   );
-// };
+const corMap = {
+  random1: "bg-random1",
+  random2: "bg-random2",
+  random3: "bg-random3",
+  random4: "bg-random4",
+  random5: "bg-random5",
+  random6: "bg-random6",
+  random7: "bg-random7",
+  random8: "bg-random8",
+  random9: "bg-random9",
+  random10: "bg-random10",
+  random11: "bg-random11",
+  random12: "bg-random12",
+};
 
-// export default AsideProfile;
+const AsideProfile = ({ cor, description, initials, name }: iAsideProps) => {
+  return (
+    <div className="flex flex-col w-full items-center bg-gray10 rounded-[5px] p-5 max-w-[351px] md:max-w-[440px] mb-7">
+      <div
+        className={`flex justify-center items-center font-inter font-medium text-2xl md:text-4xl leading-[56px] text-gray10 w-[77px] h-[77px] rounded-full md:w-[104px] md:h-[104px] mb-7  ${corMap[cor]}`}
+      >
+        {initials}
+      </div>
+      <h3 className="font-lex font-semibold text-xl text-gray1 mb-7">{name}</h3>
+      <p className="font-inter font-normal text-base text-justify mb-7 text-gray2">
+        {description}
+      </p>
+      <Button variant="gray-0">Ver todos anúncios</Button>
+    </div>
+  );
+};
+
+export default AsideProfile;

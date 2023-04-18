@@ -105,16 +105,19 @@ export const FilterList = ({
   return (
     <>
       {isOpen ? (
-        <section className="w-full flex flex-col items-center relative gap-2 md:w-calc-30-64">
-          <button
-            className="absolute top-0 right-0 border-none bg-transparent text-gray3 text-custom22 md:hidden"
-            onClick={() => setIsOpen(false)}
-            type="button"
-          >
-            x
-          </button>
+        <section className="w-full flex flex-col p-[6px] items-center gap-2 md:w-calc-30-64 ">
+          <div className="flex w-full justify-between items-center md:hidden max-w-custom375">
+            <p className="font-lex font-medium text-base text-gray1">filtros</p>
+            <button
+              className="flex border-none bg-transparent text-gray3 text-custom22 cursor-pointer md:hidden"
+              onClick={() => setIsOpen(false)}
+              type="button"
+            >
+              x
+            </button>
+          </div>
           <div className="flex flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
-            <h4 className="font-lex font-semibold text-custom28 leading-9 mt-8 text-random4">
+            <h4 className="font-lex font-semibold text-custom28 leading-9 mt-8  text-gray0">
               Marca
             </h4>
             {marca.length > 0 ? (
@@ -144,7 +147,7 @@ export const FilterList = ({
             )}
           </div>
           <div className="flex flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
-            <h4 className=" font-lex font-semibold text-custom28 leading-9 mt-8 text-black">
+            <h4 className=" font-lex font-semibold text-custom28 leading-9 mt-8 text-gray0">
               Modelo
             </h4>
             {modelo.length > 0 ? (
@@ -174,7 +177,7 @@ export const FilterList = ({
             )}
           </div>
           <div className="flex flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
-            <h4 className=" font-lex font-semibold text-custom28 leading-9 mt-8 text-black">
+            <h4 className=" font-lex font-semibold text-custom28 leading-9 mt-8 text-gray0">
               Cor
             </h4>
             {cor.length > 0 ? (
@@ -204,7 +207,7 @@ export const FilterList = ({
             )}
           </div>
           <div className="flex flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
-            <h4 className=" font-lex font-semibold text-custom28 leading-9 mt-8 text-black">
+            <h4 className=" font-lex font-semibold text-custom28 leading-9 mt-8 text-gray0">
               Ano
             </h4>
             {filtredAno.length > 0 ? (
@@ -234,7 +237,7 @@ export const FilterList = ({
             )}
           </div>
           <div className="flex flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
-            <h4 className=" font-lex font-semibold text-custom28 leading-9 mt-8 text-black">
+            <h4 className=" font-lex font-semibold text-custom28 leading-9 mt-8 text-gray0">
               Combustível
             </h4>
             {filtredCombustivel.length > 0 ? (
@@ -264,7 +267,7 @@ export const FilterList = ({
             )}
           </div>
           <div className="flex flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
-            <h4 className=" font-lex font-semibold text-custom28 leading-9 mt-8 text-black">
+            <h4 className=" font-lex font-semibold text-custom28 leading-9 mt-8 text-gray0">
               Km
             </h4>
             <div className="flex gap-6 md:gap-8">
@@ -287,7 +290,9 @@ export const FilterList = ({
             </div>
           </div>
           <div className="flex flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
-            <h4 className=" mt-10 text-black">Preço</h4>
+            <h4 className=" font-lex font-semibold text-custom28 leading-9 mt-8 text-gray0">
+              Preço
+            </h4>
             <div className="flex gap-6 md:gap-8">
               <input
                 className="mt-6 w-32 h-9 bg-gray5 py-0 px-4 md:w-36 placeholder:text-gray3 placeholder:heading-76"
@@ -312,7 +317,9 @@ export const FilterList = ({
           </div>
         </section>
       ) : (
-        <Button variant="brand-1">Filtros</Button>
+        <Button onClick={() => setIsOpen(true)} variant="brand-1">
+          Filtros
+        </Button>
       )}
     </>
   );
