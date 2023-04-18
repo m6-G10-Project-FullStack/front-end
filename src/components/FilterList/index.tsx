@@ -105,7 +105,7 @@ export const FilterList = ({
   return (
     <>
       {isOpen ? (
-        <section className="w-full flex-1 flex-col items-center relative gap-2 md:w-calc-30-64">
+        <section className="w-full flex flex-col items-center relative gap-2 md:w-calc-30-64">
           <button
             className="absolute top-0 right-0 border-none bg-transparent text-gray3 text-custom22 md:hidden"
             onClick={() => setIsOpen(false)}
@@ -113,13 +113,15 @@ export const FilterList = ({
           >
             x
           </button>
-          <div className="flex-1 flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
-            <h4 className="mt-8 text-random4">Marca</h4>
+          <div className="flex flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
+            <h4 className="font-lex font-semibold text-custom28 leading-9 mt-8 text-random4">
+              Marca
+            </h4>
             {marca.length > 0 ? (
               <ul className="pl-custom10 pt-4">
                 {filtredMarcas.map((marca) => (
                   <li
-                    className=" text-red-500 cursor-pointer"
+                    className="font-lex font-medium text-xl text-gray3 cursor-pointer"
                     onClick={handleClickMarcas}
                     key={marca}
                   >
@@ -131,7 +133,7 @@ export const FilterList = ({
               <ul className="pl-custom10 pt-4">
                 {listaMarcas.map((marca) => (
                   <li
-                    className=" text-gray3 cursor-pointer"
+                    className="font-lex font-medium text-xl text-gray3 cursor-pointer"
                     onClick={handleClickMarcas}
                     key={marca}
                   >
@@ -141,13 +143,15 @@ export const FilterList = ({
               </ul>
             )}
           </div>
-          <div className="flex-1 flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
-            <h4 className=" mt-8 text-black">Modelo</h4>
+          <div className="flex flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
+            <h4 className=" font-lex font-semibold text-custom28 leading-9 mt-8 text-black">
+              Modelo
+            </h4>
             {modelo.length > 0 ? (
               <ul className="pl-custom10 pt-4">
                 {filtredModelos.map((modelo) => (
                   <li
-                    className=" text-gray3 cursor-pointer"
+                    className="font-lex font-medium text-xl text-gray3 cursor-pointer"
                     onClick={handleClickModelos}
                     key={modelo}
                   >
@@ -159,7 +163,7 @@ export const FilterList = ({
               <ul className="pl-custom10 pt-4">
                 {listaModelos.map((modelo) => (
                   <li
-                    className=" text-gray3 cursor-pointer"
+                    className="font-lex font-medium text-xl text-gray3 cursor-pointer"
                     onClick={handleClickModelos}
                     key={modelo}
                   >
@@ -169,13 +173,15 @@ export const FilterList = ({
               </ul>
             )}
           </div>
-          <div className="flex-1 flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
-            <h4 className=" mt-8 text-black">Cor</h4>
+          <div className="flex flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
+            <h4 className=" font-lex font-semibold text-custom28 leading-9 mt-8 text-black">
+              Cor
+            </h4>
             {cor.length > 0 ? (
               <ul className="pl-custom10 pt-4">
                 {filtredCor.map((cor) => (
                   <li
-                    className=" text-gray3 cursor-pointer"
+                    className="font-lex font-medium text-xl text-gray3 cursor-pointer"
                     onClick={handleClickCor}
                     key={cor}
                   >
@@ -187,7 +193,7 @@ export const FilterList = ({
               <ul className="pl-custom10 pt-4">
                 {listaCores.map((cor) => (
                   <li
-                    className=" text-gray3 cursor-pointer"
+                    className="font-lex font-medium text-xl text-gray3 cursor-pointer"
                     onClick={handleClickCor}
                     key={cor}
                   >
@@ -197,13 +203,15 @@ export const FilterList = ({
               </ul>
             )}
           </div>
-          <div className="flex-1 flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
-            <h4 className=" mt-8 text-black">Ano</h4>
+          <div className="flex flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
+            <h4 className=" font-lex font-semibold text-custom28 leading-9 mt-8 text-black">
+              Ano
+            </h4>
             {filtredAno.length > 0 ? (
               <ul className="pl-custom10 pt-4">
                 {filtredAno.map((ano) => (
                   <li
-                    className=" text-gray3 cursor-pointer"
+                    className="font-lex font-medium text-xl text-gray3 cursor-pointer"
                     onClick={handleClickAno}
                     key={ano}
                   >
@@ -215,7 +223,7 @@ export const FilterList = ({
               <ul className="pl-custom10 pt-4">
                 {listaAnos.map((ano) => (
                   <li
-                    className=" text-gray3 cursor-pointer"
+                    className="font-lex font-medium text-xl text-gray3 cursor-pointer"
                     onClick={handleClickAno}
                     key={ano}
                   >
@@ -225,13 +233,15 @@ export const FilterList = ({
               </ul>
             )}
           </div>
-          <div className="flex-1 flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
-            <h4 className=" mt-8 text-black">Combustível</h4>
+          <div className="flex flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
+            <h4 className=" font-lex font-semibold text-custom28 leading-9 mt-8 text-black">
+              Combustível
+            </h4>
             {filtredCombustivel.length > 0 ? (
               <ul className="pl-custom10 pt-4">
                 {filtredCombustivel.map((combustivel) => (
                   <li
-                    className=" text-gray3 cursor-pointer"
+                    className="font-lex font-medium text-xl text-gray3 cursor-pointer"
                     onClick={handleClickCombustivel}
                     key={combustivel}
                   >
@@ -243,7 +253,7 @@ export const FilterList = ({
               <ul className="pl-custom10 pt-4">
                 {listaCombustivel.map((combustivel) => (
                   <li
-                    className=" text-gray3 cursor-pointer"
+                    className="font-lex font-medium text-xl text-gray3 cursor-pointer"
                     onClick={handleClickCombustivel}
                     key={combustivel}
                   >
@@ -254,7 +264,9 @@ export const FilterList = ({
             )}
           </div>
           <div className="flex flex-col justify-between content-start w-full max-w-custom375 md:max-w-custom454">
-            <h4 className=" mt-8 text-black">Km</h4>
+            <h4 className=" font-lex font-semibold text-custom28 leading-9 mt-8 text-black">
+              Km
+            </h4>
             <div className="flex gap-6 md:gap-8">
               <input
                 className="mt-6 w-32 h-9 bg-gray5 py-0 px-4 md:w-36  placeholder:text-gray3 placeholder:heading-76"

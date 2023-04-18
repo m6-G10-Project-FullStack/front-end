@@ -1,7 +1,6 @@
 import React from "react";
 import pingo from "../../assets/Ellipse.png";
 import Image from "next/image";
-import styles from "./CommentCard.module.css";
 
 interface iCommentCardProps {
   initial: string;
@@ -24,18 +23,18 @@ interface iCommentCardProps {
 }
 
 const corMap = {
-  random1: styles.random1,
-  random2: styles.random2,
-  random3: styles.random3,
-  random4: styles.random4,
-  random5: styles.random5,
-  random6: styles.random6,
-  random7: styles.random7,
-  random8: styles.random8,
-  random9: styles.random9,
-  random10: styles.random10,
-  random11: styles.random11,
-  random12: styles.random12,
+  random1: "bg-random1",
+  random2: "bg-random2",
+  random3: "bg-random3",
+  random4: "bg-random4",
+  random5: "bg-random5",
+  random6: "bg-random6",
+  random7: "bg-random7",
+  random8: "bg-random8",
+  random9: "bg-random9",
+  random10: "bg-random10",
+  random11: "bg-random11",
+  random12: "bg-random12",
 };
 
 export const CommentCard = ({
@@ -45,7 +44,9 @@ export const CommentCard = ({
   text,
   cor,
 }: iCommentCardProps) => {
-  const classname = [styles.root, corMap[cor]].join(" ");
+  const styles =
+    "flex rounded-full w-8 h-8 justify-center items-center text-gray10 font-inter font-semibold text-sm";
+  const classname = [styles, corMap[cor]].join(" ");
   return (
     <div className="w-full flex flex-col content-center mt-6 mb-11">
       <div className="flex w-full gap-2 items-center">
@@ -53,10 +54,15 @@ export const CommentCard = ({
           <span>{initial}</span>
         </div>
         <Image src={pingo} alt="um pontinho para enfeitar" />
-        <h6 className="body-25 text-gray1">{name}</h6>
-        <span className="body-24 text-gray3"> há {datetime}</span>
+        <h6 className="font-inter font-semibold text-sm text-gray1">{name}</h6>
+        <span className="font-inter font-normal text-sm text-gray3">
+          {" "}
+          há {datetime}
+        </span>
       </div>
-      <p className="body-24 text-gray3 text-center pt-4">{text}</p>
+      <p className="font-inter font-normal text-sm text-gray3 text-justify pt-4 max-w-[283px] md:max-w-[663px]">
+        {text}
+      </p>
     </div>
   );
 };

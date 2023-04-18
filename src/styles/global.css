@@ -2,6 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .button {
+    @apply font-semibold text-base py-1 px-7 rounded transition ease-in border-2;
+  }
+
+  .brand-1 {
+    @apply bg-brand1 border-brand1 text-gray10 hover:bg-brand4 hover:text-brand1 hover:border-brand4;
+  }
+
+  /* .button-border-brand-1 {
+    @apply bg-brand4 border-brand1 text-brand1 hover:bg-brand1 hover:text-brand4;
+  }
+
+  .button-brand-2 {
+    @apply bg-brand2 border-brand2 text-white hover:bg-brand4 hover:text-brand1 hover:border-brand4;
+  }
+
+  .button-brand-4 {
+    @apply bg-brand4 text-brand1 hover:bg-brand2 hover:text-white hover:border-brand2;
+  }
+
+  .button-border-brand-4 {
+    @apply bg-white border-brand1 text-brand1 hover:bg-brand1 hover:text-brand4;
+  }
+
+  .button-gray-0 {
+    @apply bg-gray0 border-gray0 text-white hover:bg-white hover:text-gray0 hover:border-white;
+  }
+
+  .button-gray-1 {
+    @apply bg-gray1 border-gray1 text-white hover:bg-white hover:text-gray1 hover:border-white;
+  }
+
+  .button-border-gray-4 {
+    @apply bg-gray10 border-gray4 text-gray0 hover:bg-gray4 hover:text-gray10;
+  }
+
+  .button-gray-5 {
+    @apply bg-gray5 border-gray5 text-gray2 hover:bg-gray2 hover:text-white hover:border-gray2;
+  }
+
+  .button-gray-5-w {
+    @apply bg-gray5 border-gray5 text-white hover:bg-gray2 hover:text-white hover:border-gray2;
+  }
+
+  .button-gray-6 {
+    @apply bg-gray6 border-gray6 text-gray2 hover:bg-gray2 hover:text-white hover:border-gray2;
+  }
+
+  .button-gray-10 {
+    @apply bg-gray10 border-gray10 text-gray0 hover:bg-gray0 hover:text-gray10 hover:border-gray0;
+  }
+
+  .button-border-gray-10 {
+    @apply bg-gray10 border-gray0 text-gray0 hover:bg-gray0 hover:text-gray10;
+  }
+
+  .button-alert-2 {
+    @apply bg-alert2 border-alert2 text-alert1 hover:bg-alert1 hover:text-white hover:border-alert1;
+  }
+
+  .button-alert-3 {
+    @apply bg-alert3 border-alert3 text-alert1 hover:bg-alert1 hover:text-white hover:border-alert1;
+  }
+
+  .button-success-2 {
+    @apply bg-success2 border-success2 text-success1 hover:bg-success1 hover:text-white hover:border-success1;
+  }
+
+  .button-success-3 {
+    @apply bg-success3 border-success3 text-success1 hover:bg-success1 hover:text-white hover:border-success1;
+  }
+
+  .button-disabled {
+    @apply bg-brand3 border-brand3 text-white cursor-default;
+  } */
+}
+
 /* Tipografia */
 /* @layer utilities {
   .heading-17 {

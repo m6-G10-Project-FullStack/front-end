@@ -1,7 +1,5 @@
 import { PropsWithChildren, ButtonHTMLAttributes } from "react";
 
-import style from "./Button.module.css";
-
 interface iButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant:
     | "brand-1"
@@ -29,11 +27,9 @@ export const Button = ({
   variant,
   ...props
 }: PropsWithChildren<iButtonProps>) => {
+  const classbutton = "";
   return (
-    <button
-      className={`${style.button} ${style[`button-${variant}`]}`}
-      {...props}
-    >
+    <button className={`button ${variant}`} {...props}>
       {children}
     </button>
   );
