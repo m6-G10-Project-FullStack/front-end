@@ -5,6 +5,7 @@ import { Header } from "../src/components/Header";
 // import { useState } from "react";
 
 import Car from "../src/assets/car.png";
+import Image from "next/image";
 // import { Button } from "../src/components/Button";
 // import { Footer } from "../src/components/Footer";
 // import { Banner, CarSection, Container, Pagination } from "./style";
@@ -39,14 +40,23 @@ export default function Home() {
       <div>
         <main>
           <section
-            className="bg-cover bg-center h-screen"
-            style={{
-              backgroundImage: `url('${Car}')`,
-            }}
+            className="relative flex justify-center items-center"
+            style={{ height: "calc(100vh - 80px)" }}
           >
-            <div>
-              <h1>Motors Shop</h1>
-              <p>A melhor plataforma de anúncios de carro do país</p>
+            <div className="absolute inset-0 h-full w-full md:h-full z-10 flex justify-center items-center bg-gradient-to-b from-gray2 to-gray0">
+              <Image
+                className="h-fit w-fit md:h-full opacity-60"
+                src={Car}
+                alt="Car banner"
+              />
+            </div>
+            <div className="z-10 flex flex-col items-center gap-4 text-center mb-40">
+              <h1 className="text-5xl font-semibold text-gray10">
+                Motors Shop
+              </h1>
+              <p className="text-semibold text-gray10 text-2xl">
+                A melhor plataforma de anúncios de carro do país
+              </p>
             </div>
           </section>
 
