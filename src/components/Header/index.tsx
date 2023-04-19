@@ -3,7 +3,7 @@ import Image from "next/image";
 import Logo from "../../assets/Logo.png";
 import { Button } from "../Button";
 import { ProfileMenu } from "../ProfileMenu";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseOutline } from "react-icons/io5";
 
@@ -12,8 +12,8 @@ export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="bg-gray10 h-20 border-b-[1px] border-gray4 relative">
-      <div className="flex justify-between items-center h-full w-full max-w-[1600px] my-0 mx-auto px-3 md:px-8">
+    <header className="bg-gray10 h-20 border-b-[1px] border-gray4">
+      <div className="relative flex justify-between items-center h-full w-full max-w-[1600px] my-0 mx-auto px-3 md:px-8">
         <Image width={158} src={Logo} alt="Motor Shop principal Logo" />
 
         {/* ----- Desktop ----- */}
@@ -49,22 +49,7 @@ export const Header = () => {
           <menu className="absolute top-[79px] left-0  items-center w-full  bg-gray10">
             {isOpen &&
               (isLoged ? (
-                <ul className="px-2 py-4 w-full flex flex-col gap-2">
-                  <li>
-                    <button>Editar perfil</button>
-                  </li>
-                  <li>
-                    <button>Editar endereço</button>
-                  </li>
-                  {user.is_anouncer && (
-                    <li>
-                      <button>Editar anúncio</button>
-                    </li>
-                  )}
-                  <li>
-                    <button onClick={() => setIsLoged(false)}>Sair</button>
-                  </li>
-                </ul>
+                <ProfileMenu />
               ) : (
                 <ul className="px-2 py-4 w-full flex flex-col gap-8">
                   <li className="w-full">

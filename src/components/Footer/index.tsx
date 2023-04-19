@@ -10,12 +10,12 @@ export const Footer = () => {
       <p className="text-center w-[265px] text-gray10 font-inter font-normal text-sm">
         © 2022 - Todos os direitos reservados.
       </p>
-      <a
-        href="#top"
-        className="flex justify-center items-center h-[50px] w-[53px] bg-gray1 text-gray10 rounded-s"
+      <button
+        className="bg-gray1 p-5 rounded"
+        onClick={() => window.scrollTo({ top: 1, behavior: "smooth" })}
       >
         <Image src={upArrow} alt="seta para cima" />
-      </a>
+      </button>
     </footer>
   );
 };

@@ -105,7 +105,7 @@ export const FilterList = ({
   return (
     <>
       {isOpen ? (
-        <section className="w-full flex flex-col p-[6px] items-center gap-2 md:w-calc-30-64 ">
+        <section className="w-full flex flex-col p-[6px] items-center gap-2 md:w-fit ">
           <div className="flex w-full justify-between items-center md:hidden max-w-custom375">
             <p className="font-lex font-medium text-base text-gray1">filtros</p>
             <button

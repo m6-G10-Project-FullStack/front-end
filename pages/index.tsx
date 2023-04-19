@@ -1,9 +1,10 @@
 import Head from "next/head";
+import { FilterList } from "../src/components/FilterList";
 import { Footer } from "../src/components/Footer";
 import { Header } from "../src/components/Header";
 // import { useState } from "react";
 
-// import Image from "../src/assets/car.png";
+import Car from "../src/assets/car.png";
 // import { Button } from "../src/components/Button";
 // import { Footer } from "../src/components/Footer";
 // import { Banner, CarSection, Container, Pagination } from "./style";
@@ -36,7 +37,46 @@ export default function Home() {
       <Header />
 
       <div>
-        <main></main>
+        <main>
+          <section
+            className="bg-cover bg-center h-screen"
+            style={{
+              backgroundImage: `url('${Car}')`,
+            }}
+          >
+            <div>
+              <h1>Motors Shop</h1>
+              <p>A melhor plataforma de anúncios de carro do país</p>
+            </div>
+          </section>
+
+          <section className="w-full">
+            <div className="w-full flex justify-between max-w-[1600px] my-0 mx-auto px-3 md:px-8">
+              <FilterList
+                listaAnos={[]}
+                listaCombustivel={[]}
+                listaCores={[]}
+                listaMarcas={[]}
+                listaModelos={[]}
+              />
+
+              <ul>
+                <li>Car Card</li>
+                <li>Car Card</li>
+                <li>Car Card</li>
+              </ul>
+            </div>
+          </section>
+
+          <div className="w-full flex items-center justify-center gap-6 my-4 md:my-16">
+            <p className="text-xl text-gray4 font-semibold">
+              <span className="text-gray3">1</span> de 2
+            </p>
+            <button className="text-brand2 font-semibold text-xl">
+              Seguinte &gt;
+            </button>
+          </div>
+        </main>
 
         <Footer />
       </div>
