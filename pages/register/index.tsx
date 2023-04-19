@@ -8,6 +8,7 @@ import { Modal } from "../../src/components/ModalWrapper";
 import { ModalPhoto } from "../../src/components/Modal";
 import { AsidePhotos } from "../../src/components/AsidePhotos";
 import CommentInput from "../../src/components/CommentInput";
+import ModalAnuncio from "../../src/components/ModalAnuncio";
 
 export default function Register() {
   const texto =
@@ -15,7 +16,7 @@ export default function Register() {
   const initials = "ST";
   const description =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's";
-  const [openModal, setOpenModal] = useState(false);
+  const [openModalAnuncio, setOpenModalAnuncio] = useState(false);
   const [photo, setPhoto] = useState("");
 
   const photos = [
@@ -49,20 +50,24 @@ export default function Register() {
         text={texto}
         cor="random1"
       /> */}
-      {/* <Button onClick={() => setOpenModal(true)} variant="brand-1">
+      <Button onClick={() => setOpenModalAnuncio(true)} variant="brand-1">
         Abrir
-      </Button> */}
-      {/* <AsidePhotos
+      </Button>
+      {/* /* <AsidePhotos
         setPhoto={setPhoto}
         photos={photos}
         setOpenModal={setOpenModal}
-      />
-      {openModal && (
-        <Modal setOpenModal={setOpenModal}>
-          <ModalPhoto setOpenModal={setOpenModal} carImg={photo} />
+      /> */}
+      {openModalAnuncio && (
+        <Modal setOpenModal={setOpenModalAnuncio}>
+          <ModalAnuncio
+            title="Criar anuncio"
+            setOpenModalAnuncio={setOpenModalAnuncio}
+          />
         </Modal>
-      )} */}
-      <CommentInput initials="BP" name="Bruno" cor="random10" />
+      )}{" "}
+      */
+      {/* <CommentInput initials="BP" name="Bruno" cor="random10" /> */}
     </>
   );
 }
