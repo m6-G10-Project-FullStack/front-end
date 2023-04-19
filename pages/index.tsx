@@ -1,4 +1,6 @@
-// import Head from "next/head";
+import Head from "next/head";
+import { Footer } from "../src/components/Footer";
+import { Header } from "../src/components/Header";
 // import { useState } from "react";
 
 // import Image from "../src/assets/car.png";
@@ -12,7 +14,34 @@
 // import { Button } from "../src/components/Button";
 
 export default function Home() {
-  return <></>;
+  return (
+    <>
+      <Head>
+        <title>
+          Compre e venda carros no Motors Shop - Anúncios de carros novos e
+          usados
+        </title>
+        <meta
+          name="description"
+          content="Compre e venda carros novos e usados no Motors Shop. Anuncie gratuitamente seus veículos e encontre as melhores ofertas."
+        />
+        <meta
+          name="keywords"
+          content="Motors Shop, carros, anúncios, venda, compra, novos, usados"
+        />
+        <meta name="author" content="Motors Shop" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
+
+      <Header />
+
+      <div>
+        <main></main>
+
+        <Footer />
+      </div>
+    </>
+  );
 }
 //   const [carList, setCarList] = useState([
 //     {
@@ -149,22 +178,6 @@ export default function Home() {
 
 //   return (
 //     <>
-//       <Head>
-//         <title>
-//           Compre e venda carros no Motors Shop - Anúncios de carros novos e
-//           usados
-//         </title>
-//         <meta
-//           name="description"
-//           content="Compre e venda carros novos e usados no Motors Shop. Anuncie gratuitamente seus veículos e encontre as melhores ofertas."
-//         />
-//         <meta
-//           name="keywords"
-//           content="Motors Shop, carros, anúncios, venda, compra, novos, usados"
-//         />
-//         <meta name="author" content="Motors Shop" />
-//         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-//       </Head>
 
 //       <Header
 //         isLoggedIn={false}
