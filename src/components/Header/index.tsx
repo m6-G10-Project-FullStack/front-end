@@ -13,7 +13,7 @@ export const Header = () => {
 
   return (
     <header className="bg-gray10 h-20 border-b-[1px] border-gray4">
-      <div className="relative flex justify-between items-center h-full w-full max-w-[1600px] my-0 mx-auto px-3 md:px-8">
+      <div className="relative z-30 flex justify-between items-center h-full w-full max-w-[1600px] my-0 mx-auto px-3 md:px-8">
         <Image width={158} src={Logo} alt="Motor Shop principal Logo" />
 
         {/* ----- Desktop ----- */}
