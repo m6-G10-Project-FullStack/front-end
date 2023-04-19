@@ -7,6 +7,7 @@ import AsideProfile from "../../src/components/AsideProfile";
 import { Modal } from "../../src/components/ModalWrapper";
 import { ModalPhoto } from "../../src/components/Modal";
 import { AsidePhotos } from "../../src/components/AsidePhotos";
+import CommentInput from "../../src/components/CommentInput";
 
 export default function Register() {
   const texto =
@@ -51,7 +52,7 @@ export default function Register() {
       {/* <Button onClick={() => setOpenModal(true)} variant="brand-1">
         Abrir
       </Button> */}
-      <AsidePhotos
+      {/* <AsidePhotos
         setPhoto={setPhoto}
         photos={photos}
         setOpenModal={setOpenModal}
@@ -60,7 +61,8 @@ export default function Register() {
         <Modal setOpenModal={setOpenModal}>
           <ModalPhoto setOpenModal={setOpenModal} carImg={photo} />
         </Modal>
-      )}
+      )} */}
+      <CommentInput initials="BP" name="Bruno" cor="random10" />
     </>
   );
 }
