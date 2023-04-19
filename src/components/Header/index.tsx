@@ -1,77 +1,79 @@
-// import React, { useState } from "react";
-// import {
-//   HeaderButton,
-//   HeaderButtonPrimary,
-//   HeaderContainer,
-//   HeaderLeft,
-//   HeaderRight,
-//   HeaderTitle,
-//   HeaderTitleAccent,
-//   HeaderUser,
-//   HeaderUserIcon,
-//   HeaderUserName,
-//   DropdownMenu,
-//   DropdownMenuItem,
-// } from "./style";
-// import { Button } from "../Button";
+import { useAuth } from "../../contexts/authContext";
+import Image from "next/image";
+import Logo from "../../assets/Logo.png";
+import { Button } from "../Button";
+import { ProfileMenu } from "../ProfileMenu";
+import { useMemo, useState } from "react";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { IoCloseOutline } from "react-icons/io5";
 
-// export interface iUserProps {
-//   initials: string;
-//   name: string;
-// }
+export const Header = () => {
+  const { user, isLoged, setIsLoged } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
 
-// export interface iHeaderProps {
-//   isLoggedIn: boolean;
-//   user: iUserProps;
-// }
+  return (
+    <header className="bg-gray10 h-20 border-b-[1px] border-gray4">
+      <div className="relative z-30 flex justify-between items-center h-full w-full max-w-[1600px] my-0 mx-auto px-3 md:px-8">
+        <Image width={158} src={Logo} alt="Motor Shop principal Logo" />
 
-// export const Header = ({ isLoggedIn, user }: iHeaderProps) => {
-//   const [showDropdown, setShowDropdown] = useState(false);
+        {/* ----- Desktop ----- */}
+        <nav className="hidden md:flex md:items-center md:h-full md:border-l-[1px] md:border-gray4 md:pl-8">
+          {isLoged ? (
+            <ProfileMenu />
+          ) : (
+            <ul className="flex gap-2">
+              <li>
+                <Button
+                  onClick={() => setIsLoged(true)}
+                  variant="gray-10"
+                  type="button"
+                >
+                  Fazer login
+                </Button>
+              </li>
+              <li>
+                <Button variant="border-gray-4" type="button">
+                  Cadastrar
+                </Button>
+              </li>
+            </ul>
+          )}
+        </nav>
 
-//   const toggleDropdown = () => {
-//     setShowDropdown(!showDropdown);
-//   };
+        {/* ----- Mobile ----- */}
+        <nav className="md:hidden flex items-center justify-center text-gray1">
+          <button onClick={() => setIsOpen(!isOpen)} className="text-2xl">
+            {isOpen ? <IoCloseOutline /> : <RxHamburgerMenu />}
+          </button>
 
-//   return (
-//     <HeaderContainer>
-//       <HeaderLeft>
-//         <HeaderTitle>
-//           Motors <HeaderTitleAccent>Shop</HeaderTitleAccent>
-//         </HeaderTitle>
-//       </HeaderLeft>
-//       <HeaderRight>
-//         {isLoggedIn ? (
-//           <HeaderUser onClick={toggleDropdown}>
-//             <HeaderUserIcon>{user.initials}</HeaderUserIcon>
-//             <HeaderUserName>{user.name}</HeaderUserName>
-//             {showDropdown && (
-//               <DropdownMenu>
-//                 <DropdownMenuItem>Editar Perfil</DropdownMenuItem>
-//                 <DropdownMenuItem>Editar endereço</DropdownMenuItem>
-//                 <DropdownMenuItem>Meus Anúncios</DropdownMenuItem>
-//                 <DropdownMenuItem>Sair</DropdownMenuItem>
-//               </DropdownMenu>
-//             )}
-//           </HeaderUser>
-//         ) : (
-//           <>
-//             <Button
-//               size="small"
-//               variant="gray-4"
-//               clickFunction={() => console.log("logou")}
-//             >
-//               Fazer Login
-//             </Button>
-//             <Button
-//               size="small"
-//               variant="gray-border"
-//               clickFunction={() => console.log("cadastrou")}
-//             >
-//               Cadastrar
-//             </Button>
-//           </>
-//         )}
-//       </HeaderRight>
-//     </HeaderContainer>
-//   );
-// };
+          <menu className="absolute top-[79px] left-0  items-center w-full  bg-gray10">
+            {isOpen &&
+              (isLoged ? (
+                <ProfileMenu />
+              ) : (
+                <ul className="px-2 py-4 w-full flex flex-col gap-8">
+                  <li className="w-full">
+                    <button
+                      className="text-gray2 font-semibold self-start"
+                      onClick={() => setIsLoged(true)}
+                      type="button"
+                    >
+                      Fazer login
+                    </button>
+                  </li>
+                  <li className="w-full">
+                    <button
+                      className="font-lex font-semibold text-gray0 w-full py-1 rounded border-[1px] border-gray4 hover:bg-gray4 hover:text-gray10"
+                      type="button"
+                    >
+                      Cadastrar
+                    </button>
+                  </li>
+                </ul>
+              ))}
+          </menu>
+        </nav>
+      </div>
+    </header>
+  );
+};

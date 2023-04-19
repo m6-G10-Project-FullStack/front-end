@@ -4,7 +4,7 @@
 
 @layer components {
   .button {
-    @apply font-lex font-semibold text-base py-1 px-7 rounded transition ease-in border-2;
+    @apply font-lex font-semibold py-1 px-3 md:px-7 rounded transition ease-in border-[1px] text-xs md:text-base;
   }
 
   .brand-1 {
@@ -52,7 +52,7 @@
   }
 
   .gray-10 {
-    @apply bg-gray10 border-gray10 text-gray0 hover:bg-gray0 hover:text-gray10 hover:border-gray0;
+    @apply bg-gray10 border-gray10 text-gray2 hover:bg-gray0 hover:text-gray10 hover:border-gray0;
   }
 
   .border-gray-10 {
