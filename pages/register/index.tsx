@@ -42,24 +42,28 @@ export default function Register() {
           <Input label="CEP" placeholder="0000.000" />
         </div>
 
-        <div>
-          <Input label="Estado" placeholder="Digitar estado" />
-        </div>
+        <div className="div-para-coluna">
+          <div>
+            <Input label="Estado" placeholder="Digitar estado" />
+          </div>
 
-        <div>
-          <Input label="Cidade" placeholder="Digitar cidade" />
+          <div>
+            <Input label="Cidade" placeholder="Digitar cidade" />
+          </div>
         </div>
 
         <div>
           <Input label="Rua" placeholder="Digitar senha da sua rua" />
         </div>
 
-        <div>
-          <Input label="Número" placeholder="Digitar número" />
-        </div>
+        <div className="div-para-coluna">
+          <div>
+            <Input label="Número" placeholder="Digitar número" />
+          </div>
 
-        <div>
-          <Input label="Complemento" placeholder="Digitar complemento" />
+          <div>
+            <Input label="Complemento" placeholder="Digitar complemento" />
+          </div>
         </div>
 
         <h4>Tipo de conta</h4>
@@ -92,6 +96,14 @@ export default function Register() {
             >
               Anunciante
             </button>
+          </div>
+
+          <div>
+            <Input label="Senha" placeholder="Digitar senha" />
+          </div>
+
+          <div>
+            <Input label="Confirmar Senha" placeholder="Digitar senha" />
           </div>
         </div>
       </div>
