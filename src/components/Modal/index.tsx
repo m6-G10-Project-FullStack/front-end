@@ -23,7 +23,6 @@ export const ModalPhoto = ({ setOpenModal, carImg }: iModalPhotoProps) => {
         <CustomImage
           src={carImg}
           alt="Imagem do veículo"
-          domains={["th.bing.com"]}
           width={260}
           height={239}
         />
