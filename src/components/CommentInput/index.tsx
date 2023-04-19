@@ -37,7 +37,9 @@ const corMap = {
 const CommentInput = ({ initials, name, cor }: iComentInputProps) => {
   const [comment, setComment] = useState("");
 
-  const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCommentChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setComment(event.target.value);
   };
 
@@ -51,26 +53,26 @@ const CommentInput = ({ initials, name, cor }: iComentInputProps) => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full max-w-[351px] py-9 px-6 md:max-w-[751px] md:h-[289px]">
       <div className="flex flex-col mt-[10px]">
         <div className="flex items-center p-[3px]">
           <div
-            className={`flex justify-center items-center w-10 h-10 rounded-full text-gray10 font-bold text-lg pr-[10px] ${corMap[cor]}`}
+            className={`flex justify-center items-center w-8 h-8 rounded-full text-gray10 font-medium text-sm ${corMap[cor]}`}
           >
             {initials}
           </div>
-          <h3>{name}</h3>
+          <h3 className="ml-2 font-medium text-sm leading-6 text-gray2">
+            {name}
+          </h3>
         </div>
-        <input
-          className="flex-grow h-10 rounded-[20px] border border-random1 py-0 px-5"
-          type="text"
+        <textarea
+          className="flex-grow mt-7 pl-3 pr-4 w-full max-w-[284px] md:max-w-[672px] md:h-16 h-32"
           placeholder={`O que você achou, ${name}?`}
           value={comment}
           onChange={handleCommentChange}
         />
-
-        <div className="flex justify-end">
-          <Button variant="brand-1" onClick={handleCommentSubmit}>
+        <div className="flex justify-start mt-6 md:justify-end">
+          <Button variant="brand-2" onClick={handleCommentSubmit}>
             Comentar
           </Button>
         </div>
