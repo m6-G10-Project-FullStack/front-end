@@ -7,8 +7,8 @@ interface iCommentCardProps {
   name: string;
   datetime: string;
   text: string;
-  cor:
-    | "random1"
+  cor: string;
+  /* | "random1"
     | "random2"
     | "random3"
     | "random4"
@@ -19,7 +19,7 @@ interface iCommentCardProps {
     | "random9"
     | "random10"
     | "random11"
-    | "random12";
+    | "random12"; */
 }
 
 const corMap = {
