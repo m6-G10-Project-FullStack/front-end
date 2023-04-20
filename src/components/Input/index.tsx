@@ -8,7 +8,7 @@ interface iInputProps {
 
 const Input = ({ label, placeholder, ...rest }: iInputProps) => {
   return (
-    <div className="flex flex-col w-27">
+    <div className="flex flex-col w-full">
       <label
         className="font-lex font-medium text-sm leading-4 text-gray1"
         htmlFor={label}
