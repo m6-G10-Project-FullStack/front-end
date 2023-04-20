@@ -1,6 +1,7 @@
 import React from "react";
 import Select from "../Select";
 import { Button } from "../Button";
+import Input from "../Input";
 
 interface iModalAnuncioProps {
   setOpenModalAnuncio: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,11 +15,11 @@ const ModalAnuncio = ({ setOpenModalAnuncio, title }: iModalAnuncioProps) => {
   const arrayCombustivel = ["Flex", "Elétrico"];
 
   return (
-    <div className="bg-gray10 w-full h-screen h-max-[1201px] max-w-custom344 flex flex-col content-center rounded-lg px-6 py-4 md:max-w-lg">
+    <div className="bg-gray10 w-full h-fit max-w-custom344 flex flex-col content-center rounded-lg px-6 py-4 md:max-w-lg">
       <div className="flex w-full justify-between items-center max-w-custom375">
         <p className="font-lex font-medium text-base text-gray1">{title}</p>
         <button
-          className="flex border-none bg-transparent text-gray3 text-custom22 cursor-pointer md:hidden"
+          className="flex border-none bg-transparent text-gray3 text-custom22 cursor-pointer"
           onClick={() => setOpenModalAnuncio(false)}
           type="button"
         >
@@ -41,67 +42,36 @@ const ModalAnuncio = ({ setOpenModalAnuncio, title }: iModalAnuncioProps) => {
         </div>
         <div className="flex justify-between gap-4">
           <div className="flex flex-col w-[127px]">
-            <Input
-              id="quilometragem"
-              label="Quilometragem"
-              type="text"
-              placeholder={"Ex.: 30.000"}
-            />
+            <Input label="Quilometragem" placeholder={"Ex.: 30.000"} />
           </div>
           <div className="flex flex-col w-[127px]">
-            <Input
-              id="cor"
-              label="Cor"
-              type="text"
-              placeholder={"Ex.: Branco"}
-            />
+            <Input label="Cor" placeholder={"Ex.: Branco"} />
           </div>
         </div>
         <div className="flex justify-between gap-4">
           <div className="flex flex-col w-[127px]">
-            <Input
-              id="precoTabelaFipe"
-              label="Preço tabela FIPE"
-              type="text"
-              disabled={true}
-            />
+            <Input placeholder="Preço tabela FIPE" label="Preço tabela FIPE" />
           </div>
           <div className="flex flex-col w-[127px]">
-            <Input
-              id="preco"
-              label="Preço"
-              type="text"
-              placeholder={"Ex.: 50.000,00"}
-            />
+            <Input label="Preço" placeholder={"Ex.: 50.000,00"} />
           </div>
         </div>
         <Input
-          id="descricao"
           label="Descrição"
-          length={500}
-          placeHolder="Escreva detalhes do seu veículo"
-          row={3}
+          placeholder="Escreva detalhes do seu veículo"
         />
+        <Input label="Imagem da capa" placeholder={"Ex.: https://image.com"} />
         <Input
-          id="imagemDaCapa"
-          label="Imagem da capa"
-          type="text"
-          placeholder={"Ex.: https://image.com"}
-        />
-        <Input
-          id="1ImagemGaleria"
           label="1ª Imagem da galeria"
-          type="text"
           placeholder={"Ex.: https://image.com"}
         />
         <Input
-          id="2ImagemGaleria"
           label="2ª Imagem da galeria"
-          type="text"
           placeholder={"Ex.: https://image.com"}
         />
-        <p>Adicionar campo para imagem da galeria</p>
-        <Button variant="brand-1" />
+        <Button variant="brand-1">
+          Adicionar campo para imagem da galeria
+        </Button>
       </form>
       <div>
         <Button variant="gray-6">Excluir anúncio</Button>
