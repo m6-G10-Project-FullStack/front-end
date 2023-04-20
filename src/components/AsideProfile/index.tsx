@@ -5,8 +5,8 @@ interface iAsideProps {
   initials: string;
   name: string;
   description: string;
-  cor:
-    | "random1"
+  cor: string;
+  /* | "random1"
     | "random2"
     | "random3"
     | "random4"
@@ -17,7 +17,7 @@ interface iAsideProps {
     | "random9"
     | "random10"
     | "random11"
-    | "random12";
+    | "random12"; */
 }
 
 const corMap = {
@@ -37,7 +37,7 @@ const corMap = {
 
 const AsideProfile = ({ cor, description, initials, name }: iAsideProps) => {
   return (
-    <div className="flex flex-col w-full items-center bg-gray10 rounded-[5px] p-5 max-w-[351px] md:max-w-[440px] mb-7">
+    <div className="bg-gray10 w-full  justify-center items-center flex flex-col rounded-s p-3 md:w-full max-w-[351px] md:max-w-[440px]">
       <div
         className={`flex justify-center items-center font-inter font-medium text-2xl md:text-4xl leading-[56px] text-gray10 w-[77px] h-[77px] rounded-full md:w-[104px] md:h-[104px] mb-7  ${corMap[cor]}`}
       >
