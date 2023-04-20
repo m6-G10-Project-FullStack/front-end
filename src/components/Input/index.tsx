@@ -6,7 +6,7 @@ interface iInputProps {
   placeholder: string;
 }
 
-const Input = ({ label, placeholder }: iInputProps) => {
+const Input = ({ label, placeholder, ...rest }: iInputProps) => {
   return (
     <div className="flex flex-col w-27">
       <label
@@ -16,9 +16,10 @@ const Input = ({ label, placeholder }: iInputProps) => {
         {label}
       </label>
       <input
+        {...rest}
         id={label}
-        placeholder={placeholder}
         type="text"
+        placeholder={placeholder}
         className="font-inter font-normal text-base text-gray3 pl-1 mt-8 mb-6"
       />
     </div>
