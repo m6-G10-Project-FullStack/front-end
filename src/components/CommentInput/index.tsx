@@ -4,8 +4,8 @@ import { Button } from "../Button";
 interface iComentInputProps {
   initials: string;
   name: string;
-  cor:
-    | "random1"
+  cor: string;
+  /*  | "random1"
     | "random2"
     | "random3"
     | "random4"
@@ -16,7 +16,7 @@ interface iComentInputProps {
     | "random9"
     | "random10"
     | "random11"
-    | "random12";
+    | "random12"; */
 }
 
 const corMap = {
