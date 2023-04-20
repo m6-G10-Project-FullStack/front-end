@@ -1,10 +1,10 @@
 import React from "react";
-//import { StaticImageData } from "next/image";
+import { StaticImageData } from "next/image";
 import Image from "next/image";
 
 interface iCarCardProps {
   carName: string;
-  carImg: string;
+  carImg: StaticImageData;
   carDescription: string;
   carSeller: string;
   carKm: number;
