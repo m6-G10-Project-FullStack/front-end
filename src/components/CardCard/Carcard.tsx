@@ -34,7 +34,7 @@ export const CarCard = ({
           <Image
             width={262}
             height={150}
-            //className="w-[262px] h-[100%]"
+            //className="w-[262px] h-full"
             src={carImg}
             alt="foto carro"
           />
@@ -56,11 +56,11 @@ export const CarCard = ({
               </p>
             </div>
           </div>
-          <div className="flex w-[100%] gap-[15px] items-center justify-around">
-            <span className="text-sm pl-[8px] pt-[4px] pr-[8px] pb-[4px] text-brand1 bg-brand4">
+          <div className="flex w-full gap-[15px] items-center justify-around">
+            <span className="text-sm pl-2 pt-1 pr-2 pb-1 text-brand1 bg-brand4">
               {carKm} Km
             </span>
-            <span className="text-sm pl-[8px] pt-[4px] pr-[8px] pb-[4px] text-brand1 bg-brand4">
+            <span className="text-sm pl-2 pt-1 pr-2 pb-1 text-brand1 bg-brand4">
               Ano{carYear}
             </span>
             <p>R$ {carPrice.toFixed(2)}</p>
