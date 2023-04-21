@@ -10,6 +10,7 @@ import { AsidePhotos } from "../../src/components/AsidePhotos";
 import CommentInput from "../../src/components/CommentInput";
 import ModalAnuncio from "../../src/components/ModalAnuncio";
 import Input from "../../src/components/Input";
+import { Header } from "../../src/components/Header";
 
 export default function Register() {
   const [isBuyer, setIsBuyer] = useState(false);
@@ -33,104 +34,117 @@ export default function Register() {
 
   return (
     <>
-      <div className="div-container-registro">
-        <h1>Cadastro</h1>
-        <h3>Informações pessoais</h3>
+      <Header />
+      <main className="flex justify-center">
+        <div className="flex flex-col max-w-2">
+          <h1 className="text-3xl font-semibold text-gray-800 m-2">Cadastro</h1>
+          <h3 className="text-1xl font-semibold text-gray-800 m-2">
+            Informações pessoais
+          </h3>
+          <form action="">
+            <div className="flex flex-col m-2">
+              <div>
+                <Input label="Nome" placeholder="Ex: Samantha Leana" />
+              </div>
 
-        <div>
-          <Input label="Nome" placeholder="Ex: Samantha Leana" />
+              <div className="m-2">
+                <Input
+                  label="Email"
+                  placeholder="Ex: sammylea@vendecarro.com.br"
+                />
+              </div>
+
+              <div className="m-2">
+                <Input label="CPF" placeholder="000.000.000-00" />
+              </div>
+
+              <div className="m-2">
+                <Input label="Celular" placeholder="(DDD) 90000-0000" />
+              </div>
+
+              <div className="m-2">
+                <Input label="Data de nascimento" placeholder="00/00/00" />
+              </div>
+
+              <div className="m-2">
+                <Input label="Descrição" placeholder="Digitar descrição" />
+              </div>
+
+              <h3 className="text-1xl font-semibold text-gray-800 m-2">
+                Informações de endereço
+              </h3>
+              <div>
+                <Input label="CEP" placeholder="0000.000" />
+              </div>
+
+              <div className="flex justify-between gap-4">
+                <div className="flex flex-col w-[127px]">
+                  <Input label="Estado" placeholder="Digitar estado" />
+                </div>
+
+                <div className="flex flex-col w-[127px]">
+                  <Input label="Cidade" placeholder="Digitar cidade" />
+                </div>
+              </div>
+
+              <div className="m-2">
+                <Input label="Rua" placeholder="Digitar senha da sua rua" />
+              </div>
+
+              <div className="flex justify-around gap-2">
+                <div className="flex flex-col w-[140px]">
+                  <Input label="Número" placeholder="Digitar número" />
+                </div>
+
+                <div className="flex flex-col w-[140px]">
+                  <Input label="Complemento" placeholder="Ex: Apart 307" />
+                </div>
+              </div>
+
+              <div>
+                <h5 className="font-bold mb-4">Tipo de conta</h5>
+                <div className="flex gap-2 mb-3 justify-center">
+                  <button
+                    className={`w-[138px] py-2 px-4 rounded border-[1px] ${
+                      isBuyer ? "bg-brand1  text-gray9" : "bg-gray9  text-gray1"
+                    }`}
+                    onClick={() => {
+                      setIsBuyer(true);
+                      setIsSeller(false);
+                    }}
+                  >
+                    Comprador
+                  </button>
+                  <button
+                    className={`w-[138px] py-2 px-4 rounded border-[1px] ${
+                      isSeller ? "bg-brand1  text-gray9" : "bg-gray9 text-gray1"
+                    }`}
+                    onClick={() => {
+                      setIsSeller(true);
+                      setIsBuyer(false);
+                    }}
+                  >
+                    Anunciante
+                  </button>
+                </div>
+
+                <div className="m-2">
+                  <Input label="Senha" placeholder="Digitar senha" />
+                </div>
+
+                <div className="m-2">
+                  <Input label="Confirmar Senha" placeholder="Digitar senha" />
+                </div>
+
+                <button className="w-[276px] py-2 px-4 rounded border-[1px] bg-brand1 text-gray9">
+                  Finalizar cadastro
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
-
-        <div>
-          <Input label="Email" placeholder="Ex: sammylea@vendecarro.com.br" />
-        </div>
-
-        <div>
-          <Input label="CPF" placeholder="000.000.000-00" />
-        </div>
-
-        <div>
-          <Input label="Celular" placeholder="(DDD) 90000-0000" />
-        </div>
-
-        <div>
-          <Input label="Data de nascimento" placeholder="00/00/00" />
-        </div>
-
-        <div>
-          <Input label="Descrição" placeholder="Digitar descrição" />
-        </div>
-
-        <h3>Informações de endereço</h3>
-        <div>
-          <Input label="CEP" placeholder="0000.000" />
-        </div>
-
-        <div className="div-para-coluna">
-          <div>
-            <Input label="Estado" placeholder="Digitar estado" />
-          </div>
-
-          <div>
-            <Input label="Cidade" placeholder="Digitar cidade" />
-          </div>
-        </div>
-
-        <div>
-          <Input label="Rua" placeholder="Digitar senha da sua rua" />
-        </div>
-
-        <div className="div-para-coluna">
-          <div>
-            <Input label="Número" placeholder="Digitar número" />
-          </div>
-
-          <div>
-            <Input label="Complemento" placeholder="Digitar complemento" />
-          </div>
-        </div>
-
-        <h4>Tipo de conta</h4>
-        <div>
-          <h5 className="font-bold mb-2">Tipo de conta</h5>
-          <div>
-            <button
-              className={`py-2 px-4 rounded-lg ${
-                isBuyer
-                  ? "bg-brand1  text-gray9 border-2 border-blue-600"
-                  : "bg-gray9  border-2 border-gray-100"
-              }`}
-              onClick={() => {
-                setIsBuyer(true);
-                setIsSeller(false);
-              }}
-            >
-              Comprador
-            </button>
-            <button
-              className={`py-2 px-4 rounded-lg ${
-                isSeller
-                  ? "bg-brand1  text-gray9 border-2 border-blue-600"
-                  : "bg-gray9   border-2 border-gray-100"
-              }`}
-              onClick={() => {
-                setIsSeller(true);
-                setIsBuyer(false);
-              }}
-            >
-              Anunciante
-            </button>
-          </div>
-
-          <div>
-            <Input label="Senha" placeholder="Digitar senha" />
-          </div>
-
-          <div>
-            <Input label="Confirmar Senha" placeholder="Digitar senha" />
-          </div>
-        </div>
-      </div>
+      </main>
+      <Footer />
     </>
   );
 }
