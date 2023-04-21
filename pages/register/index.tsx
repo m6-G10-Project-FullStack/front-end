@@ -35,13 +35,15 @@ export default function Register() {
   return (
     <>
       <Header />
-      <main className="flex justify-center">
-        <div className="flex flex-col max-w-2">
-          <h1 className="text-3xl font-semibold text-gray-800 m-2">Cadastro</h1>
-          <h3 className="text-1xl font-semibold text-gray-800 m-2">
-            Informações pessoais
-          </h3>
-          <form action="">
+      <main className="w-full flex justify-center items-center bg-gray8">
+        <div className="flex flex-col max-w-2 mt-[30px] mb-[30px]">
+          <form action="" className="bg-whitefixed p-2 rounded shadow">
+            <h1 className="text-3xl font-semibold text-gray-800 m-2">
+              Cadastro
+            </h1>
+            <h3 className="text-1xl font-semibold text-gray-800 m-2">
+              Informações pessoais
+            </h3>
             <div className="flex flex-col m-2">
               <div>
                 <Input label="Nome" placeholder="Ex: Samantha Leana" />
