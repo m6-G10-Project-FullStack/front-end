@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Select from "../Select";
 import { Button } from "../Button";
 import Input from "../Input";
@@ -13,10 +13,17 @@ const ModalAnuncio = ({ setOpenModalAnuncio, title }: iModalAnuncioProps) => {
   const arrayModelos = ["Audi SQ5", "Bmw M3"];
   const arrayAnos = ["2020", "2021"];
   const arrayCombustivel = ["Flex", "Elétrico"];
+  const [inputCount, setInputCount] = useState([1, 2]);
+
+  const handleInputCount = () => {
+    if (inputCount.length < 6) {
+      setInputCount([...inputCount, inputCount.length + 1]);
+    }
+  };
 
   return (
-    <div className="bg-gray10 w-full h-fit max-w-custom344 flex flex-col content-center rounded-lg px-6 py-4 md:max-w-lg">
-      <div className="flex w-full justify-between items-center max-w-custom375">
+    <div className="bg-gray10 w-full h-max max-w-custom344 flex flex-col content-center rounded-lg px-6 py-4 md:max-w-lg relative overflow-y-auto scrollbar-w-6 scrollbar-track-gray-100 scrollbar-thumb-gray-500 scrollbar-thumb-rounded-md">
+      <div className="flex w-full justify-between items-center">
         <p className="font-lex font-medium text-base text-gray1">{title}</p>
         <button
           className="flex border-none bg-transparent text-gray3 text-custom22 cursor-pointer"
@@ -50,7 +57,7 @@ const ModalAnuncio = ({ setOpenModalAnuncio, title }: iModalAnuncioProps) => {
         </div>
         <div className="flex justify-between gap-4">
           <div className="flex flex-col w-[127px]">
-            <Input placeholder="Preço tabela FIPE" label="Preço tabela FIPE" />
+            <Input placeholder="R$ 48.000,00" label="Preço tabela FIPE" />
           </div>
           <div className="flex flex-col w-[127px]">
             <Input label="Preço" placeholder={"Ex.: 50.000,00"} />
@@ -61,22 +68,25 @@ const ModalAnuncio = ({ setOpenModalAnuncio, title }: iModalAnuncioProps) => {
           placeholder="Escreva detalhes do seu veículo"
         />
         <Input label="Imagem da capa" placeholder={"Ex.: https://image.com"} />
-        <Input
-          label="1ª Imagem da galeria"
-          placeholder={"Ex.: https://image.com"}
-        />
-        <Input
-          label="2ª Imagem da galeria"
-          placeholder={"Ex.: https://image.com"}
-        />
-        <Button variant="brand-1">
-          Adicionar campo para imagem da galeria
-        </Button>
+        {inputCount.map((item, i) => (
+          <Input
+            key={item}
+            label={`${item}ª Imagem da galeria`}
+            placeholder={"Ex.: https://image.com"}
+          />
+        ))}
+        <div className="m-w-[315px]">
+          <Button type="button" onClick={handleInputCount} variant="brand-4">
+            Adicionar campo para imagem da galeria
+          </Button>
+        </div>
+        <div>
+          <Button variant="gray-6">Excluir anúncio</Button>
+          <Button type="submit" variant="brand-4">
+            Criar anúncio
+          </Button>
+        </div>
       </form>
-      <div>
-        <Button variant="gray-6">Excluir anúncio</Button>
-        <Button variant="brand-4">Criar anúncio</Button>
-      </div>
     </div>
   );
 };
