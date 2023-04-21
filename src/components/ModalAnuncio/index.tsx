@@ -6,13 +6,32 @@ import Input from "../Input";
 interface iModalAnuncioProps {
   setOpenModalAnuncio: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
+  brands: string[];
+  setSelectBrand: React.Dispatch<React.SetStateAction<string>>;
+  cars: string[];
+  setSelectCar: React.Dispatch<React.SetStateAction<string>>;
+  years: string[];
+  setSelectYear: React.Dispatch<React.SetStateAction<string>>;
+  fuels: string[];
+  setSelectFuel: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const ModalAnuncio = ({ setOpenModalAnuncio, title }: iModalAnuncioProps) => {
-  const arrayMarcas = ["Audi", "Bmw"];
-  const arrayModelos = ["Audi SQ5", "Bmw M3"];
-  const arrayAnos = ["2020", "2021"];
-  const arrayCombustivel = ["Flex", "Elétrico"];
+const ModalAnuncio = ({
+  setOpenModalAnuncio,
+  title,
+  brands,
+  setSelectBrand,
+  cars,
+  setSelectCar,
+  years,
+  setSelectYear,
+  fuels,
+  setSelectFuel,
+}: iModalAnuncioProps) => {
+  const arrayMarcas = brands;
+  const arrayModelos = cars;
+  const arrayAnos = years;
+  const arrayCombustivel = fuels;
   const [inputCount, setInputCount] = useState([1, 2]);
 
   const handleInputCount = () => {
@@ -37,14 +56,30 @@ const ModalAnuncio = ({ setOpenModalAnuncio, title }: iModalAnuncioProps) => {
         <h3 className="font-inter font-medium text-sm leading-6 text-gray1 mb-6">
           Informações do veículo
         </h3>
-        <Select label="Marca" arrayValue={arrayMarcas} />
-        <Select label="Modelo" arrayValue={arrayModelos} />
+        <Select
+          label="Marca"
+          arrayValue={arrayMarcas}
+          setSelect={setSelectBrand}
+        />
+        <Select
+          label="Modelo"
+          arrayValue={arrayModelos}
+          setSelect={setSelectCar}
+        />
         <div className="flex justify-between gap-4">
           <div className="flex flex-col w-[127px]">
-            <Select label="Ano" arrayValue={arrayAnos} />
+            <Select
+              label="Ano"
+              arrayValue={arrayAnos}
+              setSelect={setSelectYear}
+            />
           </div>
           <div className="flex flex-col w-[127px]">
-            <Select label="Combustível" arrayValue={arrayCombustivel} />
+            <Select
+              label="Combustível"
+              arrayValue={arrayCombustivel}
+              setSelect={setSelectFuel}
+            />
           </div>
         </div>
         <div className="flex justify-between gap-4">
