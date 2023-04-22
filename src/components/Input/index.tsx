@@ -4,9 +4,17 @@ import { Button } from "../Button";
 interface iInputProps {
   label: string;
   placeholder: string;
+  register: Function;
+  name: string;
 }
 
-const Input = ({ label, placeholder, ...rest }: iInputProps) => {
+const Input = ({
+  label,
+  placeholder,
+  register,
+  name,
+  ...rest
+}: iInputProps) => {
   return (
     <div className="flex flex-col w-full">
       <label
@@ -17,6 +25,7 @@ const Input = ({ label, placeholder, ...rest }: iInputProps) => {
       </label>
       <input
         {...rest}
+        {...register(name)}
         id={label}
         type="text"
         placeholder={placeholder}

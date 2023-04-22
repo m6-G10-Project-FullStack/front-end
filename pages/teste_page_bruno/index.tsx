@@ -24,7 +24,7 @@ const Test = () => {
   const getBrands = async () => {
     try {
       const { data } = await apiKenzie.get("");
-      const nameBrands = Object.keys(data).map((item) => item);
+      const nameBrands = Object.keys(data);
       setBrands(nameBrands);
     } catch (error) {
       console.log(error);
@@ -32,7 +32,7 @@ const Test = () => {
   };
 
   useEffect(() => {
-    if (selectBrand.length > 0) {
+    if (selectBrand[0] != "") {
       getCars(selectBrand);
     }
   }, [selectBrand]);
@@ -48,10 +48,10 @@ const Test = () => {
   };
 
   useEffect(() => {
-    if (selectCar.length > 0) {
+    if (selectCar[0] != "") {
       getYears(selectCar);
     }
-  }, [selectCar]);
+  }, [selectCar, selectBrand]);
 
   const getYears = async (selectCar: string) => {
     try {
@@ -67,9 +67,7 @@ const Test = () => {
 
   useEffect(() => {
     if (selectYear[0] != "") {
-      console.log(selectYear, selectCar);
       getFuels(selectYear, selectCar);
-      console.log(fuels);
     }
   }, [selectYear, selectCar]);
 
@@ -81,7 +79,6 @@ const Test = () => {
           return car.name == selectCar && car.year == selectYear;
         })
         .map((car: any) => car.fuel);
-      console.log(carsFuels);
       setFuels(carsFuels);
     } catch (error) {
       console.log(error);
