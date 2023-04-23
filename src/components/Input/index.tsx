@@ -1,16 +1,21 @@
-import React, { forwardRef } from "react";
 import { Button } from "../Button";
 
 interface iInputProps {
   label: string;
   placeholder: string;
-  type?: string;
+  register: Function;
+  name: string;
+  valor?: number;
 }
 
-const Input = (
-  { label, placeholder, type, ...rest }: iInputProps,
-  ref: any
-) => {
+const Input = ({
+  label,
+  placeholder,
+  register,
+  name,
+  valor,
+  ...rest
+}: iInputProps) => {
   return (
     <div className="flex flex-col w-full">
       <label
@@ -21,14 +26,14 @@ const Input = (
       </label>
       <input
         {...rest}
+        {...register(name)}
+        value={valor}
         id={label}
-        ref={ref}
-        type={type || "text"}
         placeholder={placeholder}
-        className="font-inter font-normal text-base text-gray3 pl-1 mt-8 mb-6"
+        className="font-inter font-normal text-base text-gray3 pl-1 mt-8 mb-6 w-full"
       />
     </div>
   );
 };
 
-export default forwardRef(Input);
+export default Input;

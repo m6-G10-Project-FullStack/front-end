@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { Footer } from "../../src/components/Footer";
-import Input from "../../src/components/Input";
 import { Header } from "../../src/components/Header";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { toast } from "react-toastify";
+import Input from "../../src/components/Input";
 
 interface IUserRegister {
   nome: string;
@@ -23,12 +21,12 @@ interface IUserRegister {
   rua: string;
   numero: number;
   complemento: string;
-  isSeller: boolean | undefined;
+  isSeller: boolean;
 }
 
 export default function Register() {
-  const [isBuyer, setIsBuyer] = useState(undefined);
-  const [isSeller, setIsSeller] = useState(undefined);
+  const [isBuyer, setIsBuyer] = useState<boolean>();
+  const [isSeller, setIsSeller] = useState<boolean>();
 
   // const navigate = useNavigate();
 
@@ -75,7 +73,7 @@ export default function Register() {
 
   const onFormSubmit = async (formData: IUserRegister) => {
     console.log(formData);
-    registerUser(formData);
+    // registerUser(formData);
   };
 
   //registerUser
@@ -105,9 +103,10 @@ export default function Register() {
             <div className="flex flex-col m-2">
               <div>
                 <Input
+                  register={register}
                   label="Nome"
                   placeholder="Ex: Samantha Leana"
-                  {...register("nome")}
+                  name="nome"
                 />
                 {errors.nome && (
                   <span className="text-red-600">{errors.nome.message}</span>
@@ -116,9 +115,10 @@ export default function Register() {
 
               <div className="m-2">
                 <Input
+                  register={register}
                   label="Email"
                   placeholder="Ex: sammylea@vendecarro.com.br"
-                  {...register("email")}
+                  name="email"
                 />
                 {errors.email && (
                   <span className="text-red-600">{errors.email.message}</span>
@@ -127,9 +127,10 @@ export default function Register() {
 
               <div className="m-2">
                 <Input
+                  register={register}
                   label="CPF"
                   placeholder="000.000.000-00"
-                  {...register("cpf")}
+                  name="cpf"
                 />
                 {errors.cpf && (
                   <span className="text-red-600">{errors.cpf.message}</span>
@@ -138,9 +139,10 @@ export default function Register() {
 
               <div className="m-2">
                 <Input
+                  register={register}
                   label="Celular"
                   placeholder="(DDD) 90000-0000"
-                  {...register("telefone")}
+                  name="telefone"
                 />
                 {errors.telefone && (
                   <span className="text-red-600">
@@ -151,9 +153,10 @@ export default function Register() {
 
               <div className="m-2">
                 <Input
+                  register={register}
                   label="Data de nascimento"
                   placeholder="00/00/00"
-                  {...register("dataDeNascimento")}
+                  name='"dataDeNascimento"'
                 />
                 {errors.dataDeNascimento && (
                   <span className="text-red-600">
@@ -164,9 +167,10 @@ export default function Register() {
 
               <div className="m-2">
                 <Input
+                  register={register}
                   label="Descrição"
                   placeholder="Digitar descrição"
-                  {...register("descricao")}
+                  name="descricao"
                 />
                 {errors.descricao && (
                   <span className="text-red-600">
@@ -180,9 +184,10 @@ export default function Register() {
               </h3>
               <div>
                 <Input
+                  register={register}
                   label="CEP"
                   placeholder="0000.000"
-                  {...register("cep")}
+                  name="cep"
                 />
                 {errors.cep && (
                   <span className="text-red-600">{errors.cep.message}</span>
@@ -192,9 +197,10 @@ export default function Register() {
               <div className="flex justify-between gap-4">
                 <div className="flex flex-col w-[127px]">
                   <Input
+                    register={register}
                     label="Estado"
                     placeholder="Digitar estado"
-                    {...register("estado")}
+                    name="estado"
                   />
                   {errors.estado && (
                     <span className="text-red-600">
@@ -205,9 +211,10 @@ export default function Register() {
 
                 <div className="flex flex-col w-[127px]">
                   <Input
+                    register={register}
                     label="Cidade"
                     placeholder="Digitar cidade"
-                    {...register("cidade")}
+                    name="cidade"
                   />
                   {errors.cidade && (
                     <span className="text-red-600">
@@ -219,9 +226,10 @@ export default function Register() {
 
               <div className="m-2">
                 <Input
+                  register={register}
                   label="Rua"
                   placeholder="Digitar rua"
-                  {...register("rua")}
+                  name="rua"
                 />
                 {errors.rua && (
                   <span className="text-red-600">{errors.rua.message}</span>
@@ -231,9 +239,10 @@ export default function Register() {
               <div className="flex justify-around gap-2">
                 <div className="flex flex-col w-[140px]">
                   <Input
+                    register={register}
                     label="Número"
                     placeholder="Digitar número"
-                    {...register("numero")}
+                    name="numero"
                   />
                   {errors.numero && (
                     <span className="text-red-600">
@@ -244,9 +253,10 @@ export default function Register() {
 
                 <div className="flex flex-col w-[140px]">
                   <Input
+                    register={register}
                     label="Complemento"
                     placeholder="Ex: Apart 307"
-                    {...register("complemento")}
+                    name="complemento"
                   />
                   {errors.complemento && (
                     <span className="text-red-600">
@@ -287,20 +297,19 @@ export default function Register() {
 
                 <div className="m-2">
                   <Input
-                    type="password"
+                    register={register}
                     label="Senha"
                     placeholder="Digitar senha"
-                    {...register("senha")}
+                    name="senha"
                   />
                 </div>
-
                 <div className="m-2">
                   <Input
-                    type="password"
+                    register={register}
                     label="Confirmar Senha"
                     placeholder="Digitar senha"
-                    {...register("confirmarSenha")}
-                  />{" "}
+                    name="confirmarSenha"
+                  />
                   {errors.confirmarSenha && (
                     <span className="text-red-600">
                       {errors.confirmarSenha.message}
