@@ -6,6 +6,7 @@ interface iInputProps {
   placeholder: string;
   register: Function;
   name: string;
+  valor?: number;
 }
 
 const Input = ({
@@ -13,6 +14,7 @@ const Input = ({
   placeholder,
   register,
   name,
+  valor,
   ...rest
 }: iInputProps) => {
   return (
@@ -26,6 +28,7 @@ const Input = ({
       <input
         {...rest}
         {...register(name)}
+        value={valor}
         id={label}
         type="text"
         placeholder={placeholder}

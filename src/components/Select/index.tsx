@@ -33,9 +33,26 @@ const Select = ({
       >
         <option key={label}>Selecione</option>
         {arrayValue.length > 0 &&
-          arrayValue.map((value, index) => (
-            <option key={index} value={value}>
-              {value}
+          arrayValue.map((item, index) => (
+            <option
+              key={index}
+              value={
+                item == "1"
+                  ? "Flex"
+                  : item == "2"
+                  ? "Híbrido"
+                  : item == "3"
+                  ? "Elétrico"
+                  : item
+              }
+            >
+              {item == "1"
+                ? "Flex"
+                : item == "2"
+                ? "Híbrido"
+                : item == "3"
+                ? "Elétrico"
+                : item}
             </option>
           ))}
       </select>

@@ -16,6 +16,7 @@ const Test = () => {
   const [selectYear, setSelectYear] = useState("");
   const [fuels, setFuels] = useState<string[]>([""]);
   const [selectFuel, setSelectFuel] = useState("");
+  const [fipe, setFipe] = useState<number>();
 
   useEffect(() => {
     getBrands();
@@ -48,42 +49,23 @@ const Test = () => {
   };
 
   useEffect(() => {
-    if (selectCar[0] != "") {
-      getYears(selectCar);
-    }
+    const getYearFuel = async () => {
+      if (selectCar != "") {
+        try {
+          const { data } = await apiKenzie.get(`?brand=${selectBrand}`);
+          const car = data.filter((car: any) => {
+            return car.name == selectCar;
+          });
+          setYears([car[0].year]);
+          setFuels([car[0].fuel]);
+          setFipe(car[0].value);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    getYearFuel();
   }, [selectCar, selectBrand]);
-
-  const getYears = async (selectCar: string) => {
-    try {
-      const { data } = await apiKenzie.get(`?brand=${selectBrand}`);
-      const carsYears = data
-        .filter((car: any) => car.name == selectCar)
-        .map((car: any) => car.year);
-      setYears(carsYears);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (selectYear[0] != "") {
-      getFuels(selectYear, selectCar);
-    }
-  }, [selectYear, selectCar]);
-
-  const getFuels = async (selectYear: string, selectCar: string) => {
-    try {
-      const { data } = await apiKenzie.get(`?brand=${selectBrand}`);
-      const carsFuels = data
-        .filter((car: any) => {
-          return car.name == selectCar && car.year == selectYear;
-        })
-        .map((car: any) => car.fuel);
-      setFuels(carsFuels);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <div className="h-screen overflow-scroll">
@@ -109,6 +91,7 @@ const Test = () => {
             setSelectYear={setSelectYear}
             fuels={fuels}
             setSelectFuel={setSelectFuel}
+            fipe={fipe}
           />
         </Modal>
       )}
