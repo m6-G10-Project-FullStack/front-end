@@ -1,7 +1,7 @@
 import React from "react";
 
 interface iSelectProps {
-  arrayValue: string[];
+  arrayValue?: string[];
   label: string;
   setSelect?: any;
   register: Function;
@@ -32,8 +32,8 @@ const Select = ({
         onChange={(e) => setSelect(e.target.value)}
       >
         <option key={label}>Selecione</option>
-        {arrayValue.length > 0 &&
-          arrayValue.map((item, index) => (
+        {arrayValue!.length > 0 &&
+          arrayValue!.map((item, index) => (
             <option
               key={index}
               value={

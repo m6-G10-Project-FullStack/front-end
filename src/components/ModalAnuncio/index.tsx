@@ -30,14 +30,14 @@ interface iCarRegister {
 interface iModalAnuncioProps {
   setOpenModalAnuncio: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
-  brands: string[];
-  setSelectBrand: React.Dispatch<React.SetStateAction<string>>;
-  cars: string[];
-  setSelectCar: React.Dispatch<React.SetStateAction<string>>;
-  years: string[];
-  setSelectYear: React.Dispatch<React.SetStateAction<string>>;
-  fuels: string[];
-  setSelectFuel: React.Dispatch<React.SetStateAction<string>>;
+  brands?: string[];
+  setSelectBrand?: React.Dispatch<React.SetStateAction<string>>;
+  cars?: string[];
+  setSelectCar?: React.Dispatch<React.SetStateAction<string>>;
+  years?: string[];
+  setSelectYear?: React.Dispatch<React.SetStateAction<string>>;
+  fuels?: string[];
+  setSelectFuel?: React.Dispatch<React.SetStateAction<string>>;
   fipe?: number;
 }
 
@@ -94,57 +94,54 @@ const ModalAnuncio = ({
     resolver: yupResolver(FormSchema),
   });
 
-  const onSubmitForm = async(data: iCarRegister) => {
+  const onSubmitForm = async (data: iCarRegister) => {
     console.log(data);
-   
-    const brandId = getBrandId(data.brand);
 
-    const newCar = {
-      year: data.year,
-      fuel: data.fuel,
-      km: data.km,
-      color: data.color,
-      fipe: data.fipe,
-      price: data.price,
-      description: data.description,
-      model: data.model,
-      brandId: brandId,
-    };
+    // const brandId = getBrandId(data.brand);
 
-    const carId = createCar(newCar)
+    // const newCar = {
+    //   year: data.year,
+    //   fuel: data.fuel,
+    //   km: data.km,
+    //   color: data.color,
+    //   fipe: data.fipe,
+    //   price: data.price,
+    //   description: data.description,
+    //   model: data.model,
+    //   brandId: brandId,
+    // };
 
-    const {brand, year, fuel, km, color, fipe, price, description, model, coverImage, ...gallery} = data
-    for (const key, value in gallery) {
-      let newPhoto = {
-        "carId": carId,
-	      "photo_link": value
-      }
-      await api.post("/gallery", newPhoto)
-    }
+    // const carId = createCar(newCar)
+
+    // const {brand, year, fuel, km, color, fipe, price, description, model, coverImage, ...gallery} = data
+    // for (const key, value in gallery) {
+    //   let newPhoto = {
+    //     "carId": carId,
+    //     "photo_link": value
+    //   }
+    //   await api.post("/gallery", newPhoto)
+    // }
     /* 1- separar e tratar os dados
         a) pegar a brand, pesquisa se ela,se existe eu pego o id dela, se não criou e pego o id getbrandbyName 
         b) separar dados do carro, e adicionar brandId, criar o carro
         c) separar fotos 1-6 num array, fazer um map fazer um create foto adicionando objeto o carId
     */
   };
-  const getBrandId = async (brand: string) => {
-    const { data } = await api.get(`/brands/${brand}`);
-    if (data?) {
-      return data.id
-    }else {
-      const payload = {name: brand}
-      const {data} = await api.post('/brands', payload)
-      return data.id
-    }
-  };
+  // const getBrandId = async (brand: string) => {
+  //   const { data } = await api.get(`/brands/${brand}`);
+  //   if (data?) {
+  //     return data.id
+  //   }else {
+  //     const payload = {name: brand}
+  //     const {data} = await api.post('/brands', payload)
+  //     return data.id
+  //   }
+  // };
 
-  const createCar = async(car: any) => {
-    const {data} = await api.post('/cars')
-    return data.id
-  }
-
-
-
+  // const createCar = async(car: any) => {
+  //   const {data} = await api.post('/cars')
+  //   return data.id
+  // }
 
   return (
     <div className="bg-gray10 w-full h-max max-h-[700px] max-w-custom344 flex flex-col content-center rounded-lg px-6 py-4 md:max-w-lg relative overflow-y-auto scrollbar-w-6 scrollbar-track-gray-100 scrollbar-thumb-gray-500 scrollbar-thumb-rounded-md">

@@ -1,20 +1,29 @@
 import { useAuth } from "../../contexts/authContext";
 import Image from "next/image";
+import { useRouter } from "next/dist/client/router";
 import Logo from "../../assets/Logo.png";
 import { Button } from "../Button";
 import { ProfileMenu } from "../ProfileMenu";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseOutline } from "react-icons/io5";
 
 export const Header = () => {
-  const { user, isLoged, setIsLoged } = useAuth();
+  const { isLoged, setIsLoged } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
+  const router = useRouter();
+
   return (
-    <header className="bg-gray10 h-20 border-b-[1px] border-gray4">
+    <header className="bg-gray10 h-20 border-b-[1px] border-gray4 relative z-20">
       <div className="relative z-30 flex justify-between items-center h-full w-full max-w-[1600px] my-0 mx-auto px-3 md:px-8">
-        <Image width={158} src={Logo} alt="Motor Shop principal Logo" />
+        <Image
+          className="cursor-pointer"
+          width={158}
+          src={Logo}
+          alt="Motor Shop principal Logo"
+          onClick={() => router.push("/")}
+        />
 
         {/* ----- Desktop ----- */}
         <nav className="hidden md:flex md:items-center md:h-full md:border-l-[1px] md:border-gray4 md:pl-8">
@@ -46,7 +55,7 @@ export const Header = () => {
             {isOpen ? <IoCloseOutline /> : <RxHamburgerMenu />}
           </button>
 
-          <menu className="absolute top-[79px] left-0  items-center w-full  bg-gray10">
+          <menu className="absolute top-[79px] left-0 z-30 items-center w-full bg-gray10">
             {isOpen &&
               (isLoged ? (
                 <ProfileMenu />

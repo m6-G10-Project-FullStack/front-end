@@ -1,36 +1,94 @@
 import React, { useState } from "react";
-import { FilterList } from "../../src/components/FilterList";
-import { CommentCard } from "../../src/components/CommentCard";
-import { Button } from "../../src/components/Button";
 import { Footer } from "../../src/components/Footer";
-import AsideProfile from "../../src/components/AsideProfile";
-import { Modal } from "../../src/components/ModalWrapper";
-import { ModalPhoto } from "../../src/components/Modal";
-import { AsidePhotos } from "../../src/components/AsidePhotos";
-import CommentInput from "../../src/components/CommentInput";
-import ModalAnuncio from "../../src/components/ModalAnuncio";
 import Input from "../../src/components/Input";
 import { Header } from "../../src/components/Header";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+interface IUserRegister {
+  nome: string;
+  email: string;
+  senha: string;
+  confirmarSenha: string;
+  telefone: number;
+  cpf: string;
+  dataDeNascimento: string;
+  descricao: string;
+  cep: string;
+  estado: string;
+  cidade: string;
+  rua: string;
+  numero: number;
+  complemento: string;
+  isSeller: boolean | undefined;
+}
 
 export default function Register() {
-  const [isBuyer, setIsBuyer] = useState(false);
-  const [isSeller, setIsSeller] = useState(false);
-  const texto =
-    "Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos";
-  const initials = "ST";
-  const description =
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's";
-  const [openModalAnuncio, setOpenModalAnuncio] = useState(false);
-  const [photo, setPhoto] = useState("");
+  const [isBuyer, setIsBuyer] = useState<boolean>();
+  const [isSeller, setIsSeller] = useState<boolean>();
 
-  const photos = [
-    "https://image.webmotors.com.br/_fotos/anunciousados/gigante/2023/202302/20230227/porsche-taycan-turbo-s-eletrico-wmimagem17570311526.jpg?s=fill&w=1920&h=1440&q=75",
-    "https://image.webmotors.com.br/_fotos/anunciousados/gigante/2023/202302/20230227/porsche-taycan-turbo-s-eletrico-wmimagem17570262036.jpg?s=fill&w=1920&h=1440&q=75",
-    "https://image.webmotors.com.br/_fotos/anunciousados/gigante/2023/202302/20230227/porsche-taycan-turbo-s-eletrico-wmimagem17570311526.jpg?s=fill&w=1920&h=1440&q=75",
-    "https://image.webmotors.com.br/_fotos/anunciousados/gigante/2023/202302/20230227/porsche-taycan-turbo-s-eletrico-wmimagem17570396931.jpg?s=fill&w=1920&h=1440&q=75",
-    "https://image.webmotors.com.br/_fotos/anunciousados/gigante/2023/202302/20230227/porsche-taycan-turbo-s-eletrico-wmimagem17570508335.jpg?s=fill&w=1920&h=1440&q=75",
-    "https://image.webmotors.com.br/_fotos/anunciousados/gigante/2023/202302/20230227/porsche-taycan-turbo-s-eletrico-wmimagem17570653610.jpg?s=fill&w=1920&h=1440&q=75",
-  ];
+  // const navigate = useNavigate();
+
+  // function navigateToLoginOnSuccess() {
+  //   navigate("/login");
+  // }
+
+  const schema = yup.object().shape({
+    nome: yup
+      .string()
+      .matches(/^[a-zA-Z\s]*$/, "Apenas letras são permitidas")
+      .required("Campo obrigatório"),
+    email: yup.string().email("Email inválido").required("Campo obrigatório"),
+    senha: yup
+      .string()
+      .required("Campo obrigatório")
+      .min(8, "Mínimo de 8 dígitos"),
+    confirmarSenha: yup
+      .string()
+      .oneOf([yup.ref("senha")], "Senhas diferentes")
+      .min(8, "Mínimo de 8 dígitos")
+      .required("Campo Obrigatório"),
+    telefone: yup.number().required("Campo obrigatório"),
+    cpf: yup.string().required("Campo obrigatório"),
+    dataDeNascimento: yup.string().required("Campo obrigatório"),
+    descricao: yup.string().required("Campo obrigatório"),
+    cep: yup.string().required("Campo obrigatório"),
+    estado: yup.string().required("Campo obrigatório"),
+    cidade: yup.string().required("Campo obrigatório"),
+    rua: yup.string().required("Campo obrigatório"),
+    numero: yup.number().required("Campo obrigatório"),
+    complemento: yup.string().nullable(),
+    isSeller: yup.boolean().oneOf([true, false]).required(),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<IUserRegister>({
+    resolver: yupResolver(schema),
+  });
+
+  const onFormSubmit = async (formData: IUserRegister) => {
+    console.log(formData);
+    registerUser(formData);
+  };
+
+  //registerUser
+  const registerUser = async (data: IUserRegister) => {
+    console.log(data);
+    // await api
+    //   .post("/users", data)
+    //   .then((res) => {
+    //     toast.success("Cadastro realizado!");
+    //     navigateToLoginOnSuccess();
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+  };
 
   return (
     <>
@@ -41,63 +99,170 @@ export default function Register() {
           <h3 className="text-1xl font-semibold text-gray-800 m-2">
             Informações pessoais
           </h3>
-          <form action="">
+          <form onSubmit={handleSubmit(onFormSubmit)}>
             <div className="flex flex-col m-2">
               <div>
-                <Input label="Nome" placeholder="Ex: Samantha Leana" />
+                <Input
+                  label="Nome"
+                  placeholder="Ex: Samantha Leana"
+                  name="nome"
+                  register={register}
+                />
+                {errors.nome && (
+                  <span className="text-red-600">{errors.nome.message}</span>
+                )}
               </div>
 
               <div className="m-2">
                 <Input
                   label="Email"
                   placeholder="Ex: sammylea@vendecarro.com.br"
+                  name="email"
+                  register={register}
                 />
+                {errors.email && (
+                  <span className="text-red-600">{errors.email.message}</span>
+                )}
               </div>
 
               <div className="m-2">
-                <Input label="CPF" placeholder="000.000.000-00" />
+                <Input
+                  label="CPF"
+                  placeholder="000.000.000-00"
+                  name="cpf"
+                  register={register}
+                />
+                {errors.cpf && (
+                  <span className="text-red-600">{errors.cpf.message}</span>
+                )}
               </div>
 
               <div className="m-2">
-                <Input label="Celular" placeholder="(DDD) 90000-0000" />
+                <Input
+                  label="Celular"
+                  placeholder="(DDD) 90000-0000"
+                  name="telefone"
+                  register={register}
+                />
+                {errors.telefone && (
+                  <span className="text-red-600">
+                    {errors.telefone.message}
+                  </span>
+                )}
               </div>
 
               <div className="m-2">
-                <Input label="Data de nascimento" placeholder="00/00/00" />
+                <Input
+                  label="Data de nascimento"
+                  placeholder="00/00/00"
+                  name='"dataDeNascimento"'
+                  register={register}
+                />
+                {errors.dataDeNascimento && (
+                  <span className="text-red-600">
+                    {errors.dataDeNascimento.message}
+                  </span>
+                )}
               </div>
 
               <div className="m-2">
-                <Input label="Descrição" placeholder="Digitar descrição" />
+                <Input
+                  label="Descrição"
+                  placeholder="Digitar descrição"
+                  name="descricao"
+                  register={register}
+                />
+                {errors.descricao && (
+                  <span className="text-red-600">
+                    {errors.descricao.message}
+                  </span>
+                )}
               </div>
 
               <h3 className="text-1xl font-semibold text-gray-800 m-2">
                 Informações de endereço
               </h3>
               <div>
-                <Input label="CEP" placeholder="0000.000" />
+                <Input
+                  label="CEP"
+                  placeholder="0000.000"
+                  name="cep"
+                  register={register}
+                />
+                {errors.cep && (
+                  <span className="text-red-600">{errors.cep.message}</span>
+                )}
               </div>
 
               <div className="flex justify-between gap-4">
                 <div className="flex flex-col w-[127px]">
-                  <Input label="Estado" placeholder="Digitar estado" />
+                  <Input
+                    label="Estado"
+                    placeholder="Digitar estado"
+                    name="estado"
+                    register={register}
+                  />
+                  {errors.estado && (
+                    <span className="text-red-600">
+                      {errors.estado.message}
+                    </span>
+                  )}
                 </div>
 
                 <div className="flex flex-col w-[127px]">
-                  <Input label="Cidade" placeholder="Digitar cidade" />
+                  <Input
+                    label="Cidade"
+                    placeholder="Digitar cidade"
+                    name="cidade"
+                    register={register}
+                  />
+                  {errors.cidade && (
+                    <span className="text-red-600">
+                      {errors.cidade.message}
+                    </span>
+                  )}
                 </div>
               </div>
 
               <div className="m-2">
-                <Input label="Rua" placeholder="Digitar senha da sua rua" />
+                <Input
+                  label="Rua"
+                  placeholder="Digitar rua"
+                  name="rua"
+                  register={register}
+                />
+                {errors.rua && (
+                  <span className="text-red-600">{errors.rua.message}</span>
+                )}
               </div>
 
               <div className="flex justify-around gap-2">
                 <div className="flex flex-col w-[140px]">
-                  <Input label="Número" placeholder="Digitar número" />
+                  <Input
+                    label="Número"
+                    placeholder="Digitar número"
+                    name="numero"
+                    register={register}
+                  />
+                  {errors.numero && (
+                    <span className="text-red-600">
+                      {errors.numero.message}
+                    </span>
+                  )}
                 </div>
 
                 <div className="flex flex-col w-[140px]">
-                  <Input label="Complemento" placeholder="Ex: Apart 307" />
+                  <Input
+                    label="Complemento"
+                    placeholder="Ex: Apart 307"
+                    name="complemento"
+                    register={register}
+                  />
+                  {errors.complemento && (
+                    <span className="text-red-600">
+                      {errors.complemento.message}
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -111,6 +276,7 @@ export default function Register() {
                     onClick={() => {
                       setIsBuyer(true);
                       setIsSeller(false);
+                      setValue("isSeller", false); // set isSeller to false
                     }}
                   >
                     Comprador
@@ -122,6 +288,7 @@ export default function Register() {
                     onClick={() => {
                       setIsSeller(true);
                       setIsBuyer(false);
+                      setValue("isSeller", true); // set isSeller to true
                     }}
                   >
                     Anunciante
@@ -129,14 +296,32 @@ export default function Register() {
                 </div>
 
                 <div className="m-2">
-                  <Input label="Senha" placeholder="Digitar senha" />
+                  <Input
+                    type="password"
+                    label="Senha"
+                    placeholder="Digitar senha"
+                    {...register("senha")}
+                  />
                 </div>
 
                 <div className="m-2">
-                  <Input label="Confirmar Senha" placeholder="Digitar senha" />
+                  <Input
+                    type="password"
+                    label="Confirmar Senha"
+                    placeholder="Digitar senha"
+                    {...register("confirmarSenha")}
+                  />{" "}
+                  {errors.confirmarSenha && (
+                    <span className="text-red-600">
+                      {errors.confirmarSenha.message}
+                    </span>
+                  )}
                 </div>
 
-                <button className="w-[276px] py-2 px-4 rounded border-[1px] bg-brand1 text-gray9">
+                <button
+                  type="submit"
+                  className="w-[276px] py-2 px-4 rounded border-[1px] bg-brand1 text-gray9"
+                >
                   Finalizar cadastro
                 </button>
               </div>

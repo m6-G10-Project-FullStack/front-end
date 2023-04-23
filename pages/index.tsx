@@ -2,20 +2,11 @@ import Head from "next/head";
 import { FilterList } from "../src/components/FilterList";
 import { Footer } from "../src/components/Footer";
 import { Header } from "../src/components/Header";
-// import { useState } from "react";
 
 import Car from "../src/assets/car.png";
 import Image from "next/image";
 import { useState } from "react";
 import { CarCard } from "../src/components/CardCard/Carcard";
-// import { Button } from "../src/components/Button";
-// import { Footer } from "../src/components/Footer";
-// import { Banner, CarSection, Container, Pagination } from "./style";
-
-// import { CarCard } from "../src/components/CarCard";
-// import { Header } from "../src/components/Header";
-// import { FilterList } from "../src/components/FilterList";
-// import { Button } from "../src/components/Button";
 
 export default function Home() {
   const [carList, setCarList] = useState([
