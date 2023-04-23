@@ -1,4 +1,3 @@
-import React, { forwardRef } from "react";
 import { Button } from "../Button";
 
 interface iInputProps {
@@ -37,4 +36,4 @@ const Input = ({
   );
 };
 
-export default forwardRef(Input);
+export default Input;
