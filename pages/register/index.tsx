@@ -1,34 +1,32 @@
 import React, { useState } from "react";
 import { Footer } from "../../src/components/Footer";
-import Input from "../../src/components/Input";
 import { Header } from "../../src/components/Header";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { toast } from "react-toastify";
+import Input from "../../src/components/Input";
+import api from "../../src/services/api";
 
 interface IUserRegister {
-  nome: string;
+  name: string;
   email: string;
-  senha: string;
+  password: string;
   confirmarSenha: string;
-  telefone: number;
+  phone: string;
   cpf: string;
-  dataDeNascimento: string;
-  descricao: string;
+  birthday: string;
+  description: string;
   cep: string;
-  estado: string;
-  cidade: string;
-  rua: string;
-  numero: number;
-  complemento: string;
-  isSeller: boolean | undefined;
+  state: string;
+  city: string;
+  street: string;
+  number: string;
+  complement?: string | null;
+  is_seller: boolean;
 }
 
 export default function Register() {
-  const [isBuyer, setIsBuyer] = useState(undefined);
-  const [isSeller, setIsSeller] = useState(undefined);
+  const [isSeller, setIsSeller] = useState<boolean>(false);
 
   // const navigate = useNavigate();
 
@@ -37,31 +35,30 @@ export default function Register() {
   // }
 
   const schema = yup.object().shape({
-    nome: yup
+    name: yup
       .string()
       .matches(/^[a-zA-Z\s]*$/, "Apenas letras são permitidas")
       .required("Campo obrigatório"),
     email: yup.string().email("Email inválido").required("Campo obrigatório"),
-    senha: yup
+    password: yup
       .string()
       .required("Campo obrigatório")
       .min(8, "Mínimo de 8 dígitos"),
     confirmarSenha: yup
       .string()
-      .oneOf([yup.ref("senha")], "Senhas diferentes")
+      .oneOf([yup.ref("password")], "Senhas diferentes")
       .min(8, "Mínimo de 8 dígitos")
       .required("Campo Obrigatório"),
-    telefone: yup.number().required("Campo obrigatório"),
+    phone: yup.string().required("Campo obrigatório"),
     cpf: yup.string().required("Campo obrigatório"),
-    dataDeNascimento: yup.string().required("Campo obrigatório"),
-    descricao: yup.string().required("Campo obrigatório"),
+    birthday: yup.string().required("Campo obrigatório"),
+    description: yup.string().required("Campo obrigatório"),
     cep: yup.string().required("Campo obrigatório"),
-    estado: yup.string().required("Campo obrigatório"),
-    cidade: yup.string().required("Campo obrigatório"),
-    rua: yup.string().required("Campo obrigatório"),
-    numero: yup.number().required("Campo obrigatório"),
-    complemento: yup.string().nullable(),
-    isSeller: yup.boolean().oneOf([true, false]).required(),
+    state: yup.string().required("Campo obrigatório"),
+    city: yup.string().required("Campo obrigatório"),
+    street: yup.string().required("Campo obrigatório"),
+    number: yup.string().required("Campo obrigatório"),
+    complement: yup.string().nullable(),
   });
 
   const {
@@ -75,21 +72,16 @@ export default function Register() {
 
   const onFormSubmit = async (formData: IUserRegister) => {
     console.log(formData);
-    registerUser(formData);
+    registerUser({ ...formData, is_seller: isSeller });
   };
 
-  //registerUser
   const registerUser = async (data: IUserRegister) => {
-    console.log(data);
-    // await api
-    //   .post("/users", data)
-    //   .then((res) => {
-    //     toast.success("Cadastro realizado!");
-    //     navigateToLoginOnSuccess();
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    try {
+      const newUser = await api.post("/users", data);
+      console.log("usuário cadastrado");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -105,20 +97,22 @@ export default function Register() {
             <div className="flex flex-col m-2">
               <div>
                 <Input
+                  register={register}
                   label="Nome"
                   placeholder="Ex: Samantha Leana"
-                  {...register("nome")}
+                  name="name"
                 />
-                {errors.nome && (
-                  <span className="text-red-600">{errors.nome.message}</span>
+                {errors.name && (
+                  <span className="text-red-600">{errors.name.message}</span>
                 )}
               </div>
 
               <div className="m-2">
                 <Input
+                  register={register}
                   label="Email"
                   placeholder="Ex: sammylea@vendecarro.com.br"
-                  {...register("email")}
+                  name="email"
                 />
                 {errors.email && (
                   <span className="text-red-600">{errors.email.message}</span>
@@ -127,9 +121,10 @@ export default function Register() {
 
               <div className="m-2">
                 <Input
+                  register={register}
                   label="CPF"
                   placeholder="000.000.000-00"
-                  {...register("cpf")}
+                  name="cpf"
                 />
                 {errors.cpf && (
                   <span className="text-red-600">{errors.cpf.message}</span>
@@ -138,39 +133,40 @@ export default function Register() {
 
               <div className="m-2">
                 <Input
+                  register={register}
                   label="Celular"
                   placeholder="(DDD) 90000-0000"
-                  {...register("telefone")}
+                  name="phone"
                 />
-                {errors.telefone && (
-                  <span className="text-red-600">
-                    {errors.telefone.message}
-                  </span>
+                {errors.phone && (
+                  <span className="text-red-600">{errors.phone.message}</span>
                 )}
               </div>
 
               <div className="m-2">
                 <Input
+                  register={register}
                   label="Data de nascimento"
                   placeholder="00/00/00"
-                  {...register("dataDeNascimento")}
+                  name="birthday"
                 />
-                {errors.dataDeNascimento && (
+                {errors.birthday && (
                   <span className="text-red-600">
-                    {errors.dataDeNascimento.message}
+                    {errors.birthday.message}
                   </span>
                 )}
               </div>
 
               <div className="m-2">
                 <Input
+                  register={register}
                   label="Descrição"
                   placeholder="Digitar descrição"
-                  {...register("descricao")}
+                  name="description"
                 />
-                {errors.descricao && (
+                {errors.description && (
                   <span className="text-red-600">
-                    {errors.descricao.message}
+                    {errors.description.message}
                   </span>
                 )}
               </div>
@@ -180,9 +176,10 @@ export default function Register() {
               </h3>
               <div>
                 <Input
+                  register={register}
                   label="CEP"
                   placeholder="0000.000"
-                  {...register("cep")}
+                  name="cep"
                 />
                 {errors.cep && (
                   <span className="text-red-600">{errors.cep.message}</span>
@@ -192,65 +189,66 @@ export default function Register() {
               <div className="flex justify-between gap-4">
                 <div className="flex flex-col w-[127px]">
                   <Input
+                    register={register}
                     label="Estado"
                     placeholder="Digitar estado"
-                    {...register("estado")}
+                    name="state"
                   />
-                  {errors.estado && (
-                    <span className="text-red-600">
-                      {errors.estado.message}
-                    </span>
+                  {errors.state && (
+                    <span className="text-red-600">{errors.state.message}</span>
                   )}
                 </div>
 
                 <div className="flex flex-col w-[127px]">
                   <Input
+                    register={register}
                     label="Cidade"
                     placeholder="Digitar cidade"
-                    {...register("cidade")}
+                    name="city"
                   />
-                  {errors.cidade && (
-                    <span className="text-red-600">
-                      {errors.cidade.message}
-                    </span>
+                  {errors.city && (
+                    <span className="text-red-600">{errors.city.message}</span>
                   )}
                 </div>
               </div>
 
               <div className="m-2">
                 <Input
+                  register={register}
                   label="Rua"
                   placeholder="Digitar rua"
-                  {...register("rua")}
+                  name="street"
                 />
-                {errors.rua && (
-                  <span className="text-red-600">{errors.rua.message}</span>
+                {errors.street && (
+                  <span className="text-red-600">{errors.street.message}</span>
                 )}
               </div>
 
               <div className="flex justify-around gap-2">
                 <div className="flex flex-col w-[140px]">
                   <Input
+                    register={register}
                     label="Número"
                     placeholder="Digitar número"
-                    {...register("numero")}
+                    name="number"
                   />
-                  {errors.numero && (
+                  {errors.number && (
                     <span className="text-red-600">
-                      {errors.numero.message}
+                      {errors.number.message}
                     </span>
                   )}
                 </div>
 
                 <div className="flex flex-col w-[140px]">
                   <Input
+                    register={register}
                     label="Complemento"
                     placeholder="Ex: Apart 307"
-                    {...register("complemento")}
+                    name="complement"
                   />
-                  {errors.complemento && (
+                  {errors.complement && (
                     <span className="text-red-600">
-                      {errors.complemento.message}
+                      {errors.complement.message}
                     </span>
                   )}
                 </div>
@@ -260,25 +258,25 @@ export default function Register() {
                 <h5 className="font-bold mb-4">Tipo de conta</h5>
                 <div className="flex gap-2 mb-3 justify-center">
                   <button
+                    type="button"
                     className={`w-[138px] py-2 px-4 rounded border-[1px] ${
-                      isBuyer ? "bg-brand1  text-gray9" : "bg-gray9  text-gray1"
+                      !isSeller
+                        ? "bg-brand1  text-gray9"
+                        : "bg-gray9  text-gray1"
                     }`}
                     onClick={() => {
-                      setIsBuyer(true);
                       setIsSeller(false);
-                      setValue("isSeller", false); // set isSeller to false
                     }}
                   >
                     Comprador
                   </button>
                   <button
+                    type="button"
                     className={`w-[138px] py-2 px-4 rounded border-[1px] ${
                       isSeller ? "bg-brand1  text-gray9" : "bg-gray9 text-gray1"
                     }`}
                     onClick={() => {
                       setIsSeller(true);
-                      setIsBuyer(false);
-                      setValue("isSeller", true); // set isSeller to true
                     }}
                   >
                     Anunciante
@@ -287,20 +285,19 @@ export default function Register() {
 
                 <div className="m-2">
                   <Input
-                    type="password"
+                    register={register}
                     label="Senha"
                     placeholder="Digitar senha"
-                    {...register("senha")}
+                    name="password"
                   />
                 </div>
-
                 <div className="m-2">
                   <Input
-                    type="password"
+                    register={register}
                     label="Confirmar Senha"
                     placeholder="Digitar senha"
-                    {...register("confirmarSenha")}
-                  />{" "}
+                    name="confirmarSenha"
+                  />
                   {errors.confirmarSenha && (
                     <span className="text-red-600">
                       {errors.confirmarSenha.message}
