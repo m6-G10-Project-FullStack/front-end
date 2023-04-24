@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema } from "inspector";
 import { RxDragHandleDots1 } from "react-icons/rx";
+import api from "../../services/api";
 
 interface iCarRegister {
   brand: string;
@@ -29,7 +30,6 @@ interface iCarRegister {
 
 interface iModalAnuncioProps {
   setOpenModalAnuncio: React.Dispatch<React.SetStateAction<boolean>>;
-  title: string;
   brands?: string[];
   setSelectBrand?: React.Dispatch<React.SetStateAction<string>>;
   cars?: string[];
@@ -43,7 +43,6 @@ interface iModalAnuncioProps {
 
 const ModalAnuncio = ({
   setOpenModalAnuncio,
-  title,
   brands,
   setSelectBrand,
   cars,
@@ -97,7 +96,8 @@ const ModalAnuncio = ({
   const onSubmitForm = async (data: iCarRegister) => {
     console.log(data);
 
-    // const brandId = getBrandId(data.brand);
+    const brandId = await getBrandId(data.brand);
+    console.log(brandId);
 
     // const newCar = {
     //   year: data.year,
@@ -109,9 +109,12 @@ const ModalAnuncio = ({
     //   description: data.description,
     //   model: data.model,
     //   brandId: brandId,
+    //   coverImage: data.coverImage,
+    //   // userId: VEM DO TOKEN ID
     // };
 
-    // const carId = createCar(newCar)
+    // const carId = await createCar(newCar);
+    // console.log(carId);
 
     // const {brand, year, fuel, km, color, fipe, price, description, model, coverImage, ...gallery} = data
     // for (const key, value in gallery) {
@@ -121,32 +124,31 @@ const ModalAnuncio = ({
     //   }
     //   await api.post("/gallery", newPhoto)
     // }
-    /* 1- separar e tratar os dados
-        a) pegar a brand, pesquisa se ela,se existe eu pego o id dela, se não criou e pego o id getbrandbyName 
-        b) separar dados do carro, e adicionar brandId, criar o carro
-        c) separar fotos 1-6 num array, fazer um map fazer um create foto adicionando objeto o carId
-    */
   };
-  // const getBrandId = async (brand: string) => {
-  //   const { data } = await api.get(`/brands/${brand}`);
-  //   if (data?) {
-  //     return data.id
-  //   }else {
-  //     const payload = {name: brand}
-  //     const {data} = await api.post('/brands', payload)
-  //     return data.id
-  //   }
-  // };
+  const getBrandId = async (brand: string) => {
+    try {
+      const { data } = await api.get(`/brands/${brand}`);
+      return data.id;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // const createCar = async(car: any) => {
-  //   const {data} = await api.post('/cars')
-  //   return data.id
-  // }
+  const createCar = async (car: any) => {
+    try {
+      const { data } = await api.post("/cars");
+      return data.id;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="bg-gray10 w-full h-max max-h-[700px] max-w-custom344 flex flex-col content-center rounded-lg px-6 py-4 md:max-w-lg relative overflow-y-auto scrollbar-w-6 scrollbar-track-gray-100 scrollbar-thumb-gray-500 scrollbar-thumb-rounded-md">
       <div className="flex w-full justify-between items-center">
-        <p className="font-lex font-medium text-base text-gray1">{title}</p>
+        <p className="font-lex font-medium text-base text-gray1">
+          Criar anúncio
+        </p>
         <button
           className="flex border-none bg-transparent text-gray3 text-custom22 cursor-pointer"
           onClick={() => setOpenModalAnuncio(false)}
