@@ -17,7 +17,7 @@ const Select = ({
   ...rest
 }: iSelectProps) => {
   return (
-    <>
+    <div className="w-full flex flex-col gap-2">
       <label
         className="font-lex font-medium text-sm leading-4 text-gray1 sm:font-inter sm:text-r"
         htmlFor={label}
@@ -25,13 +25,18 @@ const Select = ({
         {label}
       </label>
       <select
-        className="font-inter font-normal text-base text-gray3 pl-1 mt-8 mb-6"
+        className="font-inter font-normal text-base text-gray3 p-3 rounded-s border-[2px] border-gray6 bg-gray10 cursor-pointer hover:border-brand2 focus:border-brand2 mb-2"
         id={label}
         {...rest}
         {...register(name)}
         onChange={(e) => setSelect(e.target.value)}
       >
-        <option key={label}>Selecione</option>
+        <option
+          className="font-inter font-normal text-base text-gray1"
+          key={label}
+        >
+          Selecione
+        </option>
         {arrayValue!.length > 0 &&
           arrayValue!.map((item, index) => (
             <option
@@ -56,7 +61,7 @@ const Select = ({
             </option>
           ))}
       </select>
-    </>
+    </div>
   );
 };
 
