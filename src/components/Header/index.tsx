@@ -15,7 +15,7 @@ export const Header = () => {
   const router = useRouter();
 
   return (
-    <header className="bg-gray10 h-20 border-b-[1px] border-gray4 relative z-20">
+    <header className="bg-gray10 w-full h-20 border-b-[1px] border-gray4 fixed top-0 left-0 z-20">
       <div className="relative z-30 flex justify-between items-center h-full w-full max-w-[1600px] my-0 mx-auto px-3 md:px-8">
         <Image
           className="cursor-pointer"

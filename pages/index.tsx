@@ -1,147 +1,31 @@
 import Head from "next/head";
+import { GetServerSideProps } from "next";
+
 import { FilterList } from "../src/components/FilterList";
 import { Footer } from "../src/components/Footer";
 import { Header } from "../src/components/Header";
 
 import Car from "../src/assets/car.png";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
 import { CarCard } from "../src/components/CardCard/Carcard";
 
-export default function Home() {
-  const [carList, setCarList] = useState([
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-  ]);
+interface iCar {
+  id: number;
+  carName: string;
+  carImg: StaticImageData;
+  carDescription: string;
+  carSeller: string;
+  carKm: number;
+  carYear: number;
+  carPrice: number;
+}
 
+interface iHomeProps {
+  carList: iCar[];
+}
+
+export default function Home({ carList }: iHomeProps) {
   return (
     <>
       <Head>
@@ -163,7 +47,7 @@ export default function Home() {
 
       <Header />
 
-      <div>
+      <div className="mt-20">
         <main>
           <section
             className="relative flex justify-center items-center"
@@ -196,7 +80,7 @@ export default function Home() {
                 listaModelos={[]}
               />
 
-              {carList.length ? (
+              {carList?.length ? (
                 <ul className="w-full flex mt-4 gap-4 overflow-y-scroll md:flex-wrap md:justify-between md:gap-0 md:overflow-y-hidden">
                   {carList.map((car, i) => (
                     <CarCard
@@ -236,3 +120,13 @@ export default function Home() {
     </>
   );
 }
+
+// export const getServerSideProps: GetServerSideProps<iHomeProps> = async () => {
+//   // const response = await fetch("data");
+
+//   return {
+//     props: {
+//       carList: [],
+//     },
+//   };
+// };

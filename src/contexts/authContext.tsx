@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
   const [user, setUser] = useState({
     username: "Róger Aguiar",
     email: "roger@kenzie.com.br",
-    is_anouncer: true,
+    is_seller: true,
   });
 
   return (
