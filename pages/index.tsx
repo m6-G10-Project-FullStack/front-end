@@ -1,5 +1,4 @@
 import Head from "next/head";
-import { GetServerSideProps } from "next";
 
 import { FilterList } from "../src/components/FilterList";
 import { Footer } from "../src/components/Footer";
@@ -7,25 +6,44 @@ import { Header } from "../src/components/Header";
 
 import Car from "../src/assets/car.png";
 import Image, { StaticImageData } from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CarCard } from "../src/components/CardCard/Carcard";
+import api from "../src/services/api";
 
 interface iCar {
-  id: number;
-  carName: string;
-  carImg: StaticImageData;
-  carDescription: string;
-  carSeller: string;
-  carKm: number;
-  carYear: number;
-  carPrice: number;
+  id: string;
+  year: number;
+  fuel: string;
+  km: number;
+  color: string;
+  fipe: string;
+  price: string;
+  is_promo: boolean;
+  description: string;
+  is_active: boolean;
+  model: string;
+  coverImage: string;
+  userId: string;
+  brandId: number;
+  Brand: {
+    id: number;
+    name: string;
+  };
 }
 
-interface iHomeProps {
-  carList: iCar[];
-}
+export default function Home() {
+  const [carList, setCarList] = useState<iCar[]>([]);
+  const [page, setPage] = useState(0);
 
-export default function Home({ carList }: iHomeProps) {
+  useEffect(() => {
+    const fetchData = async () => {
+      await api.get(`/cars?page=${page}`).then((res) => {
+        setCarList([...res.data]);
+      });
+    };
+    fetchData();
+  }, [page]);
+
   return (
     <>
       <Head>
@@ -85,13 +103,13 @@ export default function Home({ carList }: iHomeProps) {
                   {carList.map((car, i) => (
                     <CarCard
                       key={i}
-                      carName={car.carName}
-                      carDescription={car.carDescription}
-                      carImg={car.carImg}
-                      carKm={car.carKm}
-                      carPrice={car.carPrice}
-                      carSeller={car.carSeller}
-                      carYear={car.carYear}
+                      carName={car.model}
+                      carDescription={car.description}
+                      carImg="https://www.volvocars.com/images/v/-/media/project/contentplatform/data/media/my23/car-images/c40-bev-my23-responsive.jpg?h=600&iar=0"
+                      carKm={car.km}
+                      carPrice={car.price}
+                      carSeller="Róger Aguiar"
+                      carYear={car.year}
                     />
                   ))}
                 </ul>
@@ -106,10 +124,23 @@ export default function Home({ carList }: iHomeProps) {
           </section>
 
           <div className="w-full flex items-center justify-center gap-6 mt-16 mb-8 md:mb-16">
+            {page < 0 && (
+              <button
+                type="button"
+                onClick={() => setPage(page + 1)}
+                className="text-brand2 font-semibold text-xl"
+              >
+                Anterior &#60;
+              </button>
+            )}
             <p className="text-xl text-gray4 font-semibold">
-              <span className="text-gray3">1</span> de 2
+              <span className="text-gray3">{page + 1}</span> de 2
             </p>
-            <button className="text-brand2 font-semibold text-xl">
+            <button
+              type="button"
+              onClick={() => setPage(page + 1)}
+              className="text-brand2 font-semibold text-xl"
+            >
               Seguinte &gt;
             </button>
           </div>
@@ -122,11 +153,11 @@ export default function Home({ carList }: iHomeProps) {
 }
 
 // export const getServerSideProps: GetServerSideProps<iHomeProps> = async () => {
-//   // const response = await fetch("data");
+//   const response = await api.get("/cars");
 
 //   return {
 //     props: {
-//       carList: [],
+//       carList: response.data,
 //     },
 //   };
 // };

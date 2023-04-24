@@ -4,12 +4,12 @@ import Image from "next/image";
 
 interface iCarCardProps {
   carName: string;
-  carImg: StaticImageData;
+  carImg: string;
   carDescription: string;
   carSeller: string;
   carKm: number;
   carYear: number;
-  carPrice: number;
+  carPrice: string;
 }
 
 export const CarCard = ({
@@ -63,7 +63,7 @@ export const CarCard = ({
             <span className="text-sm pl-2 pt-1 pr-2 pb-1 text-brand1 bg-brand4">
               Ano{carYear}
             </span>
-            <p>R$ {carPrice.toFixed(2)}</p>
+            <p>R$ {carPrice}</p>
           </div>
         </div>
       </div>
