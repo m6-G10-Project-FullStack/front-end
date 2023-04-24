@@ -6,6 +6,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../../src/components/Input";
 import api from "../../src/services/api";
+import { ShemaRegisterUser } from "../../src/schemas/shemas";
+import { useAuth } from "../../src/contexts/authContext";
 
 interface IUserRegister {
   name: string;
@@ -26,6 +28,7 @@ interface IUserRegister {
 }
 
 export default function Register() {
+  const { router } = useAuth();
   const [isSeller, setIsSeller] = useState<boolean>(false);
 
   // const navigate = useNavigate();
@@ -34,40 +37,13 @@ export default function Register() {
   //   navigate("/login");
   // }
 
-  const schema = yup.object().shape({
-    name: yup
-      .string()
-      .matches(/^[a-zA-Z\s]*$/, "Apenas letras são permitidas")
-      .required("Campo obrigatório"),
-    email: yup.string().email("Email inválido").required("Campo obrigatório"),
-    password: yup
-      .string()
-      .required("Campo obrigatório")
-      .min(8, "Mínimo de 8 dígitos"),
-    confirmarSenha: yup
-      .string()
-      .oneOf([yup.ref("password")], "Senhas diferentes")
-      .min(8, "Mínimo de 8 dígitos")
-      .required("Campo Obrigatório"),
-    phone: yup.string().required("Campo obrigatório"),
-    cpf: yup.string().required("Campo obrigatório"),
-    birthday: yup.string().required("Campo obrigatório"),
-    description: yup.string().required("Campo obrigatório"),
-    cep: yup.string().required("Campo obrigatório"),
-    state: yup.string().required("Campo obrigatório"),
-    city: yup.string().required("Campo obrigatório"),
-    street: yup.string().required("Campo obrigatório"),
-    number: yup.string().required("Campo obrigatório"),
-    complement: yup.string().nullable(),
-  });
-
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm<IUserRegister>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(ShemaRegisterUser),
   });
 
   const onFormSubmit = async (formData: IUserRegister) => {
@@ -79,6 +55,9 @@ export default function Register() {
     try {
       const newUser = await api.post("/users", data);
       console.log("usuário cadastrado");
+      if (newUser) {
+        router.push("/login");
+      }
     } catch (error) {
       console.log(error);
     }
