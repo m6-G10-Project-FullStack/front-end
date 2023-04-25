@@ -13,7 +13,7 @@ export const ModalPhoto = ({ setOpenModal, carImg }: iModalPhotoProps) => {
       <div className="flex justify-between px-4 py-8 items-center">
         <h6 className="font-lex font-medium text-base">Imagem do veículo</h6>
         <button
-          className="border-none cursor-pointer"
+          className="h-10 border-none cursor-pointer"
           onClick={() => setOpenModal(false)}
         >
           <Image src={imgX} alt="botão fechar" width={24} height={24} />

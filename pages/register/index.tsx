@@ -8,6 +8,8 @@ import Input from "../../src/components/Input";
 import api from "../../src/services/api";
 import { ShemaRegisterUser } from "../../src/schemas/shemas";
 import { useAuth } from "../../src/contexts/authContext";
+import { Modal } from "../../src/components/ModalWrapper";
+import { ModalSuccess } from "../../src/components/ModalSuccess/ModalSuccess";
 
 interface IUserRegister {
   name: string;
@@ -30,12 +32,7 @@ interface IUserRegister {
 export default function Register() {
   const { router } = useAuth();
   const [isSeller, setIsSeller] = useState<boolean>(false);
-
-  // const navigate = useNavigate();
-
-  // function navigateToLoginOnSuccess() {
-  //   navigate("/login");
-  // }
+  const [openModalSuccess, setOpenModalSuccess] = useState(false);
 
   const {
     register,
@@ -47,17 +44,13 @@ export default function Register() {
   });
 
   const onFormSubmit = async (formData: IUserRegister) => {
-    console.log(formData);
     registerUser({ ...formData, is_seller: isSeller });
   };
 
   const registerUser = async (data: IUserRegister) => {
     try {
       const newUser = await api.post("/users", data);
-      console.log("usuário cadastrado");
-      if (newUser) {
-        router.push("/login");
-      }
+      setOpenModalSuccess(true);
     } catch (error) {
       console.log(error);
     }
@@ -65,6 +58,11 @@ export default function Register() {
 
   return (
     <>
+      {openModalSuccess && (
+        <Modal setOpenModal={setOpenModalSuccess}>
+          <ModalSuccess setOpenModal={setOpenModalSuccess} />
+        </Modal>
+      )}
       <Header />
       <main className="flex justify-center">
         <div className="flex flex-col max-w-2">

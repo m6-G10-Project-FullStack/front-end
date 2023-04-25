@@ -150,7 +150,7 @@ const ModalAnuncio = ({
           Criar anúncio
         </p>
         <button
-          className="flex border-none bg-transparent text-gray3 text-custom22 cursor-pointer"
+          className="h-10 flex border-none bg-transparent text-gray3 text-custom22 cursor-pointer"
           onClick={() => setOpenModalAnuncio(false)}
           type="button"
         >
