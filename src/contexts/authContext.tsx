@@ -32,19 +32,15 @@ interface iAuthProvider {
 export const AuthProvider = ({ children }: iAuthProvider) => {
   const [isLoged, setIsLoged] = useState(false);
   const [user, setUser] = useState<any>();
-
+  const cookies = parseCookies();
   const router = useRouter();
-
-  const [id, setId] = useState("");
 
   const HandleFormLogin = async (data: iLoginFormInputs) => {
     console.log(data);
     const response = await api
       .post("/login", data)
       .then((res) => {
-        const decodedToken: any = jwt_decode(res.data.token);
-        setId(decodedToken.sub);
-        setCookie(null, "token", res.data);
+        setCookie(null, "token", res.data.token);
         const localtoken = parseCookies();
         console.log(localtoken);
         if (localtoken) {
@@ -57,19 +53,23 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
 
   const getUserData = async (id: string) => {
     try {
-      const { data } = await api.get<iUser>(`/users/${id}`);
+      const { data } = await api.get<iUser>(`/users/${id}`, {
+        headers: { Authorization: `Bearer ${cookies["token"]}` },
+      });
       setUser(data);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    console.log("entrei");
-    if (isLoged) {
-      getUserData(id);
+    if (cookies["token"]) {
+      const decodedToken: any = jwt_decode(cookies["token"]);
+      setIsLoged(true);
+      getUserData(decodedToken.sub);
     }
-  }, [id]);
+  }, []);
 
   return (
     <AuthContext.Provider
