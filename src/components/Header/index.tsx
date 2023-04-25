@@ -9,10 +9,8 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseOutline } from "react-icons/io5";
 
 export const Header = () => {
-  const { isLoged, setIsLoged } = useAuth();
+  const { isLoged, setIsLoged, router } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-
-  const router = useRouter();
 
   return (
     <header className="bg-gray10 h-20 border-b-[1px] border-gray4 relative z-20">
@@ -33,7 +31,7 @@ export const Header = () => {
             <ul className="flex gap-2">
               <li>
                 <Button
-                  onClick={() => setIsLoged(true)}
+                  onClick={() => router.push("/login")}
                   variant="gray-10"
                   type="button"
                 >
@@ -41,7 +39,11 @@ export const Header = () => {
                 </Button>
               </li>
               <li>
-                <Button variant="border-gray-4" type="button">
+                <Button
+                  onClick={() => router.push("/register")}
+                  variant="border-gray-4"
+                  type="button"
+                >
                   Cadastrar
                 </Button>
               </li>

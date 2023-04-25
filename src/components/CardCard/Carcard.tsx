@@ -29,8 +29,8 @@ export const CarCard = ({
 
   return (
     <>
-      <div className="w-[312px] mx-auto my-0 box-border flex flex-col items-start justify-center gap-[10]  text-justify drop-shadow-md cursor-pointer ">
-        <div className="flex w-full justify-center bg-gray5 box-border ">
+      <div className="w-[312px] mx-auto my-0 rounded-[5px]  box-border flex flex-col items-start justify-center gap-[10]  text-justify shadow-md cursor-pointer ">
+        <div className="flex w-full justify-center bg-gray5 box-border rounded-t-[4px]">
           <Image
             width={262}
             height={150}

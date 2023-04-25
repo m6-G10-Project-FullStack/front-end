@@ -12,8 +12,7 @@ export interface iLoginFormInputs {
 }
 
 const Login = () => {
-  //const { HandleFormLogin } = useContext(AuthContext);
-  const { HandleFormLogin } = useAuth();
+  const { HandleFormLogin, router } = useAuth();
   const { register, handleSubmit } = useForm<iLoginFormInputs>({
     resolver: yupResolver(SchemaLogin),
   });
@@ -50,7 +49,9 @@ const Login = () => {
             Entrar
           </Button>
           <p className="text-center">Ainda não possui conta?</p>
-          <Button variant="gray-6">Cadastrar</Button>
+          <Button onClick={() => router.push("/register")} variant="gray-6">
+            Cadastrar
+          </Button>
         </form>
       </main>
     </>

@@ -197,7 +197,7 @@ export default function Home() {
               />
 
               {carList.length ? (
-                <ul className="w-full flex mt-4 gap-4 overflow-y-scroll md:flex-wrap md:justify-between md:gap-0 md:overflow-y-hidden">
+                <ul className="w-full flex mt-4 gap-4 overflow-y-scroll md:flex-wrap md:justify-between md:gap-[8px] md:overflow-y-hidden">
                   {carList.map((car, i) => (
                     <CarCard
                       key={i}
