@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema } from "inspector";
 import { RxDragHandleDots1 } from "react-icons/rx";
 import api from "../../services/api";
+import { AuthContext, useAuth } from "../../contexts/authContext";
 
 interface iCarRegister {
   brand: string;
@@ -58,6 +59,7 @@ const ModalAnuncio = ({
   const arrayAnos = years;
   const arrayCombustivel = fuels;
   const [inputCount, setInputCount] = useState([1, 2]);
+  const { user } = useAuth();
 
   const handleInputCount = () => {
     if (inputCount.length < 6) {
@@ -99,22 +101,22 @@ const ModalAnuncio = ({
     const brandId = await getBrandId(data.brand);
     console.log(brandId);
 
-    // const newCar = {
-    //   year: data.year,
-    //   fuel: data.fuel,
-    //   km: data.km,
-    //   color: data.color,
-    //   fipe: data.fipe,
-    //   price: data.price,
-    //   description: data.description,
-    //   model: data.model,
-    //   brandId: brandId,
-    //   coverImage: data.coverImage,
-    //   // userId: VEM DO TOKEN ID
-    // };
+    const newCar = {
+      year: data.year,
+      fuel: data.fuel,
+      km: data.km,
+      color: data.color,
+      fipe: data.fipe,
+      price: data.price,
+      description: data.description,
+      model: data.model,
+      brandId: brandId,
+      coverImage: data.coverImage,
+      userId: user.id,
+    };
 
-    // const carId = await createCar(newCar);
-    // console.log(carId);
+    const carId = await createCar(newCar);
+    console.log(carId);
 
     // const {brand, year, fuel, km, color, fipe, price, description, model, coverImage, ...gallery} = data
     // for (const key, value in gallery) {
@@ -280,3 +282,4 @@ const ModalAnuncio = ({
 };
 
 export default ModalAnuncio;
+

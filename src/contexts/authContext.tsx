@@ -31,7 +31,7 @@ interface iAuthProvider {
 
 export const AuthProvider = ({ children }: iAuthProvider) => {
   const [isLoged, setIsLoged] = useState(false);
-  const [user, setUser] = useState<any>();
+  const [user, setUser] = useState<iUser>();
   const cookies = parseCookies();
   const router = useRouter();
 

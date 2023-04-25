@@ -21,6 +21,7 @@ const Test = () => {
   const [fuels, setFuels] = useState<string[]>([""]);
   const [selectFuel, setSelectFuel] = useState("");
   const [fipe, setFipe] = useState<number>();
+  const { user } = useAuth();
 
   useEffect(() => {
     getBrands();
@@ -204,19 +205,15 @@ const Test = () => {
     },
   ]);
 
-  const { user } = useAuth();
-
   const randomColor = useMemo(() => Math.floor(Math.random() * 11 + 1), []);
 
   return (
     <>
       <Head>
-        <title>
-          Anúncios de Carros do Usuário {user.username} - Motors Shop
-        </title>
+        <title>Anúncios de Carros do Usuário {user?.name} - Motors Shop</title>
         <meta
           name="description"
-          content={`Confira todos os anúncios do usuário ${user.username} no Motors Shop. Encontre o carro dos seus sonhos!`}
+          content={`Confira todos os anúncios do usuário ${user?.name} no Motors Shop. Encontre o carro dos seus sonhos!`}
         />
         <meta
           name="keywords"
@@ -240,8 +237,8 @@ const Test = () => {
                 </div>
 
                 <h1 className="text-gray1 font-semibold text-lg">
-                  {user.username}{" "}
-                  {user.is_anouncer && (
+                  {user?.name}
+                  {user?.is_seller && (
                     <span className="text-sm pl-[8px] pt-[4px] pr-[8px] pb-[4px] text-brand1 bg-brand4">
                       Anunciante
                     </span>
