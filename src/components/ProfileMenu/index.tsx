@@ -21,14 +21,14 @@ export const ProfileMenu = () => {
           >
             <p className="text-whitefixed">RA</p>
           </div>
-          <p>{user.username}</p>
+          <p>{user.name}</p>
         </button>
 
         {isOpen && (
           <menu className="absolute top-11 left-0 z-10 w-full bg-gray10 p-4 rounded flex flex-col items-start gap-1 text-gray2">
             <button>Editar perfil</button>
             <button>Editar endereço</button>
-            {user.is_anouncer && <button>Editar anúncios</button>}
+            {user.is_seller && <button>Editar anúncios</button>}
             <button onClick={() => setIsLoged(false)}>Sair</button>
           </menu>
         )}
@@ -43,7 +43,7 @@ export const ProfileMenu = () => {
             >
               RA
             </div>
-            <p>{user.username}</p>
+            <p>{user.name}</p>
           </span>
         </li>
         <li>
@@ -52,7 +52,7 @@ export const ProfileMenu = () => {
         <li>
           <button>Editar endereço</button>
         </li>
-        {user.is_anouncer && (
+        {user.is_seller && (
           <li>
             <button>Editar anúncio</button>
           </li>
