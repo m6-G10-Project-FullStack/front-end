@@ -9,6 +9,7 @@ import { photos } from "./dataFotos";
 import AsideProfile from "../../src/components/AsideProfile";
 import { Modal } from "../../src/components/ModalWrapper";
 import { ModalPhoto } from "../../src/components/Modal";
+import { useAuth } from "../../src/contexts/authContext";
 //import { Header } from "../../src/components/Header";
 const CardPage = () => {
   const user = {

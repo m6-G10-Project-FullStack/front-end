@@ -10,8 +10,10 @@ import { useEffect, useState } from "react";
 import { CarCard } from "../src/components/CardCard/Carcard";
 import api from "../src/services/api";
 import { iCarResponse } from "../src/components/ModalAnuncio";
+import { useAuth } from "../src/contexts/authContext";
 
 export default function Home() {
+  const { setIdSeller } = useAuth();
   const [carList, setCarList] = useState<iCarResponse[]>([]);
   const [page, setPage] = useState(0);
 

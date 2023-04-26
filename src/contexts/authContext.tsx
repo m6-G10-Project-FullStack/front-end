@@ -21,6 +21,8 @@ interface iAuthContext {
   setUser: Dispatch<SetStateAction<iUser>>;
   HandleFormLogin: (data: iLoginFormInputs) => void;
   router: NextRouter;
+  idSeller: string;
+  setIdSeller: Dispatch<SetStateAction<string>>;
 }
 
 export const AuthContext = createContext<iAuthContext>({} as iAuthContext);
@@ -34,6 +36,7 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
   const [user, setUser] = useState<any>();
   const cookies = parseCookies();
   const [idCar, setCarId] = useState<string>();
+  const [idSeller, setIdSeller] = useState<string>("");
 
   const router = useRouter();
 
@@ -82,6 +85,8 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
         setUser,
         HandleFormLogin,
         router,
+        idSeller,
+        setIdSeller,
       }}
     >
       {children}

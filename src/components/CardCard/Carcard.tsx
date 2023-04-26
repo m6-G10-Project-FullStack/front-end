@@ -24,7 +24,7 @@ export const CarCard = ({
   carPrice,
   carId,
 }: iCarCardProps) => {
-  const { router } = useAuth();
+  const { router, setIdSeller } = useAuth();
   const [idCar, setCarId] = useState<string>();
   /* const handleInitials = () => {
     const arr = carSeller.split(" ");
@@ -34,6 +34,9 @@ export const CarCard = ({
   console.log(idCar);
   const getCarId = (id: string) => {
     setCarId(id);
+    setIdSeller(carSeller);
+    console.log(carSeller);
+
     router.push(`/car_page/${carId}`);
   };
 

@@ -1,6 +1,5 @@
 import { useAuth } from "../../contexts/authContext";
 import Image from "next/image";
-import { useRouter } from "next/dist/client/router";
 import Logo from "../../assets/Logo.png";
 import { Button } from "../Button";
 import { ProfileMenu } from "../ProfileMenu";
@@ -9,7 +8,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseOutline } from "react-icons/io5";
 
 export const Header = () => {
-  const { isLoged, setIsLoged, user } = useAuth();
+  const { isLoged, setIsLoged, user, router } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
