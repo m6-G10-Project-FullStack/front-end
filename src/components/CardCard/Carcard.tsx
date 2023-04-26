@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StaticImageData } from "next/image";
 import Image from "next/image";
 import { useAuth } from "../../contexts/authContext";
+import { setCookie, parseCookies } from "nookies";
 
 interface iCarCardProps {
   carName: string;
@@ -34,7 +35,7 @@ export const CarCard = ({
   const getCarId = (id: string) => {
     setCarId(id);
     setIdSeller(carSeller);
-    console.log(carSeller);
+    setCookie(null, "idSeller", carSeller);
 
     router.push(`/car_page/${carId}`);
   };
