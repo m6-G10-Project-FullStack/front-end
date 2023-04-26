@@ -28,10 +28,9 @@ export const CarCard = ({
   const [idCar, setCarId] = useState<string>();
   /* const handleInitials = () => {
     const arr = carSeller.split(" ");
-
     return arr![0][0] + arr![1][0];
   }; */
-  console.log(idCar);
+
   const getCarId = (id: string) => {
     setCarId(id);
     setIdSeller(carSeller);
@@ -47,20 +46,16 @@ export const CarCard = ({
         className="w-[312px] mx-auto my-0 rounded-[5px]  box-border flex flex-col items-start justify-center gap-[10]  text-justify shadow-md cursor-pointer "
       >
         <div className="flex w-full justify-center bg-gray5 box-border rounded-t-[4px]">
-          <Image
-            width={262}
-            height={150}
-            //className="w-[262px] h-full"
-            src={carImg}
-            alt="foto carro"
-          />
+          <Image width={262} height={150} src={carImg} alt="foto carro" />
         </div>
         <div className="flex flex-col p-[10px] gap-[10px]">
           <h2 className="text-base font-semibold test-lex leading-5 text-gray0 ">
             {carName}
           </h2>
           <p className="text-sm text-gray2 text-inter font-normal">
-            {carDescription.slice(0, 130) + "..."}
+            {carDescription && carDescription.length > 130
+              ? `${carDescription.substring(0, 130)}...`
+              : carDescription}
           </p>
           <div>
             <div className="flex items-center">

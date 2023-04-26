@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Button } from "../../src/components/Button";
 import { Modal } from "../../src/components/ModalWrapper";
-import ModalAnuncio from "../../src/components/ModalAnuncio";
+import ModalAnuncio, { iCarResponse } from "../../src/components/ModalAnuncio";
 import { Header } from "../../src/components/Header";
 import { Footer } from "../../src/components/Footer";
 import Head from "next/head";
@@ -10,6 +10,7 @@ import { useAuth } from "../../src/contexts/authContext";
 import { CarCard } from "../../src/components/CardCard/Carcard";
 import apiKenzie from "../../src/services/apiKenzie";
 import api from "../../src/services/api";
+import { iUser } from "../../src/@types";
 
 const Test = () => {
   const [openAnuncio, setOpenModalAnuncio] = useState(false);
@@ -22,10 +23,11 @@ const Test = () => {
   const [fuels, setFuels] = useState<string[]>([""]);
   const [selectFuel, setSelectFuel] = useState("");
   const [fipe, setFipe] = useState<number>();
-  const [carList, setCarList] = useState<any[]>();
+  const [carList, setCarList] = useState<iCarResponse[]>();
+  const [seller, setSeller] = useState<iUser>();
 
   const randomColor = useMemo(() => Math.floor(Math.random() * 11 + 1), []);
-  const { user, idSeller } = useAuth();
+  const { user, idSeller, token } = useAuth();
 
   useEffect(() => {
     getBrands();
@@ -77,25 +79,27 @@ const Test = () => {
   }, [selectCar, selectBrand]);
 
   useEffect(() => {
-    if (idSeller) {
-      getSellerCars();
-    }
+    getSellerCars();
   }, [openAnuncio]);
 
   const getSellerCars = async () => {
     const { data } = await api.get(`/users/${idSeller}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    console.log(data.cars);
     setCarList(data.cars);
+    setSeller(data);
   };
 
   return (
     <>
       <Head>
-        <title>Anúncios de Carros do Usuário {user?.name} - Motors Shop</title>
+        <title>
+          Anúncios de Carros do Usuário {seller?.name} - Motors Shop
+        </title>
         <meta
           name="description"
-          content={`Confira todos os anúncios do usuário ${user?.name} no Motors Shop. Encontre o carro dos seus sonhos!`}
+          content={`Confira todos os anúncios do usuário ${seller?.name} no Motors Shop. Encontre o carro dos seus sonhos!`}
         />
         <meta
           name="keywords"
@@ -113,7 +117,7 @@ const Test = () => {
             <div className="bg-gray10 h-fit rounded w-full max-w-[1200px] mx-auto mt-6 px-7 py-9 md:mt-20">
               <div className="flex flex-col items-start gap-6 mb-9">
                 <div
-                  className={`bg-random${randomColor} w-24 h-24 rounded-full flex items-center justify-center`}
+                  className={`bg-random${seller?.color} w-24 h-24 rounded-full flex items-center justify-center`}
                 >
                   <p className="text-whitefixed text-4xl pl-0.5">RA</p>
                 </div>
@@ -165,18 +169,18 @@ const Test = () => {
         </section>
 
         <section className="w-full max-w-[1600px] my-o mx-auto p-4">
-          {carList && carList.length ? (
+          {carList && carList!.length > 0 ? (
             <ul className="w-full flex mt-4 gap-4 overflow-y-scroll md:flex-wrap md:overflow-y-hidden md:mt-2">
-              {carList.map((car, i) => (
+              {carList!.map((car, i) => (
                 <CarCard
                   key={i}
-                  carName={car.carName}
-                  carDescription={car.carDescription}
-                  carImg={car.carImg}
-                  carKm={car.carKm}
-                  carPrice={car.carPrice}
-                  carSeller={car.carSeller}
-                  carYear={car.carYear}
+                  carName={car.model}
+                  carDescription={car.description}
+                  carImg={car.coverImage}
+                  carKm={car.km}
+                  carPrice={car.price}
+                  carSeller={car.userId}
+                  carYear={car.year}
                   carId={car.id}
                 />
               ))}

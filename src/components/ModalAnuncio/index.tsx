@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema } from "inspector";
 import { RxDragHandleDots1 } from "react-icons/rx";
 import api from "../../services/api";
+import { AuthContext, useAuth } from "../../contexts/authContext";
 
 interface iCarRegister {
   brand: string;
@@ -21,7 +22,6 @@ interface iCarRegister {
   description: string;
   coverImage: string;
   image1?: string;
-  image2?: string;
   image3?: string;
   image4?: string;
   image5?: string;
@@ -76,6 +76,7 @@ const ModalAnuncio = ({
   const arrayAnos = years;
   const arrayCombustivel = fuels;
   const [inputCount, setInputCount] = useState([1, 2]);
+  const { user, token } = useAuth();
 
   const handleInputCount = () => {
     if (inputCount.length < 6) {
@@ -117,35 +118,53 @@ const ModalAnuncio = ({
     const brandId = await getBrandId(data.brand);
     console.log(brandId);
 
-    // const newCar = {
-    //   year: data.year,
-    //   fuel: data.fuel,
-    //   km: data.km,
-    //   color: data.color,
-    //   fipe: data.fipe,
-    //   price: data.price,
-    //   description: data.description,
-    //   model: data.model,
-    //   brandId: brandId,
-    //   coverImage: data.coverImage,
-    //   // userId: VEM DO TOKEN ID
-    // };
+    const newCar = {
+      year: data.year,
+      fuel: data.fuel,
+      km: data.km,
+      color: data.color,
+      fipe: data.fipe,
+      price: data.price,
+      description: data.description,
+      model: data.model,
+      brandId: brandId,
+      coverImage: data.coverImage,
+      userId: user!.id,
+    };
 
-    // const carId = await createCar(newCar);
-    // console.log(carId);
+    const carId = await createCar(newCar);
+    console.log(carId);
 
-    // const {brand, year, fuel, km, color, fipe, price, description, model, coverImage, ...gallery} = data
-    // for (const key, value in gallery) {
-    //   let newPhoto = {
-    //     "carId": carId,
-    //     "photo_link": value
-    //   }
-    //   await api.post("/gallery", newPhoto)
-    // }
+    const {
+      brand,
+      year,
+      fuel,
+      km,
+      color,
+      fipe,
+      price,
+      description,
+      model,
+      coverImage,
+      ...gallery
+    } = data;
+    console.log(gallery);
+    const values = Object.values(gallery);
+    for (let value of values) {
+      let newPhoto = {
+        carId: carId,
+        photo_link: value,
+      };
+      await api.post("/gallery", newPhoto, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    }
   };
   const getBrandId = async (brand: string) => {
     try {
-      const { data } = await api.get(`/brands/${brand}`);
+      const { data } = await api.get(`/brands/${brand}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       return data.id;
     } catch (error) {
       console.log(error);
@@ -153,8 +172,11 @@ const ModalAnuncio = ({
   };
 
   const createCar = async (car: any) => {
+    console.log(token);
     try {
-      const { data } = await api.post("/cars");
+      const { data } = await api.post("/cars", car, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       return data.id;
     } catch (error) {
       console.log(error);
@@ -284,7 +306,11 @@ const ModalAnuncio = ({
           </Button>
         </div>
         <div>
-          <Button type="button" variant="gray-6">
+          <Button
+            onClick={() => setOpenModalAnuncio(false)}
+            type="button"
+            variant="gray-6"
+          >
             Cancelar
           </Button>
 

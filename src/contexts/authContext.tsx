@@ -22,6 +22,8 @@ interface iAuthContext {
   HandleFormLogin: (data: iLoginFormInputs) => void;
   router: NextRouter;
   token?: string;
+  idSeller: string;
+  setIdSeller: Dispatch<SetStateAction<string>>;
 }
 
 export const AuthContext = createContext<iAuthContext>({} as iAuthContext);
@@ -36,6 +38,7 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
   const cookies = parseCookies();
   const [token, setToken] = useState<string>(cookies["token"] || "");
   const [idCar, setCarId] = useState<string>();
+  const [idSeller, setIdSeller] = useState<string>("");
 
   const router = useRouter();
 
@@ -70,6 +73,7 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
   useEffect(() => {
     if (cookies["token"]) {
       const decodedToken: any = jwt_decode(cookies["token"]);
+      setToken(cookies["token"]);
       setIsLoged(true);
       getUserData(decodedToken.sub);
     }
@@ -85,6 +89,8 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
         HandleFormLogin,
         router,
         token,
+        idSeller,
+        setIdSeller,
       }}
     >
       {children}
