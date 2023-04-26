@@ -9,10 +9,8 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseOutline } from "react-icons/io5";
 
 export const Header = () => {
-  const { isLoged, setIsLoged } = useAuth();
+  const { isLoged, setIsLoged, user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-
-  const router = useRouter();
 
   return (
     <header className="bg-gray10 w-full h-20 border-b-[1px] border-gray4 fixed top-0 left-0 z-20">
@@ -27,13 +25,13 @@ export const Header = () => {
 
         {/* ----- Desktop ----- */}
         <nav className="hidden md:flex md:items-center md:h-full md:border-l-[1px] md:border-gray4 md:pl-8">
-          {isLoged ? (
+          {user ? (
             <ProfileMenu />
           ) : (
             <ul className="flex gap-2">
               <li>
                 <Button
-                  onClick={() => setIsLoged(true)}
+                  onClick={() => router.push("/login")}
                   variant="gray-10"
                   type="button"
                 >
@@ -41,7 +39,11 @@ export const Header = () => {
                 </Button>
               </li>
               <li>
-                <Button variant="border-gray-4" type="button">
+                <Button
+                  onClick={() => router.push("/register")}
+                  variant="border-gray-4"
+                  type="button"
+                >
                   Cadastrar
                 </Button>
               </li>
@@ -64,7 +66,7 @@ export const Header = () => {
                   <li className="w-full">
                     <button
                       className="text-gray2 font-semibold self-start"
-                      onClick={() => setIsLoged(true)}
+                      onClick={() => router.push("/login")}
                       type="button"
                     >
                       Fazer login
@@ -72,6 +74,7 @@ export const Header = () => {
                   </li>
                   <li className="w-full">
                     <button
+                      onClick={() => router.push("/register")}
                       className="font-lex font-semibold text-gray0 w-full py-1 rounded border-[1px] border-gray4 hover:bg-gray4 hover:text-gray10"
                       type="button"
                     >

@@ -9,30 +9,10 @@ import Image, { StaticImageData } from "next/image";
 import { useEffect, useState } from "react";
 import { CarCard } from "../src/components/CardCard/Carcard";
 import api from "../src/services/api";
-
-interface iCar {
-  id: string;
-  year: number;
-  fuel: string;
-  km: number;
-  color: string;
-  fipe: string;
-  price: string;
-  is_promo: boolean;
-  description: string;
-  is_active: boolean;
-  model: string;
-  coverImage: string;
-  userId: string;
-  brandId: number;
-  Brand: {
-    id: number;
-    name: string;
-  };
-}
+import { iCarResponse } from "../src/components/ModalAnuncio";
 
 export default function Home() {
-  const [carList, setCarList] = useState<iCar[]>([]);
+  const [carList, setCarList] = useState<iCarResponse[]>([]);
   const [page, setPage] = useState(0);
 
   useEffect(() => {
@@ -100,15 +80,16 @@ export default function Home() {
 
               {carList?.length ? (
                 <ul className="w-full flex mt-4 gap-4 overflow-y-scroll md:flex-wrap md:justify-between md:gap-0 md:overflow-y-hidden">
-                  {carList.map((car, i) => (
+                  {carList.map((car: iCarResponse, i) => (
                     <CarCard
                       key={i}
+                      carId={car.id}
                       carName={car.model}
                       carDescription={car.description}
-                      carImg="https://www.volvocars.com/images/v/-/media/project/contentplatform/data/media/my23/car-images/c40-bev-my23-responsive.jpg?h=600&iar=0"
+                      carImg={car.coverImage}
                       carKm={car.km}
                       carPrice={car.price}
-                      carSeller="Róger Aguiar"
+                      carSeller={car.userId}
                       carYear={car.year}
                     />
                   ))}
