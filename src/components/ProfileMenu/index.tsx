@@ -30,7 +30,7 @@ export const ProfileMenu = () => {
           <p>{user!.name}</p>
         </button>
 
-        {isOpen && user && (
+        {isOpen && (
           <menu className="absolute top-11 left-0 z-10 w-full bg-gray10 p-4 rounded flex flex-col items-start gap-1 text-gray2">
             <button>Editar perfil</button>
             <button>Editar endereço</button>
