@@ -17,10 +17,11 @@ import jwt_decode from "jwt-decode";
 interface iAuthContext {
   isLoged: boolean;
   setIsLoged: Dispatch<SetStateAction<boolean>>;
-  user: iUser;
-  setUser: Dispatch<SetStateAction<iUser>>;
+  user?: iUser;
+  setUser?: Dispatch<SetStateAction<iUser | undefined>>;
   HandleFormLogin: (data: iLoginFormInputs) => void;
   router: NextRouter;
+  token?: string;
 }
 
 export const AuthContext = createContext<iAuthContext>({} as iAuthContext);
@@ -33,6 +34,7 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
   const [isLoged, setIsLoged] = useState(false);
   const [user, setUser] = useState<iUser>();
   const cookies = parseCookies();
+  const [token, setToken] = useState<string>(cookies["token"] || "");
   const router = useRouter();
 
   const HandleFormLogin = async (data: iLoginFormInputs) => {
@@ -42,6 +44,7 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
       .then((res) => {
         setCookie(null, "token", res.data.token);
         const localtoken = parseCookies();
+        setToken(localtoken["token"]);
         console.log(localtoken);
         if (localtoken) {
           setIsLoged(true);
@@ -80,6 +83,7 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
         setUser,
         HandleFormLogin,
         router,
+        token,
       }}
     >
       {children}

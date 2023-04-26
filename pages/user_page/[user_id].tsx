@@ -9,6 +9,7 @@ import Car from "../../src/assets/car.png";
 import { useAuth } from "../../src/contexts/authContext";
 import { CarCard } from "../../src/components/CardCard/Carcard";
 import apiKenzie from "../../src/services/apiKenzie";
+import api from "../../src/services/api";
 
 const Test = () => {
   const [openAnuncio, setOpenModalAnuncio] = useState(false);
@@ -21,7 +22,7 @@ const Test = () => {
   const [fuels, setFuels] = useState<string[]>([""]);
   const [selectFuel, setSelectFuel] = useState("");
   const [fipe, setFipe] = useState<number>();
-  const { user } = useAuth();
+  const { user, token } = useAuth();
 
   useEffect(() => {
     getBrands();
@@ -206,6 +207,16 @@ const Test = () => {
   ]);
 
   const randomColor = useMemo(() => Math.floor(Math.random() * 11 + 1), []);
+
+  useEffect(() => {}, [openAnuncio]);
+
+  const getSellerCars = async () => {
+    const { data } = await api.get(`/users/${user?.id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log(data);
+    // setCarList(data);
+  };
 
   return (
     <>
