@@ -11,6 +11,7 @@ import { CarCard } from "../../src/components/CardCard/Carcard";
 import apiKenzie from "../../src/services/apiKenzie";
 import api from "../../src/services/api";
 import { iUser } from "../../src/@types";
+import { parseCookies } from "nookies";
 
 const Test = () => {
   const [openAnuncio, setOpenModalAnuncio] = useState(false);
@@ -27,7 +28,7 @@ const Test = () => {
   const [seller, setSeller] = useState<iUser>();
 
   const randomColor = useMemo(() => Math.floor(Math.random() * 11 + 1), []);
-  const { user, idSeller, token } = useAuth();
+  const { user, token } = useAuth();
 
   useEffect(() => {
     getBrands();
@@ -79,11 +80,13 @@ const Test = () => {
   }, [selectCar, selectBrand]);
 
   useEffect(() => {
-    getSellerCars();
+    const cookies = parseCookies();
+    const sellerId = cookies["idSeller"];
+    getSellerCars(sellerId);
   }, [openAnuncio]);
 
-  const getSellerCars = async () => {
-    const { data } = await api.get(`/users/${idSeller}`, {
+  const getSellerCars = async (sellerId: string) => {
+    const { data } = await api.get(`/users/${sellerId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log(data.cars);
