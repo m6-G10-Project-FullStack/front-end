@@ -7,6 +7,7 @@ const nextConfig = {
       "fotos.jornaldocarro.estadao.com.br",
       "pt.vecteezy.com",
       "image.webmotors.com.br",
+      "www.volvocars.com",
     ],
   },
 };
