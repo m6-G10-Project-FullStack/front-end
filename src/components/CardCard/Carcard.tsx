@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { StaticImageData } from "next/image";
 import Image from "next/image";
+import { useAuth } from "../../contexts/authContext";
 
 interface iCarCardProps {
   carName: string;
-  carImg: StaticImageData;
+  carImg: string;
   carDescription: string;
   carSeller: string;
   carKm: number;
   carYear: number;
   carPrice: number;
+  carId: string;
+  idCar: string;
+  setCarId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  getCarId: Function;
 }
 
 export const CarCard = ({
@@ -20,17 +25,28 @@ export const CarCard = ({
   carKm,
   carYear,
   carPrice,
+  carId,
 }: iCarCardProps) => {
-  const handleInitials = () => {
+  const { router } = useAuth();
+  const [idCar, setCarId] = useState<string>();
+  /* const handleInitials = () => {
     const arr = carSeller.split(" ");
 
-    return arr[0][0] + arr[1][0];
+    return arr![0][0] + arr![1][0];
+  }; */
+  console.log(idCar);
+  const getCarId = (id: string) => {
+    setCarId(id);
+    router.push(`/car_page/${carId}`);
   };
 
   return (
     <>
-      <div className="w-[312px] mx-auto my-0 box-border flex flex-col items-start justify-center gap-[10]  text-justify drop-shadow-md cursor-pointer ">
-        <div className="flex w-full justify-center bg-gray5 box-border ">
+      <div
+        onClick={() => getCarId(carId)}
+        className="w-[312px] mx-auto my-0 rounded-[5px]  box-border flex flex-col items-start justify-center gap-[10]  text-justify shadow-md cursor-pointer "
+      >
+        <div className="flex w-full justify-center bg-gray5 box-border rounded-t-[4px]">
           <Image
             width={262}
             height={150}
@@ -49,10 +65,10 @@ export const CarCard = ({
           <div>
             <div className="flex items-center">
               <p className="bg-brand1 p-[5px] flex justify-center items-center w-8 h-8 rounded-full text-whitefixed text-sm/[17px]">
-                {handleInitials()}
+                {/* handleInitials() */}
               </p>
               <p className="pl-[5px] items-center text-sm text-gray2 text-inter font-medium">
-                {carSeller}
+                {}
               </p>
             </div>
           </div>
@@ -63,7 +79,7 @@ export const CarCard = ({
             <span className="text-sm pl-2 pt-1 pr-2 pb-1 text-brand1 bg-brand4">
               Ano{carYear}
             </span>
-            <p>R$ {carPrice.toFixed(2)}</p>
+            <p>R$ {carPrice}</p>
           </div>
         </div>
       </div>

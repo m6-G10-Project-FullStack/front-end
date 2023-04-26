@@ -35,6 +35,8 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
   const [user, setUser] = useState<iUser>();
   const cookies = parseCookies();
   const [token, setToken] = useState<string>(cookies["token"] || "");
+  const [idCar, setCarId] = useState<string>();
+
   const router = useRouter();
 
   const HandleFormLogin = async (data: iLoginFormInputs) => {
