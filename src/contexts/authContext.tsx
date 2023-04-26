@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
       setIsLoged(true);
       getUserData(decodedToken.sub);
     }
-  }, []);
+  }, [token]);
 
   return (
     <AuthContext.Provider
