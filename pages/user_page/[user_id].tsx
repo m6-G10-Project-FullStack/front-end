@@ -22,7 +22,10 @@ const Test = () => {
   const [fuels, setFuels] = useState<string[]>([""]);
   const [selectFuel, setSelectFuel] = useState("");
   const [fipe, setFipe] = useState<number>();
-  const { user, token } = useAuth();
+  const [carList, setCarList] = useState<any[]>();
+
+  const randomColor = useMemo(() => Math.floor(Math.random() * 11 + 1), []);
+  const { user, token, idSeller } = useAuth();
 
   useEffect(() => {
     getBrands();
@@ -73,149 +76,17 @@ const Test = () => {
     getYearFuel();
   }, [selectCar, selectBrand]);
 
-  const [carList, setCarList] = useState([
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-  ]);
-
-  const randomColor = useMemo(() => Math.floor(Math.random() * 11 + 1), []);
-
-  useEffect(() => {}, [openAnuncio]);
+  useEffect(() => {
+    if (idSeller) {
+      getSellerCars();
+    }
+  }, [openAnuncio]);
 
   const getSellerCars = async () => {
     const { data } = await api.get(`/users/${user?.id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(data);
-    // setCarList(data);
+    setCarList(data.cars);
   };
 
   return (
@@ -294,7 +165,7 @@ const Test = () => {
         </section>
 
         <section className="w-full max-w-[1600px] my-o mx-auto p-4">
-          {carList.length ? (
+          {carList && carList.length ? (
             <ul className="w-full flex mt-4 gap-4 overflow-y-scroll md:flex-wrap md:overflow-y-hidden md:mt-2">
               {carList.map((car, i) => (
                 <CarCard
@@ -306,6 +177,7 @@ const Test = () => {
                   carPrice={car.carPrice}
                   carSeller={car.carSeller}
                   carYear={car.carYear}
+                  carId={car.id}
                 />
               ))}
             </ul>

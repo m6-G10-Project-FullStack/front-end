@@ -12,9 +12,6 @@ interface iCarCardProps {
   carYear: number;
   carPrice: number;
   carId: string;
-  idCar: string;
-  setCarId: React.Dispatch<React.SetStateAction<string | undefined>>;
-  getCarId: Function;
 }
 
 export const CarCard = ({
