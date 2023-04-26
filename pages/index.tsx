@@ -9,8 +9,10 @@ import { useState } from "react";
 import { CarCard } from "../src/components/CardCard/Carcard";
 import { useEffect } from "react";
 import api from "../src/services/api";
+import { iCarResponse } from "../src/components/ModalAnuncio";
 
 export default function Home() {
+  const [carList, setCarList] = useState<[]>();
   useEffect(() => {
     const getCars = async () => {
       const cars = await api
@@ -23,139 +25,6 @@ export default function Home() {
     };
     getCars();
   }, []);
-
-  const [carList, setCarList] = useState([
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-    {
-      id: 0,
-      carName: "Fiat uno",
-      carImg: Car,
-      carDescription: "Card de test",
-      carSeller: "Róger Aguiar",
-      carKm: 1,
-      carYear: 2019,
-      carPrice: 10000,
-    },
-  ]);
 
   return (
     <>
@@ -211,18 +80,19 @@ export default function Home() {
                 listaModelos={[]}
               />
 
-              {carList.length ? (
-                <ul className="w-full flex mt-4 gap-4 overflow-y-scroll md:flex-wrap md:justify-between md:gap-[8px] md:overflow-y-hidden">
-                  {carList.map((car, i) => (
+              {carList?.length ? (
+                <ul className="w-full flex mt-4 gap-4 overflow-y-scroll md:flex-wrap md:justify-between md:gap-0 md:overflow-y-hidden">
+                  {carList.map((car: iCarResponse, i) => (
                     <CarCard
                       key={i}
-                      carName={car.carName}
-                      carDescription={car.carDescription}
-                      carImg={car.carImg}
-                      carKm={car.carKm}
-                      carPrice={car.carPrice}
-                      carSeller={car.carSeller}
-                      carYear={car.carYear}
+                      carId={car.id}
+                      carName={car.model}
+                      carDescription={car.description}
+                      carImg={car.coverImage}
+                      carKm={car.km}
+                      carPrice={car.price}
+                      carSeller={car.userId}
+                      carYear={car.year}
                     />
                   ))}
                 </ul>

@@ -28,6 +28,24 @@ interface iCarRegister {
   image6?: string;
 }
 
+export interface iCarResponse {
+  brand: string;
+  model: string;
+  year: number;
+  km: number;
+  fuel: string;
+  color: string;
+  fipe: number;
+  price: number;
+  description: string;
+  coverImage: string;
+  id: string;
+  is_promo: boolean;
+  is_active: boolean;
+  userId: string;
+  brandId: string;
+}
+
 interface iModalAnuncioProps {
   setOpenModalAnuncio: React.Dispatch<React.SetStateAction<boolean>>;
   brands?: string[];
