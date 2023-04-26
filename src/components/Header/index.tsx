@@ -12,8 +12,6 @@ export const Header = () => {
   const { isLoged, setIsLoged, user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
-  const router = useRouter();
-
   return (
     <header className="bg-gray10 h-20 border-b-[1px] border-gray4 relative z-20">
       <div className="relative z-30 flex justify-between items-center h-full w-full max-w-[1600px] my-0 mx-auto px-3 md:px-8">
