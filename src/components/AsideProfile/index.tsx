@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../Button";
+import { useAuth } from "../../contexts/authContext";
 
 interface iAsideProps {
   initials: string;
@@ -36,6 +37,7 @@ const corMap = {
 };
 
 const AsideProfile = ({ cor, description, initials, name }: iAsideProps) => {
+  const { idSeller, router } = useAuth();
   return (
     <div className="bg-gray10 w-full  justify-center items-center flex flex-col rounded-s p-3 md:w-full max-w-[351px] md:max-w-[440px]">
       <div
@@ -47,7 +49,12 @@ const AsideProfile = ({ cor, description, initials, name }: iAsideProps) => {
       <p className="font-inter font-normal text-base text-justify mb-7 text-gray2">
         {description}
       </p>
-      <Button variant="gray-0">Ver todos anúncios</Button>
+      <Button
+        onClick={() => router.push(`/user_page/${idSeller}`)}
+        variant="gray-0"
+      >
+        Ver todos anúncios
+      </Button>
     </div>
   );
 };
