@@ -5,7 +5,7 @@ import { Footer } from "../src/components/Footer";
 import { Header } from "../src/components/Header";
 
 import Car from "../src/assets/car.png";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CarCard } from "../src/components/CardCard/Carcard";
 import api from "../src/services/api";
@@ -15,10 +15,22 @@ export default function Home() {
   const [carList, setCarList] = useState<iCarResponse[]>([]);
   const [page, setPage] = useState(0);
 
+  const prevPage = () => {
+    window.scrollTo({ top: window.innerHeight - 80, behavior: "smooth" });
+
+    setPage(page - 1);
+  };
+
+  const nextPage = () => {
+    window.scrollTo({ top: window.innerHeight - 80, behavior: "smooth" });
+
+    setPage(page + 1);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
-      await api.get(`/cars?page=${page}`).then((res) => {
-        setCarList([...res.data]);
+      await api.get(`/cars?page=${page}&limit=12`).then((res) => {
+        setCarList(res.data);
       });
     };
     fetchData();
@@ -105,10 +117,10 @@ export default function Home() {
           </section>
 
           <div className="w-full flex items-center justify-center gap-6 mt-16 mb-8 md:mb-16">
-            {page < 0 && (
+            {page > 0 && (
               <button
                 type="button"
-                onClick={() => setPage(page + 1)}
+                onClick={prevPage}
                 className="text-brand2 font-semibold text-xl"
               >
                 Anterior &#60;
@@ -119,7 +131,7 @@ export default function Home() {
             </p>
             <button
               type="button"
-              onClick={() => setPage(page + 1)}
+              onClick={nextPage}
               className="text-brand2 font-semibold text-xl"
             >
               Seguinte &gt;
@@ -132,13 +144,3 @@ export default function Home() {
     </>
   );
 }
-
-// export const getServerSideProps: GetServerSideProps<iHomeProps> = async () => {
-//   const response = await api.get("/cars");
-
-//   return {
-//     props: {
-//       carList: response.data,
-//     },
-//   };
-// };
