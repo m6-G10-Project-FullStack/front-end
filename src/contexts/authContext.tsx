@@ -17,12 +17,11 @@ import jwt_decode from "jwt-decode";
 interface iAuthContext {
   isLoged: boolean;
   setIsLoged: Dispatch<SetStateAction<boolean>>;
-  user: iUser;
-  setUser: Dispatch<SetStateAction<iUser>>;
+  user?: iUser;
+  setUser?: Dispatch<SetStateAction<iUser | undefined>>;
   HandleFormLogin: (data: iLoginFormInputs) => void;
   router: NextRouter;
-  idSeller: string;
-  setIdSeller: Dispatch<SetStateAction<string>>;
+  token?: string;
 }
 
 export const AuthContext = createContext<iAuthContext>({} as iAuthContext);
@@ -33,10 +32,10 @@ interface iAuthProvider {
 
 export const AuthProvider = ({ children }: iAuthProvider) => {
   const [isLoged, setIsLoged] = useState(false);
-  const [user, setUser] = useState<any>();
+  const [user, setUser] = useState<iUser>();
   const cookies = parseCookies();
+  const [token, setToken] = useState<string>(cookies["token"] || "");
   const [idCar, setCarId] = useState<string>();
-  const [idSeller, setIdSeller] = useState<string>("");
 
   const router = useRouter();
 
@@ -47,7 +46,7 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
       .then((res) => {
         setCookie(null, "token", res.data.token);
         const localtoken = parseCookies();
-        console.log(localtoken);
+        setToken(localtoken["token"]);
         if (localtoken) {
           setIsLoged(true);
           router.push("/");
@@ -85,8 +84,7 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
         setUser,
         HandleFormLogin,
         router,
-        idSeller,
-        setIdSeller,
+        token,
       }}
     >
       {children}
