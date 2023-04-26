@@ -49,8 +49,8 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
       .then((res) => {
         setCookie(null, "token", res.data.token);
         const localtoken = parseCookies();
-        setToken(localtoken["token"]);
         if (localtoken) {
+          setToken(localtoken["token"]);
           setIsLoged(true);
           router.push("/");
         }
@@ -64,7 +64,6 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
         headers: { Authorization: `Bearer ${cookies["token"]}` },
       });
       setUser(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -72,8 +71,8 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
 
   useEffect(() => {
     if (cookies["token"]) {
-      const decodedToken: any = jwt_decode(cookies["token"]);
       setToken(cookies["token"]);
+      const decodedToken: any = jwt_decode(cookies["token"]);
       setIsLoged(true);
       getUserData(decodedToken.sub);
     }

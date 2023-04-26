@@ -8,7 +8,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseOutline } from "react-icons/io5";
 
 export const Header = () => {
-  const { isLoged, setIsLoged, user, router } = useAuth();
+  const { isLoged, setIsLoged, user, router, token } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -24,7 +24,7 @@ export const Header = () => {
 
         {/* ----- Desktop ----- */}
         <nav className="hidden md:flex md:items-center md:h-full md:border-l-[1px] md:border-gray4 md:pl-8">
-          {user ? (
+          {isLoged && user ? (
             <ProfileMenu />
           ) : (
             <ul className="flex gap-2">
@@ -58,6 +58,8 @@ export const Header = () => {
 
           <menu className="absolute top-[79px] left-0 z-30 items-center w-full bg-gray10">
             {isOpen &&
+              token &&
+              user &&
               (isLoged ? (
                 <ProfileMenu />
               ) : (

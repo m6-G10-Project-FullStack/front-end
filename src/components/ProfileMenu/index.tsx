@@ -1,12 +1,18 @@
 import { useState, useMemo } from "react";
 import { useAuth } from "../../contexts/authContext";
 import { Button } from "../Button";
+import { destroyCookie } from "nookies";
 
 export const ProfileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, setUser, setIsLoged } = useAuth();
 
   const randomColor = useMemo(() => Math.floor(Math.random() * 11 + 1), []);
+
+  const clearTokenCookie = () => {
+    destroyCookie(null, "token", { path: "/" });
+    setIsLoged(false);
+  };
 
   return (
     <>
@@ -21,15 +27,15 @@ export const ProfileMenu = () => {
           >
             <p className="text-whitefixed">RA</p>
           </div>
-          <p>{user.name}</p>
+          <p>{user!.name}</p>
         </button>
 
-        {isOpen && (
+        {isOpen && user && (
           <menu className="absolute top-11 left-0 z-10 w-full bg-gray10 p-4 rounded flex flex-col items-start gap-1 text-gray2">
             <button>Editar perfil</button>
             <button>Editar endereço</button>
-            {user.is_seller && <button>Editar anúncios</button>}
-            <button onClick={() => setIsLoged(false)}>Sair</button>
+            {user!.is_seller && <button>Editar anúncios</button>}
+            <button onClick={clearTokenCookie}>Sair</button>
           </menu>
         )}
       </div>
@@ -43,7 +49,7 @@ export const ProfileMenu = () => {
             >
               RA
             </div>
-            <p>{user.name}</p>
+            <p>{user!.name}</p>
           </span>
         </li>
         <li>
@@ -52,13 +58,13 @@ export const ProfileMenu = () => {
         <li>
           <button>Editar endereço</button>
         </li>
-        {user.is_seller && (
+        {user!.is_seller && (
           <li>
             <button>Editar anúncio</button>
           </li>
         )}
         <li>
-          <button onClick={() => setIsLoged(false)}>Sair</button>
+          <button onClick={clearTokenCookie}>Sair</button>
         </li>
       </ul>
     </>
