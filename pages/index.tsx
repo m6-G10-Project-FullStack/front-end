@@ -7,8 +7,23 @@ import Car from "../src/assets/car.png";
 import Image from "next/image";
 import { useState } from "react";
 import { CarCard } from "../src/components/CardCard/Carcard";
+import { useEffect } from "react";
+import api from "../src/services/api";
 
 export default function Home() {
+  useEffect(() => {
+    const getCars = async () => {
+      const cars = await api
+        .get("/cars?limit=12")
+        .then((car) => {
+          console.log(car.data);
+          setCarList(car.data);
+        })
+        .catch((err) => console.log(err));
+    };
+    getCars();
+  }, []);
+
   const [carList, setCarList] = useState([
     {
       id: 0,
