@@ -17,10 +17,11 @@ import jwt_decode from "jwt-decode";
 interface iAuthContext {
   isLoged: boolean;
   setIsLoged: Dispatch<SetStateAction<boolean>>;
-  user: iUser;
-  setUser: Dispatch<SetStateAction<iUser>>;
+  user?: iUser;
+  setUser?: Dispatch<SetStateAction<iUser | undefined>>;
   HandleFormLogin: (data: iLoginFormInputs) => void;
   router: NextRouter;
+  token?: string;
   idSeller: string;
   setIdSeller: Dispatch<SetStateAction<string>>;
 }
@@ -33,8 +34,9 @@ interface iAuthProvider {
 
 export const AuthProvider = ({ children }: iAuthProvider) => {
   const [isLoged, setIsLoged] = useState(false);
-  const [user, setUser] = useState<any>();
+  const [user, setUser] = useState<iUser>();
   const cookies = parseCookies();
+  const [token, setToken] = useState<string>(cookies["token"] || "");
   const [idCar, setCarId] = useState<string>();
   const [idSeller, setIdSeller] = useState<string>("");
 
@@ -47,8 +49,8 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
       .then((res) => {
         setCookie(null, "token", res.data.token);
         const localtoken = parseCookies();
-        console.log(localtoken);
         if (localtoken) {
+          setToken(localtoken["token"]);
           setIsLoged(true);
           router.push("/");
         }
@@ -62,7 +64,6 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
         headers: { Authorization: `Bearer ${cookies["token"]}` },
       });
       setUser(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -70,6 +71,7 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
 
   useEffect(() => {
     if (cookies["token"]) {
+      setToken(cookies["token"]);
       const decodedToken: any = jwt_decode(cookies["token"]);
       setIsLoged(true);
       getUserData(decodedToken.sub);
@@ -85,6 +87,7 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
         setUser,
         HandleFormLogin,
         router,
+        token,
         idSeller,
         setIdSeller,
       }}
