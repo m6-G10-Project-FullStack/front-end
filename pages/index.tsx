@@ -1,30 +1,28 @@
 import Head from "next/head";
+
 import { FilterList } from "../src/components/FilterList";
 import { Footer } from "../src/components/Footer";
 import { Header } from "../src/components/Header";
 
 import Car from "../src/assets/car.png";
-import Image from "next/image";
-import { useState } from "react";
+import Image, { StaticImageData } from "next/image";
+import { useEffect, useState } from "react";
 import { CarCard } from "../src/components/CardCard/Carcard";
-import { useEffect } from "react";
 import api from "../src/services/api";
 import { iCarResponse } from "../src/components/ModalAnuncio";
 
 export default function Home() {
-  const [carList, setCarList] = useState<[]>();
+  const [carList, setCarList] = useState<iCarResponse[]>([]);
+  const [page, setPage] = useState(0);
+
   useEffect(() => {
-    const getCars = async () => {
-      const cars = await api
-        .get("/cars?limit=12")
-        .then((car) => {
-          console.log(car.data);
-          setCarList(car.data);
-        })
-        .catch((err) => console.log(err));
+    const fetchData = async () => {
+      await api.get(`/cars?page=${page}`).then((res) => {
+        setCarList([...res.data]);
+      });
     };
-    getCars();
-  }, []);
+    fetchData();
+  }, [page]);
 
   return (
     <>
@@ -47,7 +45,7 @@ export default function Home() {
 
       <Header />
 
-      <div>
+      <div className="mt-20">
         <main>
           <section
             className="relative flex justify-center items-center"
@@ -107,10 +105,23 @@ export default function Home() {
           </section>
 
           <div className="w-full flex items-center justify-center gap-6 mt-16 mb-8 md:mb-16">
+            {page < 0 && (
+              <button
+                type="button"
+                onClick={() => setPage(page + 1)}
+                className="text-brand2 font-semibold text-xl"
+              >
+                Anterior &#60;
+              </button>
+            )}
             <p className="text-xl text-gray4 font-semibold">
-              <span className="text-gray3">1</span> de 2
+              <span className="text-gray3">{page + 1}</span> de 2
             </p>
-            <button className="text-brand2 font-semibold text-xl">
+            <button
+              type="button"
+              onClick={() => setPage(page + 1)}
+              className="text-brand2 font-semibold text-xl"
+            >
               Seguinte &gt;
             </button>
           </div>
@@ -121,3 +132,13 @@ export default function Home() {
     </>
   );
 }
+
+// export const getServerSideProps: GetServerSideProps<iHomeProps> = async () => {
+//   const response = await api.get("/cars");
+
+//   return {
+//     props: {
+//       carList: response.data,
+//     },
+//   };
+// };
