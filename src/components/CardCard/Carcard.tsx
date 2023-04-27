@@ -31,7 +31,7 @@ export const CarCard = ({
 
     return arr![0][0] + arr![1][0];
   }; */
-  console.log(idCar);
+
   const getCarId = (id: string) => {
     setCarId(id);
     router.push(`/car_page/${carId}`);

@@ -12,7 +12,10 @@ import api from "../src/services/api";
 import { iCarResponse } from "../src/components/ModalAnuncio";
 
 export default function Home() {
+  const [absoluteList, setAbsoluteList] = useState<iCarResponse[]>([]);
   const [carList, setCarList] = useState<iCarResponse[]>([]);
+  const [brandList, setBrandList] = useState([]);
+  const [modelList, setModelList] = useState([]);
   const [page, setPage] = useState(0);
 
   const prevPage = () => {
@@ -30,9 +33,22 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       await api.get(`/cars?page=${page}&limit=12`).then((res) => {
+        setAbsoluteList(res.data);
         setCarList(res.data);
+        const models = res.data.map((car: iCarResponse) => car.model);
+
+        setModelList(
+          models.filter((item: string, index: number) => {
+            return models.indexOf(item) === index;
+          })
+        );
+      });
+
+      await api.get(`/brands`).then((res) => {
+        setBrandList(res.data.map(({ name }: any) => name));
       });
     };
+
     fetchData();
   }, [page]);
 
@@ -83,11 +99,13 @@ export default function Home() {
           <section className="w-full h-full">
             <div className="w-full h-full flex justify-around max-w-[1600px] my-0 mx-auto px-3 flex-col-reverse md:px-8 md:flex-row md:justify-center">
               <FilterList
-                listaAnos={[]}
-                listaCombustivel={[]}
-                listaCores={[]}
-                listaMarcas={[]}
-                listaModelos={[]}
+                list={absoluteList}
+                setList={setCarList}
+                listaMarcas={brandList}
+                listaModelos={["m5", "m6", "m7"]}
+                listaCores={["Preto", "Branco", "Prata", "Colorido"]}
+                listaAnos={["2019", "2020", "2021", "2022"]}
+                listaCombustivel={["Flex", "Elétrico", "Híbrido"]}
               />
 
               {carList?.length ? (
