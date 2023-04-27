@@ -11,10 +11,13 @@ import apiKenzie from "../../src/services/apiKenzie";
 import api from "../../src/services/api";
 import { iUser } from "../../src/@types";
 import { parseCookies } from "nookies";
-import { CarCardAnuncio } from "../../src/components/CarCarAnuncio/CarCarAnuncio";
+import { CarCardAnuncio } from "../../src/components/CarCardAnuncio/CarCardAnuncio";
+import { ModalSuccess } from "../../src/components/ModalSuccess/ModalSuccess";
+import { ModalSuccessCarRegister } from "../../src/components/ModalSuccessCarRegister/ModalSuccessCarRegister";
 
 const Test = () => {
   const [openAnuncio, setOpenModalAnuncio] = useState(false);
+  const [openModalSuccess, setOpenModalSuccess] = useState(false);
   const [brands, setBrands] = useState<string[]>([""]);
   const [selectBrand, setSelectBrand] = useState("");
   const [cars, setCars] = useState<string[]>([""]);
@@ -113,6 +116,11 @@ const Test = () => {
       </Head>
 
       <Header />
+      {openModalSuccess && (
+        <Modal setOpenModal={setOpenModalSuccess}>
+          <ModalSuccessCarRegister setOpenModal={setOpenModalSuccess} />
+        </Modal>
+      )}
 
       <main className="w-full h-full bg-gray8">
         <section className="w-full h-full">
@@ -156,6 +164,7 @@ const Test = () => {
                 <Modal setOpenModal={setOpenModalAnuncio}>
                   <ModalAnuncio
                     setOpenModalAnuncio={setOpenModalAnuncio}
+                    setOpenModalSuccess={setOpenModalSuccess}
                     brands={brands}
                     setSelectBrand={setSelectBrand}
                     cars={cars}
@@ -197,14 +206,6 @@ const Test = () => {
                     carId={car.id}
                     seller={seller}
                   />
-                  {user?.id == seller?.id ? (
-                    <div className="flex gap-5">
-                      <Button variant="border-gray-10">Editar</Button>
-                      <Button variant="border-gray-10">Ver detalhes</Button>
-                    </div>
-                  ) : (
-                    <></>
-                  )}
                 </div>
               ))}
             </ul>
