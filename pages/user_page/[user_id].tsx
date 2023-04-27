@@ -89,9 +89,9 @@ const Test = () => {
     const { data } = await api.get(`/users/${sellerId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(data.cars);
-    setCarList(data.cars);
     setSeller(data);
+    console.log(data);
+    setCarList(data.cars);
   };
 
   return (
@@ -117,39 +117,41 @@ const Test = () => {
       <main className="w-full bg-gray8">
         <section className="w-full h-full">
           <div className="h-full p-4 relative z-10 w-full">
-            <div className="bg-gray10 h-fit rounded w-full max-w-[1200px] mx-auto mt-6 px-7 py-9 md:mt-20">
+            <div className="bg-gray10 h-fit rounded w-full max-w-[1200px] mx-auto mt-6 px-7 py-9 md:mt-56">
               <div className="flex flex-col items-start gap-6 mb-9">
                 <div
-                  className={`bg-random${seller?.color} w-24 h-24 rounded-full flex items-center justify-center`}
+                  className={`bg-${seller?.color} w-24 h-24 rounded-full flex items-center justify-center`}
                 >
-                  <p className="text-whitefixed text-4xl pl-0.5">RA</p>
+                  <p className="text-whitefixed text-4xl pl-0.5">
+                    {seller?.name?.toUpperCase().split("")[0]}
+                    {seller?.name?.toUpperCase().split("")[1]}
+                  </p>
                 </div>
 
                 <h1 className="text-gray1 font-semibold text-lg">
-                  {user?.name}
-                  {user?.is_seller && (
+                  {seller?.name}
+                  {seller?.is_seller && (
                     <span className="text-sm pl-[8px] pt-[4px] pr-[8px] pb-[4px] text-brand1 bg-brand4">
                       Anunciante
                     </span>
                   )}
                 </h1>
 
-                <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Ratione quas reiciendis, distinctio porro, eius laudantium hic
-                  ut magnam, unde voluptate atque obcaecati dolor nihil
-                  consequuntur dolorum vitae ab soluta quia!
-                </p>
+                <p>{seller?.description}</p>
               </div>
+              {user?.id == seller?.id ? (
+                <Button
+                  onClick={() => {
+                    setOpenModalAnuncio(true);
+                  }}
+                  variant="border-brand-4"
+                >
+                  Criar anúncio
+                </Button>
+              ) : (
+                <></>
+              )}
 
-              <Button
-                onClick={() => {
-                  setOpenModalAnuncio(true);
-                }}
-                variant="border-brand-4"
-              >
-                Criar anúncio
-              </Button>
               {openAnuncio && (
                 <Modal setOpenModal={setOpenModalAnuncio}>
                   <ModalAnuncio
