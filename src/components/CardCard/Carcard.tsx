@@ -34,7 +34,7 @@ export const CarCard = ({
     setCarId(id);
     setIdSeller(carSeller);
     setCookie(null, "idSeller", carSeller);
-
+    setCookie(null, "idCar", carId);
     router.push(`/car_page/${carId}`);
   };
 

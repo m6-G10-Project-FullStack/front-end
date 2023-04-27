@@ -21,15 +21,7 @@ interface iCarRegister {
   price: number;
   description: string;
   coverImage: string;
-  image1?: string;
-  image3?: string;
-  image4?: string;
-  image5?: string;
-  image6?: string;
-}
-
-export interface iUserCarSeller {
-  name: string;
+  photos?: string[];
 }
 
 export interface iCarResponse {
@@ -48,7 +40,14 @@ export interface iCarResponse {
   is_active: boolean;
   userId: string;
   brandId: string;
-  User: iUserCarSeller;
+  photos: iCarPhotos[];
+  User: {
+    name: string;
+  };
+}
+
+export interface iCarPhotos {
+  photo_link: string;
 }
 
 interface iModalAnuncioProps {

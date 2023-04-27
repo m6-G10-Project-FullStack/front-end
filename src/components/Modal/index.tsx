@@ -4,6 +4,7 @@ import { useOutsideClick } from "../../hooks/useOutsideClick";
 interface iModalProps {
   children: ReactNode;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  carImg?: string;
 }
 
 export const Modal = ({ children, setOpenModal }: iModalProps) => {
