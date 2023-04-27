@@ -28,6 +28,10 @@ interface iCarRegister {
   image6?: string;
 }
 
+export interface iUserCarSeller {
+  name: string;
+}
+
 export interface iCarResponse {
   brand: string;
   model: string;
@@ -44,6 +48,7 @@ export interface iCarResponse {
   is_active: boolean;
   userId: string;
   brandId: string;
+  User: iUserCarSeller;
 }
 
 interface iModalAnuncioProps {

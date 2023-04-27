@@ -1,17 +1,17 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Button } from "../../src/components/Button";
-import { Modal } from "../../src/components/ModalWrapper";
+import { Modal } from "../../src/components/Modal";
 import ModalAnuncio, { iCarResponse } from "../../src/components/ModalAnuncio";
 import { Header } from "../../src/components/Header";
 import { Footer } from "../../src/components/Footer";
 import Head from "next/head";
 import Car from "../../src/assets/car.png";
 import { useAuth } from "../../src/contexts/authContext";
-import { CarCard } from "../../src/components/CardCard/Carcard";
 import apiKenzie from "../../src/services/apiKenzie";
 import api from "../../src/services/api";
 import { iUser } from "../../src/@types";
 import { parseCookies } from "nookies";
+import { CarCardAnuncio } from "../../src/components/CarCarAnuncio/CarCarAnuncio";
 
 const Test = () => {
   const [openAnuncio, setOpenModalAnuncio] = useState(false);
@@ -114,10 +114,10 @@ const Test = () => {
 
       <Header />
 
-      <main className="w-full bg-gray8">
+      <main className="w-full h-full bg-gray8">
         <section className="w-full h-full">
           <div className="h-full p-4 relative z-10 w-full">
-            <div className="bg-gray10 h-fit rounded w-full max-w-[1200px] mx-auto mt-6 px-7 py-9 md:mt-56">
+            <div className="bg-gray10 h-fit rounded w-full max-w-[1200px] mx-auto mt-56 px-7 py-9 md:mt-56">
               <div className="flex flex-col items-start gap-6 mb-9">
                 <div
                   className={`bg-${seller?.color} w-24 h-24 rounded-full flex items-center justify-center`}
@@ -172,22 +172,40 @@ const Test = () => {
           </div>
           <div className="w-full h-[437px] absolute bg-brand1 z-0 top-0 left-0" />
         </section>
-
-        <section className="w-full max-w-[1600px] my-o mx-auto p-4">
+        {user?.id == seller?.id ? (
+          <></>
+        ) : (
+          <h3 className="font-lex font-semibold text-2xl text-gray0 leading-8 w-full max-w-[1600px] my-0 mx-auto p-4">
+            Anúncios
+          </h3>
+        )}
+        <section className="w-full max-w-[1600px] my-0 mx-auto mt-[90px] p-4">
           {carList && carList!.length > 0 ? (
-            <ul className="w-full flex mt-4 gap-4 overflow-y-scroll md:flex-wrap md:overflow-y-hidden md:mt-2">
+            <ul className="w-full flex mt-4 gap-12 overflow-y-scroll md:flex-wrap md:overflow-y-hidden md:mt-2">
               {carList!.map((car, i) => (
-                <CarCard
-                  key={i}
-                  carName={car.model}
-                  carDescription={car.description}
-                  carImg={car.coverImage}
-                  carKm={car.km}
-                  carPrice={car.price}
-                  carSeller={car.userId}
-                  carYear={car.year}
-                  carId={car.id}
-                />
+                <div key={i} className="flex flex-col">
+                  <CarCardAnuncio
+                    key={i}
+                    carIsActive={car.is_active}
+                    carName={car.model}
+                    carDescription={car.description}
+                    carImg={car.coverImage}
+                    carKm={car.km}
+                    carPrice={car.price}
+                    carSeller={car.userId}
+                    carYear={car.year}
+                    carId={car.id}
+                    seller={seller}
+                  />
+                  {user?.id == seller?.id ? (
+                    <div className="flex gap-5">
+                      <Button variant="border-gray-10">Editar</Button>
+                      <Button variant="border-gray-10">Ver detalhes</Button>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               ))}
             </ul>
           ) : (
@@ -199,7 +217,7 @@ const Test = () => {
           )}
         </section>
 
-        <div className="w-full flex items-center justify-center gap-6 mt-16 mb-8 md:mb-16">
+        <div className="w-full flex flex-col items-center justify-center gap-6 mt-[125px] mb-[65px] md:mb-16">
           <p className="text-xl text-gray4 font-semibold">
             <span className="text-gray3">1</span> de 2
           </p>

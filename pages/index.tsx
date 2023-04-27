@@ -105,6 +105,7 @@ export default function Home() {
                       carPrice={car.price}
                       carSeller={car.userId}
                       carYear={car.year}
+                      carSellerName={car.User.name}
                     />
                   ))}
                 </ul>

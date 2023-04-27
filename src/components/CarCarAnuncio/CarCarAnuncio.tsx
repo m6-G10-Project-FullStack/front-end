@@ -3,6 +3,8 @@ import { StaticImageData } from "next/image";
 import Image from "next/image";
 import { useAuth } from "../../contexts/authContext";
 import { setCookie, parseCookies } from "nookies";
+import { iUser } from "../../@types";
+import { Button } from "../Button";
 
 interface iCarCardProps {
   carName: string;
@@ -13,10 +15,11 @@ interface iCarCardProps {
   carYear: number;
   carPrice: number;
   carId: string;
-  carSellerName: string;
+  seller?: iUser;
+  carIsActive: boolean;
 }
 
-export const CarCard = ({
+export const CarCardAnuncio = ({
   carName,
   carImg,
   carDescription,
@@ -25,9 +28,10 @@ export const CarCard = ({
   carYear,
   carPrice,
   carId,
-  carSellerName,
+  seller,
+  carIsActive,
 }: iCarCardProps) => {
-  const { router, setIdSeller } = useAuth();
+  const { router, setIdSeller, user } = useAuth();
   const [idCar, setCarId] = useState<string>();
 
   const getCarId = (id: string) => {
@@ -42,8 +46,19 @@ export const CarCard = ({
     <>
       <div
         onClick={() => getCarId(carId)}
-        className="w-[312px] mx-auto my-0 rounded-[5px]  box-border flex flex-col items-start justify-center gap-[10]  text-justify shadow-md cursor-pointer "
+        className="w-[312px] mx-auto my-0 rounded-[5px]  box-border flex flex-col items-start justify-center gap-[10]  text-justify shadow-md cursor-pointer relative"
       >
+        {user?.id == seller?.id ? (
+          <></>
+        ) : carIsActive ? (
+          <div className="absolute top-1 left-1">
+            <Button variant="brand-1">Ativo</Button>
+          </div>
+        ) : (
+          <div className="absolute top-1 left-1">
+            <Button variant="disabled">Inativo</Button>
+          </div>
+        )}
         <div className="flex w-full justify-center bg-gray5 box-border rounded-t-[4px]">
           <Image width={262} height={150} src={carImg} alt="foto carro" />
         </div>
@@ -58,10 +73,14 @@ export const CarCard = ({
           </p>
           <div>
             <div className="flex items-center">
-              <p className="bg-brand1 p-[5px] flex justify-center items-center w-8 h-8 rounded-full text-whitefixed text-sm/[17px]">
-                {carSellerName.toUpperCase().split("")[0]}
-                {carSellerName.toUpperCase().split("")[1]}
-              </p>
+              {user?.id == seller?.id ? (
+                <></>
+              ) : (
+                <p className="bg-brand1 p-[5px] flex justify-center items-center w-8 h-8 rounded-full text-whitefixed text-sm/[17px]">
+                  {seller?.name?.toUpperCase().split("")[0]}
+                  {seller?.name?.toUpperCase().split("")[1]}
+                </p>
+              )}
             </div>
           </div>
           <div className="flex w-full gap-[15px] items-center justify-around">
