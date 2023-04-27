@@ -8,7 +8,7 @@ import Input from "../../src/components/Input";
 import api from "../../src/services/api";
 import { ShemaRegisterUser } from "../../src/schemas/shemas";
 import { useAuth } from "../../src/contexts/authContext";
-import { Modal } from "../../src/components/ModalWrapper";
+import { Modal } from "../../src/components/Modal";
 import { ModalSuccess } from "../../src/components/ModalSuccess/ModalSuccess";
 
 interface IUserRegister {
