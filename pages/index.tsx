@@ -123,6 +123,7 @@ export default function Home() {
                       carSeller={car.userId}
                       carYear={car.year}
                       carSellerName={car.User.name}
+                      carIsPromo={car.is_promo}
                     />
                   ))}
                 </ul>

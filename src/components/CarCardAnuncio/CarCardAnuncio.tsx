@@ -94,6 +94,16 @@ export const CarCardAnuncio = ({
           </div>
         </div>
       </div>
+      {user?.id == seller?.id ? (
+        <div className="flex gap-5 mt-3">
+          <Button variant="border-gray-10">Editar</Button>
+          <Button onClick={() => getCarId(carId)} variant="border-gray-10">
+            Ver detalhes
+          </Button>
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   );
 };
