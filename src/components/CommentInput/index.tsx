@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Button } from "../Button";
 
 interface iComentInputProps {
-  initials: string;
-  name: string;
-  cor: string;
+  initials?: string;
+  name?: string;
+  cor?: string;
   /*  | "random1"
     | "random2"
     | "random3"

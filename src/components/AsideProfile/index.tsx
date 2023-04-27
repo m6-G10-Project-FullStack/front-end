@@ -3,22 +3,10 @@ import { Button } from "../Button";
 import { useAuth } from "../../contexts/authContext";
 
 interface iAsideProps {
-  initials: string;
-  name: string;
-  description: string;
-  cor: string;
-  /* | "random1"
-    | "random2"
-    | "random3"
-    | "random4"
-    | "random5"
-    | "random6"
-    | "random7"
-    | "random8"
-    | "random9"
-    | "random10"
-    | "random11"
-    | "random12"; */
+  initials?: string;
+  name?: string;
+  description?: string;
+  cor: any;
 }
 
 const corMap = {

@@ -4,7 +4,7 @@ import Image from "next/image";
 
 interface iModalPhotoProps {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  carImg: string;
+  carImg?: string;
 }
 
 export const ModalPhoto = ({ setOpenModal, carImg }: iModalPhotoProps) => {
