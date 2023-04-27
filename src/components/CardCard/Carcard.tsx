@@ -14,6 +14,7 @@ interface iCarCardProps {
   carPrice: number;
   carId: string;
   carSellerName: string;
+  carIsPromo: boolean;
 }
 
 export const CarCard = ({
@@ -26,6 +27,7 @@ export const CarCard = ({
   carPrice,
   carId,
   carSellerName,
+  carIsPromo,
 }: iCarCardProps) => {
   const { router, setIdSeller } = useAuth();
   const [idCar, setCarId] = useState<string>();
@@ -42,10 +44,22 @@ export const CarCard = ({
     <>
       <div
         onClick={() => getCarId(carId)}
-        className="w-[312px] mx-auto my-0 rounded-[5px]  box-border flex flex-col items-start justify-center gap-[10]  text-justify shadow-md cursor-pointer "
+        className="w-[312px] mx-auto my-0 rounded-[5px]  box-border flex flex-col items-start justify-center gap-[10]  text-justify shadow-md cursor-pointer"
       >
-        <div className="flex w-full justify-center bg-gray5 box-border rounded-t-[4px]">
-          <Image width={262} height={150} src={carImg} alt="foto carro" />
+        <div className="flex w-full justify-center bg-gray5 box-border rounded-t-[4px] relative">
+          {carIsPromo && (
+            <div className="absolute top-0 right-0 bg-random7 h-7 w-4 flex justify-center items-center font-inter font-medium text-sm text-gray10 leading-4">
+              $
+            </div>
+          )}
+          <Image
+            className="w-full"
+            style={{ objectFit: "fill" }}
+            width={262}
+            height={150}
+            src={carImg}
+            alt="foto carro"
+          />
         </div>
         <div className="flex flex-col p-[10px] gap-[10px]">
           <h2 className="text-base font-semibold test-lex leading-5 text-gray0 ">
