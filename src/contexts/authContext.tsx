@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { iUser } from "../@types";
+import { iUser, iUserResponse } from "../@types";
 import { NextRouter, useRouter } from "next/router";
 import { setCookie, parseCookies } from "nookies";
 import Api from "../server/api";
@@ -17,8 +17,8 @@ import jwt_decode from "jwt-decode";
 interface iAuthContext {
   isLoged: boolean;
   setIsLoged: Dispatch<SetStateAction<boolean>>;
-  user?: iUser;
-  setUser?: Dispatch<SetStateAction<iUser | undefined>>;
+  user: iUser | iUserResponse;
+  setUser: Dispatch<SetStateAction<iUser>>;
   HandleFormLogin: (data: iLoginFormInputs) => void;
   router: NextRouter;
   token?: string;
@@ -34,7 +34,7 @@ interface iAuthProvider {
 
 export const AuthProvider = ({ children }: iAuthProvider) => {
   const [isLoged, setIsLoged] = useState(false);
-  const [user, setUser] = useState<iUser>();
+  const [user, setUser] = useState<iUser>({});
   const cookies = parseCookies();
   const [token, setToken] = useState<string>(cookies["token"] || "");
   const [idCar, setCarId] = useState<string>();

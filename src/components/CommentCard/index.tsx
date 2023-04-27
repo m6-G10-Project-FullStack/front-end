@@ -3,11 +3,11 @@ import pingo from "../../assets/Ellipse.png";
 import Image from "next/image";
 
 interface iCommentCardProps {
-  initial: string;
-  name: string;
-  datetime: string;
-  text: string;
-  cor: string;
+  initial?: string;
+  name?: string;
+  datetime?: string;
+  text?: string;
+  cor?: string;
   /* | "random1"
     | "random2"
     | "random3"
