@@ -25,7 +25,10 @@ interface iCarRegister {
 }
 
 export interface iCarResponse {
-  brand: string;
+  Brand: {
+    id: number;
+    name: string;
+  };
   model: string;
   year: number;
   km: number;
