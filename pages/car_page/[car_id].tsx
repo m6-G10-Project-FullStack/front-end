@@ -7,56 +7,67 @@ import CommentInput from "../../src/components/CommentInput";
 import { AsidePhotos } from "../../src/components/AsidePhotos";
 import { photos } from "./dataFotos";
 import AsideProfile from "../../src/components/AsideProfile";
-import { Modal } from "../../src/components/ModalWrapper";
-import { ModalPhoto } from "../../src/components/Modal";
-//import { Header } from "../../src/components/Header";
+import { Modal } from "../../src/components/Modal";
+import { ModalPhoto } from "../../src/components/ModalPhoto";
+import { useAuth } from "../../src/contexts/authContext";
+import api from "../../src/services/api";
+import { parseCookies } from "nookies";
+import { iCarResponse } from "../../src/components/ModalAnuncio";
+import { object } from "yup";
+import { Header } from "../../src/components/Header";
 const CardPage = () => {
-  const user = {
-    name: "Roberto",
-    initial: "RS",
-    description: "Vendedor especialido em carros de luxo.",
-    text: "Roberto jr, empresario e vendedor de carros",
-    cor: "random1",
-  };
-
+  const { user } = useAuth();
   const [openModal, setOpenModal] = useState(false);
   const [photo, setPhoto] = useState("");
-  const photos = [
-    "https://image.webmotors.com.br/_fotos/anunciousados/gigante/2023/202302/20230227/porsche-taycan-turbo-s-eletrico-wmimagem17570311526.jpg?s=fill&w=1920&h=1440&q=75",
-    "https://image.webmotors.com.br/_fotos/anunciousados/gigante/2023/202302/20230227/porsche-taycan-turbo-s-eletrico-wmimagem17570262036.jpg?s=fill&w=1920&h=1440&q=75",
-    "https://image.webmotors.com.br/_fotos/anunciousados/gigante/2023/202302/20230227/porsche-taycan-turbo-s-eletrico-wmimagem17570311526.jpg?s=fill&w=1920&h=1440&q=75",
-    "https://image.webmotors.com.br/_fotos/anunciousados/gigante/2023/202302/20230227/porsche-taycan-turbo-s-eletrico-wmimagem17570396931.jpg?s=fill&w=1920&h=1440&q=75",
-    "https://image.webmotors.com.br/_fotos/anunciousados/gigante/2023/202302/20230227/porsche-taycan-turbo-s-eletrico-wmimagem17570508335.jpg?s=fill&w=1920&h=1440&q=75",
-    "https://image.webmotors.com.br/_fotos/anunciousados/gigante/2023/202302/20230227/porsche-taycan-turbo-s-eletrico-wmimagem17570653610.jpg?s=fill&w=1920&h=1440&q=75",
-  ];
+  const [car, setCar] = useState<iCarResponse>();
+  console.log(car);
+
+  useEffect(() => {
+    const id = parseCookies();
+    const getCarById = async (id: string) => {
+      const cars = await api
+        .get(`/cars/${id}`)
+        .then((res) => setCar(res.data))
+        .catch((err) => console.log(err));
+      console.log(cars);
+      return cars;
+    };
+    getCarById(id["idCar"]);
+  }, []);
 
   return (
     <>
-      {/* <Header isLoggedIn={true} user={user} /> */}
+      <Header />
       {openModal && (
         <Modal setOpenModal={setOpenModal}>
           <ModalPhoto setOpenModal={setOpenModal} carImg={photo} />
         </Modal>
       )}
-      <main className="my-0 mx-auto xl:p-[30px] md:p-[20px] flex flex-col md:min-w-[375px] xl:max-w-[1600px] xl:flex-row xl:items-start md:items-center content-start justify-center  box-border gap-[15px] bg-gradient-to-b from-brand1 from-30%  to-brand4 to-20%">
+      <main className="my-0 mt-[40px] mx-auto xl:p-[30px] md:p-[20px] flex flex-col md:min-w-[375px] xl:max-w-[1600px] xl:flex-row xl:items-start md:items-center content-start justify-center  box-border gap-[15px] bg-gradient-to-b from-brand1 from-30%  to-brand4 to-20%">
         <section className="flex flex-col gap-[10px] p-[10px] xl:p-[30px]  md:p-[15px] box-border w-full content-center md:flex-wrap md:m-[5px] xl:m-[10px]">
-          <section className="shadow-sm flex p-[30px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-center g-[32px] rounded">
-            <Image className="w-[294px] md:w-[441px] " src={car} alt="Card" />
+          <section className=" relative shadow-sm flex p-[60px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-center g-[32px] rounded">
+            <Image
+              src={car?.coverImage}
+              alt="Card"
+              width={1280}
+              height={300}
+              style={{ objectFit: "fill" }}
+            />
           </section>
           <section className=" shadow-sm flex p-[30px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-start g-[32px] rounded">
             <h1 className="text-base font-semibold font-lex text-gray0">
-              Mercedes Benz A 200 CGI ADVANCE SEDAN Mercedes Benz A 200{" "}
+              {car?.model}
             </h1>
             <div className="xl:flex mx:flex-col gap-3 text-center justify-center md:justify-between text-base ">
               <div className="flex justify-between items-center ">
                 <span className="bg-brand4 h-[32px] w-[50px] rounded ml-[5px] py-[8px] px-[4px] text-brand1 ">
-                  2013
+                  {car?.year}
                 </span>
                 <span className="bg-brand4 h-[32px] w-[50px] rounded ml-[5px] py-[8px] px-[4px]  text-brand1">
-                  0 KM
+                  {car?.km}
                 </span>
               </div>
-              <p className="font-semibold">R$ 00.000,00</p>
+              <p className="font-semibold">{car?.price}</p>
             </div>
             <Button
               className="xl:w-[20%] mt-3 w-[100px] min-w-[100px] rounded p-2 bg-brand1 text-whitefixed"
@@ -67,16 +78,11 @@ const CardPage = () => {
           </section>
           <section className="shadow-sm flex p-[30px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-start g-[32px] rounded ">
             <h2 className="font-semibold text-base">Descrição</h2>
-            <p className="text-justify">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industrys standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </p>
+            <p className="text-justify">{car?.description}</p>
           </section>
           <div className="shadow-sm flex p-[30px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-start g-[32px] rounded">
             <CommentCard
-              cor={user.cor}
+              cor={user.color}
               datetime="11/04/2023"
               name="Roberto"
               initial="RS"
@@ -86,9 +92,9 @@ const CardPage = () => {
           </div>
           <section className="shadow-sm flex p-[30px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-start g-[32px] rounded">
             <CommentInput
-              initials={user.initial}
-              name={user.name}
-              cor={user.cor}
+              initials={user?.name}
+              name={user?.name}
+              cor={user?.color}
             />
           </section>
         </section>
@@ -97,15 +103,15 @@ const CardPage = () => {
             <AsidePhotos
               setOpenModal={setOpenModal}
               setPhoto={setPhoto}
-              photos={photos}
+              photos={car?.photos}
             />
           </div>
           <div className=" bg-whitefixed w-full flex rounded-lg flex-col items-center justify-center">
             <AsideProfile
               name={user.name}
-              cor={user.cor}
+              cor={user.color}
               description={user.description}
-              initials={user.initial}
+              initials={user.name}
             />
           </div>
         </aside>

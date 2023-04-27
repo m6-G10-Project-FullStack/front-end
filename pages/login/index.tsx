@@ -20,7 +20,7 @@ const Login = () => {
   return (
     <>
       <Header />
-      <main className="w-full flex justify-center items-center bg-gray8 ">
+      <main className="w-full flex justify-center items-center h-screen bg-gray8 pb-[20px] ">
         <form
           onSubmit={handleSubmit(HandleFormLogin)}
           className="flex flex-col justify-center w-[412px] md:w-[343px] shadow-md h-[542px] md:h-[542px] rounded items-stretch px-11 py-12 min-w-[320px] gap-8 m-5 mt-10 bg-whitefixed"

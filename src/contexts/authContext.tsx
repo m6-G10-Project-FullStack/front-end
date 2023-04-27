@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { iUser } from "../@types";
+import { iUser, iUserResponse } from "../@types";
 import { NextRouter, useRouter } from "next/router";
 import { setCookie, parseCookies } from "nookies";
 import Api from "../server/api";
@@ -17,10 +17,13 @@ import jwt_decode from "jwt-decode";
 interface iAuthContext {
   isLoged: boolean;
   setIsLoged: Dispatch<SetStateAction<boolean>>;
-  user: iUser;
+  user: iUser | iUserResponse;
   setUser: Dispatch<SetStateAction<iUser>>;
   HandleFormLogin: (data: iLoginFormInputs) => void;
   router: NextRouter;
+  token?: string;
+  idSeller: string;
+  setIdSeller: Dispatch<SetStateAction<string>>;
 }
 
 export const AuthContext = createContext<iAuthContext>({} as iAuthContext);
@@ -31,9 +34,11 @@ interface iAuthProvider {
 
 export const AuthProvider = ({ children }: iAuthProvider) => {
   const [isLoged, setIsLoged] = useState(false);
-  const [user, setUser] = useState<any>();
+  const [user, setUser] = useState<iUser>({});
   const cookies = parseCookies();
+  const [token, setToken] = useState<string>(cookies["token"] || "");
   const [idCar, setCarId] = useState<string>();
+  const [idSeller, setIdSeller] = useState<string>("");
 
   const router = useRouter();
 
@@ -44,8 +49,8 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
       .then((res) => {
         setCookie(null, "token", res.data.token);
         const localtoken = parseCookies();
-        console.log(localtoken);
         if (localtoken) {
+          setToken(localtoken["token"]);
           setIsLoged(true);
           router.push("/");
         }
@@ -59,7 +64,6 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
         headers: { Authorization: `Bearer ${cookies["token"]}` },
       });
       setUser(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -67,11 +71,12 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
 
   useEffect(() => {
     if (cookies["token"]) {
+      setToken(cookies["token"]);
       const decodedToken: any = jwt_decode(cookies["token"]);
       setIsLoged(true);
       getUserData(decodedToken.sub);
     }
-  }, []);
+  }, [token]);
 
   return (
     <AuthContext.Provider
@@ -82,6 +87,9 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
         setUser,
         HandleFormLogin,
         router,
+        token,
+        idSeller,
+        setIdSeller,
       }}
     >
       {children}
