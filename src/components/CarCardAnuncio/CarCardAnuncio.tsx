@@ -3,6 +3,8 @@ import { StaticImageData } from "next/image";
 import Image from "next/image";
 import { useAuth } from "../../contexts/authContext";
 import { setCookie, parseCookies } from "nookies";
+import { iUser } from "../../@types";
+import { Button } from "../Button";
 
 interface iCarCardProps {
   carName: string;
@@ -13,11 +15,11 @@ interface iCarCardProps {
   carYear: number;
   carPrice: number;
   carId: string;
-  carSellerName: string;
-  carIsPromo: boolean;
+  seller?: iUser;
+  carIsActive: boolean;
 }
 
-export const CarCard = ({
+export const CarCardAnuncio = ({
   carName,
   carImg,
   carDescription,
@@ -26,10 +28,10 @@ export const CarCard = ({
   carYear,
   carPrice,
   carId,
-  carSellerName,
-  carIsPromo,
+  seller,
+  carIsActive,
 }: iCarCardProps) => {
-  const { router, setIdSeller } = useAuth();
+  const { router, setIdSeller, user } = useAuth();
   const [idCar, setCarId] = useState<string>();
 
   const getCarId = (id: string) => {
@@ -44,22 +46,21 @@ export const CarCard = ({
     <>
       <div
         onClick={() => getCarId(carId)}
-        className="w-[312px] mx-auto my-0 rounded-[5px]  box-border flex flex-col items-start justify-center gap-[10]  text-justify shadow-md cursor-pointer"
+        className="w-[312px] mx-auto my-0 rounded-[5px]  box-border flex flex-col items-start justify-center gap-[10]  text-justify shadow-md cursor-pointer relative"
       >
-        <div className="flex w-full justify-center bg-gray5 box-border rounded-t-[4px] relative">
-          {carIsPromo && (
-            <div className="absolute top-0 right-0 bg-random7 h-7 w-4 flex justify-center items-center font-inter font-medium text-sm text-gray10 leading-4">
-              $
-            </div>
-          )}
-          <Image
-            className="w-full"
-            style={{ objectFit: "fill" }}
-            width={262}
-            height={150}
-            src={carImg}
-            alt="foto carro"
-          />
+        {user?.id == seller?.id ? (
+          <></>
+        ) : carIsActive ? (
+          <div className="absolute top-1 left-1">
+            <Button variant="brand-1">Ativo</Button>
+          </div>
+        ) : (
+          <div className="absolute top-1 left-1">
+            <Button variant="disabled">Inativo</Button>
+          </div>
+        )}
+        <div className="flex w-full justify-center bg-gray5 box-border rounded-t-[4px]">
+          <Image width={262} height={150} src={carImg} alt="foto carro" />
         </div>
         <div className="flex flex-col p-[10px] gap-[10px]">
           <h2 className="text-base font-semibold test-lex leading-5 text-gray0 ">
@@ -72,10 +73,14 @@ export const CarCard = ({
           </p>
           <div>
             <div className="flex items-center">
-              <p className="bg-brand1 p-[5px] flex justify-center items-center w-8 h-8 rounded-full text-whitefixed text-sm/[17px]">
-                {carSellerName.toUpperCase().split("")[0]}
-                {carSellerName.toUpperCase().split("")[1]}
-              </p>
+              {user?.id == seller?.id ? (
+                <></>
+              ) : (
+                <p className="bg-brand1 p-[5px] flex justify-center items-center w-8 h-8 rounded-full text-whitefixed text-sm/[17px]">
+                  {seller?.name?.toUpperCase().split("")[0]}
+                  {seller?.name?.toUpperCase().split("")[1]}
+                </p>
+              )}
             </div>
           </div>
           <div className="flex w-full gap-[15px] items-center justify-around">
@@ -89,6 +94,16 @@ export const CarCard = ({
           </div>
         </div>
       </div>
+      {user?.id == seller?.id ? (
+        <div className="flex gap-5 mt-3">
+          <Button variant="border-gray-10">Editar</Button>
+          <Button onClick={() => getCarId(carId)} variant="border-gray-10">
+            Ver detalhes
+          </Button>
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

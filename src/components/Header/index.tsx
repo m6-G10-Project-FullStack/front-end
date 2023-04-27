@@ -58,9 +58,7 @@ export const Header = () => {
 
           <menu className="absolute top-[79px] left-0 z-30 items-center w-full bg-gray10">
             {isOpen &&
-              token &&
-              user &&
-              (isLoged ? (
+              (user && isLoged ? (
                 <ProfileMenu />
               ) : (
                 <ul className="px-2 py-4 w-full flex flex-col gap-8">

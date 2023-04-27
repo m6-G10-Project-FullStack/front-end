@@ -9,6 +9,7 @@ import { Schema } from "inspector";
 import { RxDragHandleDots1 } from "react-icons/rx";
 import api from "../../services/api";
 import { AuthContext, useAuth } from "../../contexts/authContext";
+import { error } from "console";
 
 interface iCarRegister {
   brand: string;
@@ -25,7 +26,10 @@ interface iCarRegister {
 }
 
 export interface iCarResponse {
-  brand: string;
+  Brand: {
+    id: number;
+    name: string;
+  };
   model: string;
   year: number;
   km: number;
@@ -52,6 +56,7 @@ export interface iCarPhotos {
 
 interface iModalAnuncioProps {
   setOpenModalAnuncio: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenModalSuccess: React.Dispatch<React.SetStateAction<boolean>>;
   brands?: string[];
   setSelectBrand?: React.Dispatch<React.SetStateAction<string>>;
   cars?: string[];
@@ -65,6 +70,7 @@ interface iModalAnuncioProps {
 
 const ModalAnuncio = ({
   setOpenModalAnuncio,
+  setOpenModalSuccess,
   brands,
   setSelectBrand,
   cars,
@@ -117,51 +123,55 @@ const ModalAnuncio = ({
   });
 
   const onSubmitForm = async (data: iCarRegister) => {
-    console.log(data);
+    try {
+      const brandId = await getBrandId(data.brand);
 
-    const brandId = await getBrandId(data.brand);
-    console.log(brandId);
-
-    const newCar = {
-      year: data.year,
-      fuel: data.fuel,
-      km: data.km,
-      color: data.color,
-      fipe: data.fipe,
-      price: data.price,
-      description: data.description,
-      model: data.model,
-      brandId: brandId,
-      coverImage: data.coverImage,
-      userId: user!.id,
-    };
-
-    const carId = await createCar(newCar);
-    console.log(carId);
-
-    const {
-      brand,
-      year,
-      fuel,
-      km,
-      color,
-      fipe,
-      price,
-      description,
-      model,
-      coverImage,
-      ...gallery
-    } = data;
-    console.log(gallery);
-    const values = Object.values(gallery);
-    for (let value of values) {
-      let newPhoto = {
-        carId: carId,
-        photo_link: value,
+      const newCar = {
+        year: data.year,
+        fuel: data.fuel,
+        km: data.km,
+        color: data.color,
+        fipe: data.fipe,
+        price: data.price,
+        description: data.description,
+        model: data.model,
+        brandId: brandId,
+        coverImage: data.coverImage,
+        userId: user!.id,
       };
-      await api.post("/gallery", newPhoto, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+
+      const carId = await createCar(newCar);
+      console.log(carId);
+
+      const {
+        brand,
+        year,
+        fuel,
+        km,
+        color,
+        fipe,
+        price,
+        description,
+        model,
+        coverImage,
+        ...gallery
+      } = data;
+      console.log(gallery);
+      const values = Object.values(gallery);
+      for (let value of values) {
+        let newPhoto = {
+          carId: carId,
+          photo_link: value,
+        };
+        await api.post("/gallery", newPhoto, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      }
+
+      setOpenModalAnuncio(false);
+      setOpenModalSuccess(true);
+    } catch (error) {
+      console.log(error);
     }
   };
   const getBrandId = async (brand: string) => {
@@ -188,142 +198,144 @@ const ModalAnuncio = ({
   };
 
   return (
-    <div className="bg-gray10 w-full h-max max-h-[700px] max-w-custom344 flex flex-col content-center rounded-lg px-6 py-4 md:max-w-lg relative overflow-y-auto scrollbar-w-6 scrollbar-track-gray-100 scrollbar-thumb-gray-500 scrollbar-thumb-rounded-md">
-      <div className="flex w-full justify-between items-center">
-        <p className="font-lex font-medium text-base text-gray1">
-          Criar anúncio
-        </p>
-        <button
-          className="h-10 flex border-none bg-transparent text-gray3 text-custom22 cursor-pointer"
-          onClick={() => setOpenModalAnuncio(false)}
-          type="button"
-        >
-          x
-        </button>
-      </div>
-      <form
-        onSubmit={handleSubmit(onSubmitForm)}
-        className="flex flex-col w-full py-4 gap-2"
-      >
-        <h3 className="font-inter font-medium text-sm leading-6 text-gray1 mb-6">
-          Informações do veículo
-        </h3>
-        <Select
-          register={register}
-          name="brand"
-          label="Marca"
-          arrayValue={arrayMarcas}
-          setSelect={setSelectBrand}
-        />
-        <Select
-          register={register}
-          name="model"
-          label="Modelo"
-          arrayValue={arrayModelos}
-          setSelect={setSelectCar}
-        />
-        <div className="flex justify-between gap-4">
-          <div className="flex flex-col w-[127px]">
-            <Select
-              register={register}
-              name="year"
-              label="Ano"
-              arrayValue={arrayAnos}
-              setSelect={setSelectYear}
-            />
-          </div>
-          <div className="flex flex-col w-[127px]">
-            <Select
-              register={register}
-              name="fuel"
-              label="Combustível"
-              arrayValue={arrayCombustivel}
-              setSelect={setSelectFuel}
-            />
-          </div>
-        </div>
-        <div className="flex justify-between gap-4">
-          <div className="flex flex-col w-[127px]">
-            <Input
-              register={register}
-              name="km"
-              label="Quilometragem"
-              placeholder={"Ex.: 30.000"}
-            />
-          </div>
-          <div className="flex flex-col w-[127px]">
-            <Input
-              register={register}
-              name="color"
-              label="Cor"
-              placeholder={"Ex.: Branco"}
-            />
-          </div>
-        </div>
-        <div className="flex justify-between gap-4">
-          <div className="flex flex-col w-[127px]">
-            <Input
-              register={register}
-              name="fipe"
-              placeholder="R$ 48.000,00"
-              label="Preço tabela FIPE"
-              valor={fipe}
-            />
-          </div>
-          <div className="flex flex-col w-[127px]">
-            <Input
-              register={register}
-              name="price"
-              label="Preço"
-              placeholder={"Ex.: 50.000,00"}
-            />
-          </div>
-        </div>
-        <Input
-          register={register}
-          name="description"
-          label="Descrição"
-          placeholder="Escreva detalhes do seu veículo"
-        />
-        <Input
-          register={register}
-          name="coverImage"
-          label="Imagem da capa"
-          placeholder={"Ex.: https://image.com"}
-        />
-        {inputCount.map((item) => (
-          <Input
-            register={register}
-            name={`image${item}`}
-            key={item}
-            label={`${item}ª Imagem da galeria`}
-            placeholder={"Ex.: https://image.com"}
-          />
-        ))}
-        <div className="m-w-[315px]">
-          <Button
-            type="button"
-            onClick={handleInputCount}
-            variant={inputCount.length == 6 ? "disabled" : "brand-4"}
-          >
-            Adicionar campo para imagem da galeria
-          </Button>
-        </div>
-        <div>
-          <Button
+    <>
+      <div className="bg-gray10 w-full h-max max-h-[700px] max-w-custom344 flex flex-col content-center rounded-lg px-6 py-4 md:max-w-lg relative overflow-y-auto scrollbar-w-6 scrollbar-track-gray-100 scrollbar-thumb-gray-500 scrollbar-thumb-rounded-md">
+        <div className="flex w-full justify-between items-center">
+          <p className="font-lex font-medium text-base text-gray1">
+            Criar anúncio
+          </p>
+          <button
+            className="h-10 flex border-none bg-transparent text-gray3 text-custom22 cursor-pointer"
             onClick={() => setOpenModalAnuncio(false)}
             type="button"
-            variant="gray-6"
           >
-            Cancelar
-          </Button>
-
-          <Button type="submit" variant="brand-4">
-            Criar anúncio
-          </Button>
+            x
+          </button>
         </div>
-      </form>
-    </div>
+        <form
+          onSubmit={handleSubmit(onSubmitForm)}
+          className="flex flex-col w-full py-4 gap-2"
+        >
+          <h3 className="font-inter font-medium text-sm leading-6 text-gray1 mb-6">
+            Informações do veículo
+          </h3>
+          <Select
+            register={register}
+            name="brand"
+            label="Marca"
+            arrayValue={arrayMarcas}
+            setSelect={setSelectBrand}
+          />
+          <Select
+            register={register}
+            name="model"
+            label="Modelo"
+            arrayValue={arrayModelos}
+            setSelect={setSelectCar}
+          />
+          <div className="flex justify-between gap-4">
+            <div className="flex flex-col w-[127px]">
+              <Select
+                register={register}
+                name="year"
+                label="Ano"
+                arrayValue={arrayAnos}
+                setSelect={setSelectYear}
+              />
+            </div>
+            <div className="flex flex-col w-[127px]">
+              <Select
+                register={register}
+                name="fuel"
+                label="Combustível"
+                arrayValue={arrayCombustivel}
+                setSelect={setSelectFuel}
+              />
+            </div>
+          </div>
+          <div className="flex justify-between gap-4">
+            <div className="flex flex-col w-[127px]">
+              <Input
+                register={register}
+                name="km"
+                label="Quilometragem"
+                placeholder={"Ex.: 30.000"}
+              />
+            </div>
+            <div className="flex flex-col w-[127px]">
+              <Input
+                register={register}
+                name="color"
+                label="Cor"
+                placeholder={"Ex.: Branco"}
+              />
+            </div>
+          </div>
+          <div className="flex justify-between gap-4">
+            <div className="flex flex-col w-[127px]">
+              <Input
+                register={register}
+                name="fipe"
+                placeholder="R$ 48.000,00"
+                label="Preço tabela FIPE"
+                valor={fipe}
+              />
+            </div>
+            <div className="flex flex-col w-[127px]">
+              <Input
+                register={register}
+                name="price"
+                label="Preço"
+                placeholder={"Ex.: 50.000,00"}
+              />
+            </div>
+          </div>
+          <Input
+            register={register}
+            name="description"
+            label="Descrição"
+            placeholder="Escreva detalhes do seu veículo"
+          />
+          <Input
+            register={register}
+            name="coverImage"
+            label="Imagem da capa"
+            placeholder={"Ex.: https://image.com"}
+          />
+          {inputCount.map((item) => (
+            <Input
+              register={register}
+              name={`image${item}`}
+              key={item}
+              label={`${item}ª Imagem da galeria`}
+              placeholder={"Ex.: https://image.com"}
+            />
+          ))}
+          <div className="m-w-[315px]">
+            <Button
+              type="button"
+              onClick={handleInputCount}
+              variant={inputCount.length == 6 ? "disabled" : "brand-4"}
+            >
+              Adicionar campo para imagem da galeria
+            </Button>
+          </div>
+          <div>
+            <Button
+              onClick={() => setOpenModalAnuncio(false)}
+              type="button"
+              variant="gray-6"
+            >
+              Cancelar
+            </Button>
+
+            <Button type="submit" variant="brand-4">
+              Criar anúncio
+            </Button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
 

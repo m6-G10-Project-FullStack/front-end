@@ -1,31 +1,26 @@
-import CustomImage from "../CustomImage/customImage";
-import imgX from "../../assets/x.png";
-import Image from "next/image";
+import React, { ReactNode } from "react";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
 
-interface iModalPhotoProps {
+interface iModalProps {
+  children: ReactNode;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   carImg?: string;
 }
 
-export const ModalPhoto = ({ setOpenModal, carImg }: iModalPhotoProps) => {
+export const Modal = ({ children, setOpenModal }: iModalProps) => {
+  const modalRef = useOutsideClick(() => {
+    setOpenModal(false);
+  });
+
   return (
-    <div className="bg-gray10 w-full max-w-custom344 h-custom365 flex flex-col content-center rounded-lg md:max-w-lg">
-      <div className="flex justify-between px-4 py-8 items-center">
-        <h6 className="font-lex font-medium text-base">Imagem do veículo</h6>
-        <button
-          className="h-10 border-none cursor-pointer"
-          onClick={() => setOpenModal(false)}
+    <div className="fixed top-0 left-0 w-screen h-screen z-50">
+      <div className="w-full h-screen flex justify-center items-star bg-gray2 bg-opacity-50">
+        <div
+          className="flex justify-center h-custom365 w-[344px] md:w-[520px] px-custom15 py-0 mt-[94px] relative"
+          ref={modalRef}
         >
-          <Image src={imgX} alt="botão fechar" width={24} height={24} />
-        </button>
-      </div>
-      <div className="flex w-full max-w-custom344 h-60 justify-center items-center md:max-w-full">
-        <CustomImage
-          src={carImg}
-          alt="Imagem do veículo"
-          width={260}
-          height={239}
-        />
+          {children}
+        </div>
       </div>
     </div>
   );
