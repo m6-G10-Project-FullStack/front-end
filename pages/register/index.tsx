@@ -64,8 +64,8 @@ export default function Register() {
         </Modal>
       )}
       <Header />
-      <main className="flex justify-center">
-        <div className="flex flex-col max-w-2">
+      <main className="w-full flex justify-center items-center mt-[60px] bg-gray8 pb-[20px]">
+        <div className="flex flex-col justify-start w-[600px] md:w-[343px] shadow-md   rounded items-stretch px-11 py-12 min-w-[320px] gap-8 m-5 mt-[60px] bg-whitefixed">
           <h1 className="text-3xl font-semibold text-gray-800 m-2">Cadastro</h1>
           <h3 className="text-1xl font-semibold text-gray-800 m-2">
             Informações pessoais
