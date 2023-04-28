@@ -2,9 +2,12 @@ import { useState, useMemo } from "react";
 import { useAuth } from "../../contexts/authContext";
 import { Button } from "../Button";
 import { destroyCookie } from "nookies";
+import { Modal } from "../Modal";
+import ModalEditProfile from "../ModalEditProfile";
 
 export const ProfileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [openModalEditProfile, setOpenModalEditProfile] = useState(false);
   const { user, setUser, setIsLoged } = useAuth();
 
   const randomColor = useMemo(() => Math.floor(Math.random() * 11 + 1), []);
@@ -16,6 +19,11 @@ export const ProfileMenu = () => {
 
   return (
     <>
+      {openModalEditProfile && (
+        <Modal setOpenModal={setOpenModalEditProfile}>
+          <ModalEditProfile setOpenModalEditProfile={setOpenModalEditProfile} />
+        </Modal>
+      )}
       {/* ----- Desktop ----- */}
       <div className="relative hidden md:block">
         <button
@@ -32,8 +40,12 @@ export const ProfileMenu = () => {
 
         {isOpen && (
           <menu className="absolute top-11 left-0 z-10 w-full bg-gray10 p-4 rounded flex flex-col items-start gap-1 text-gray2">
-            <button>Editar perfil</button>
-            <button>Editar endereço</button>
+            <button onClick={() => setOpenModalEditProfile(true)}>
+              Editar perfil
+            </button>
+            <button onClick={() => console.log("implemente maldito")}>
+              Editar endereço
+            </button>
             {user!.is_seller && <button>Editar anúncios</button>}
             <button onClick={clearTokenCookie}>Sair</button>
           </menu>

@@ -6,7 +6,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../../src/components/Input";
 import api from "../../src/services/api";
-import { ShemaRegisterUser } from "../../src/schemas/shemas";
+import { SchemaRegisterUser } from "../../src/schemas/shemas";
 import { useAuth } from "../../src/contexts/authContext";
 import { Modal } from "../../src/components/Modal";
 import { ModalSuccess } from "../../src/components/ModalSuccess/ModalSuccess";
@@ -40,10 +40,10 @@ export default function Register() {
     setValue,
     formState: { errors },
   } = useForm<IUserRegister>({
-    resolver: yupResolver(ShemaRegisterUser),
+    resolver: yupResolver(SchemaRegisterUser),
   });
 
-  const onFormSubmit = async (formData: IUserRegister) => {
+  const onSubmitForm = async (formData: IUserRegister) => {
     registerUser({ ...formData, is_seller: isSeller });
   };
 
@@ -70,7 +70,7 @@ export default function Register() {
           <h3 className="text-1xl font-semibold text-gray-800 m-2">
             Informações pessoais
           </h3>
-          <form onSubmit={handleSubmit(onFormSubmit)}>
+          <form onSubmit={handleSubmit(onSubmitForm)}>
             <div className="flex flex-col m-2">
               <div>
                 <Input
