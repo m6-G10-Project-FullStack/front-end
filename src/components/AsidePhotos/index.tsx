@@ -20,7 +20,7 @@ export const AsidePhotos = ({
   };
 
   return (
-    <div className="bg-gray10 rounded-s p-3 md:w-full max-w-[351px] md:max-w-[440px]">
+    <div className="bg-gray10 rounded-lg p-3 md:w-full ">
       <h3 className="pt-9 pl-8 font-lex font-semibold text-xl">Fotos</h3>
       <section className="bg-gray10 rounded-s grid gap-4 grid-cols-3 grid-rows-2 md:pt-custom10 md:w-full">
         {photos?.map((photo, index) => (
