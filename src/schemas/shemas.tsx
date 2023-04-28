@@ -8,7 +8,7 @@ export const SchemaLogin = yup.object().shape({
     .min(8, "Mínimo de 8 dígitos"),
 });
 
-export const ShemaRegisterUser = yup.object().shape({
+export const SchemaRegisterUser = yup.object().shape({
   name: yup
     .string()
     .matches(/^[a-zA-Z\s]*$/, "Apenas letras são permitidas")
