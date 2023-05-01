@@ -13,7 +13,11 @@ export interface iLoginFormInputs {
 
 const Login = () => {
   const { HandleFormLogin, router } = useAuth();
-  const { register, handleSubmit } = useForm<iLoginFormInputs>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<iLoginFormInputs>({
     resolver: yupResolver(SchemaLogin),
   });
 
@@ -23,7 +27,7 @@ const Login = () => {
       <main className="w-full flex justify-center items-center h-screen bg-gray8 pb-[20px] ">
         <form
           onSubmit={handleSubmit(HandleFormLogin)}
-          className="flex flex-col justify-center w-[412px] md:w-[343px] shadow-md h-[542px] md:h-[542px] rounded items-stretch px-11 py-12 min-w-[320px] gap-8 m-5 mt-10 bg-whitefixed"
+          className="flex flex-col justify-center w-[412px] md:w-[343px] shadow-md   rounded items-stretch px-11 py-12 min-w-[320px] gap-8 m-5 mt-10 bg-whitefixed"
         >
           <h1 className="text-left font-lex font-semibold">Login</h1>
           <label htmlFor="email" className="font-semibold">
@@ -34,6 +38,9 @@ const Login = () => {
             placeholder="Digitar usuário"
             {...register("email")}
           />
+          {errors.email && (
+            <span className="text-red-600">{errors.email.message}</span>
+          )}
           <label htmlFor="email" className="font-semibold">
             Senha
           </label>
@@ -42,6 +49,9 @@ const Login = () => {
             placeholder="Digitar senha"
             {...register("password")}
           />
+          {errors.password && (
+            <span className="text-red-600">{errors.password.message}</span>
+          )}
           <p className="text-right text-gray1">
             <a href="#">Esqueci minha senha</a>
           </p>

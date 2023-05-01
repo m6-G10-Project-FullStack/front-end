@@ -27,7 +27,7 @@ const corMap = {
 const AsideProfile = ({ cor, description, initials, name }: iAsideProps) => {
   const { idSeller, router } = useAuth();
   return (
-    <div className="bg-gray10 w-full  justify-center items-center flex flex-col rounded-s p-3 md:w-full max-w-[351px] md:max-w-[440px]">
+    <div className="bg-gray10 w-full  justify-center items-center flex flex-col rounded-lg p-3 md:w-full ">
       <div
         className={`flex justify-center items-center font-inter font-medium text-2xl md:text-4xl leading-[56px] text-gray10 w-[77px] h-[77px] rounded-full md:w-[104px] md:h-[104px] mb-7  ${corMap[cor]}`}
       >
