@@ -21,6 +21,8 @@ export const ModalPhoto = ({ setOpenModal, carImg }: iModalPhotoProps) => {
       </div>
       <div className="flex w-full max-w-custom344 h-60 justify-center items-center md:max-w-full">
         <CustomImage
+          className="w-[466px] h-[240px]"
+          style={{ objectFit: "fill" }}
           src={carImg}
           alt="Imagem do veículo"
           width={260}

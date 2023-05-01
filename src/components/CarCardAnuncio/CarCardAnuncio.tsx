@@ -90,7 +90,7 @@ export const CarCardAnuncio = ({
             <span className="text-sm pl-2 pt-1 pr-2 pb-1 text-brand1 bg-brand4">
               Ano{carYear}
             </span>
-            <p>R$ {carPrice}</p>
+            <p>R$ {carPrice.toLocaleString()},00</p>
           </div>
         </div>
       </div>

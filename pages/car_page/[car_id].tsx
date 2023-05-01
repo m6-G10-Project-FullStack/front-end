@@ -60,15 +60,15 @@ const CardPage = () => {
             </h1>
             <div className="xl:flex mx:flex-col gap-3 text-center justify-center w-[200px] md:justify-between text-base ">
               <div className="flex justify-between items-center content-center w-[200px]  ">
-                <span className="bg-brand4 h-[32px] justify-center flex  w-[300px] rounded-lg ml-[5px] p-[4px] text-brand1 font-bold ">
+                <span className="bg-brand4 h-[32px] justify-center flex  w-[300px] rounded-lg ml-[5px] p-[4px] text-brand1 font-medium ">
                   Ano:{car?.year}
                 </span>
-                <span className="bg-brand4 font-bold h-[32px] flex w-full rounded-lg ml-[15px] ] p-[4px]  text-brand1">
+                <span className="bg-brand4 font-medium h-[32px] flex w-full rounded-lg ml-[15px] ] p-[4px]  text-brand1">
                   KM:{car?.km.toLocaleString()}
                 </span>
               </div>
               <p className="font-semibold flex w-full">
-                R$ {car?.price.toLocaleString()}
+                R$ {car?.price.toLocaleString()},00
               </p>
             </div>
             <Button
