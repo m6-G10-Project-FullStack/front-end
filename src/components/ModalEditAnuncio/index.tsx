@@ -10,22 +10,30 @@ import api from "../../services/api";
 import { useAuth } from "../../contexts/authContext";
 import jwt_decode from "jwt-decode";
 
-export interface iModalEditAddressProps {
-  setOpenModalEditAddress: React.Dispatch<SetStateAction<boolean>>;
+export interface iModalEditAnnouncementProps {
+  setOpenModalEditAnnouncement: React.Dispatch<SetStateAction<boolean>>;
 }
 
-export interface iUserEditAddress {
-  cep?: string;
-  city?: string;
-  state?: string;
-  street?: string;
-  number?: string;
-  complement?: string;
+export interface iUserEditAnnouncement {
+  model?: string;
+  year?: number;
+  km?: number;
+  fuel: string;
+  color: string;
+  fipe: number;
+  price: number;
+  description: string;
+  coverImage: string;
+  id: string;
+  is_promo: boolean;
+  is_active: boolean;
+  userId: string;
+  brandId: string;
 }
 
-const ModalEditAddress = ({
-  setOpenModalEditAddress: setOpenModalEditAddress,
-}: iModalEditAddressProps) => {
+const ModalEditAnnouncement = ({
+  setOpenModalEditAnnouncement: setOpenModalEditAnnouncement,
+}: iModalEditAnnouncementProps) => {
   const { token, router } = useAuth();
   const decodedToken: any = jwt_decode(token!);
 
@@ -43,11 +51,16 @@ const ModalEditAddress = ({
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<iUserEditAddress>({
+  } = useForm<iUserEditAnnouncement>({
     resolver: yupResolver(FormSchema),
   });
 
-  const onSubmitForm = async (data: iUserEditAddress) => {
+
+  const onSubmitForm = async (formData: IUserRegister) => {
+    registerUser({ ...formData, is_seller: isSeller });
+  };
+
+  const onSubmitForm = async (data: iUserEditAnnouncement) => {
     console.log(data);
     const filteredData = Object.entries(data).reduce<Record<string, string>>(
       (acc, [key, value]) => {
@@ -59,13 +72,13 @@ const ModalEditAddress = ({
       },
       {}
     );
-    EditProfileAPI(filteredData);
+    EditAnnouncementAPI(filteredData);
     router.reload();
   };
 
   console.log(decodedToken);
 
-  const EditProfileAPI = async (data: iUserEditAddress) => {
+  const EditAnnouncementAPI = async (data: iUserEditAnnouncement) => {
     try {
       await api.patch(`/users/${decodedToken.sub}`, data, {
         headers: { Authorization: `Bearer ${token}` },
@@ -78,29 +91,65 @@ const ModalEditAddress = ({
   return (
     <div className="bg-gray10 w-full h-max max-h-[700px] max-w-custom344 flex flex-col content-center rounded-lg px-6 py-4 md:max-w-[520px] relative overflow-y-auto scrollbar-w-6 scrollbar-track-gray-100 scrollbar-thumb-gray-500 scrollbar-thumb-rounded-md">
       <div className="flex w-full justify-between items-center">
-        <p className="font-lex text-2xl font-medium text-gray1">
-          Editar endereço
+        <div></div>
+        <p className="font-lex font-medium text-base text-gray1">
+          Editar anúncio
         </p>
         <button
           className="h-10 flex border-none bg-transparent text-gray3 text-custom22 cursor-pointer"
-          onClick={() => setOpenModalEditAddress(false)}
+          onClick={() => setOpenModalEditAnnouncement(false)}
           type="button"
         >
           x
         </button>
+
+        <div>
+                <h5 className="font-bold mb-4">Tipo de conta</h5>
+                <div className="flex gap-2 mb-3 justify-center">
+                  <button
+                    type="button"
+                    className={`w-[138px] py-2 px-4 rounded border-[1px] ${
+                      !isAuction
+                        ? "bg-brand1  text-gray9"
+                        : "bg-gray9  text-gray1"
+                    }`}
+                    onClick={() => {
+                      setIsAuction(false);
+                    }}
+                  >
+                    Comprador
+                  </button>
+                  <button
+                    type="button"
+                    className={`w-[138px] py-2 px-4 rounded border-[1px] ${
+                      isAuction ? "bg-brand1  text-gray9" : "bg-gray9 text-gray1"
+                    }`}
+                    onClick={() => {
+                      setIsAuction(true);
+                    }}
+                  >
+                    Anunciante
+                  </button>
+                </div>
+
+        
       </div>
+
+
+
       <div className="flex flex-col max-w-2">
+        <h1 className="text-3xl font-semibold text-gray-800 m-2">Cadastro</h1>
         <h3 className="text-1xl font-semibold text-gray-800 m-2">
-          Informações pessoais
+          Informações do veículo
         </h3>
         <form onSubmit={handleSubmit(onSubmitForm)}>
           <div className="flex flex-col m-2">
             <div>
               <Input
-                register={register}
-                label="CEP"
-                placeholder="89888.888"
-                name="cep"
+                brand={brand}
+                label="Título"
+                placeholder="Mercedes Benz A 200 CGI ADVANCE SEDAN Mercedes Benz"
+                name="brand"
               />
               {errors.cep && (
                 <span className="text-red-600">{errors.cep.message}</span>
@@ -109,10 +158,10 @@ const ModalEditAddress = ({
 
             <div className="m-2">
               <Input
-                register={register}
-                label="Estado"
-                placeholder="Acre"
-                name="state"
+                year={year}
+                label="Ano"
+                placeholder="2018"
+                name="year"
               />
               {errors.state && (
                 <span className="text-red-600">{errors.state.message}</span>
@@ -170,13 +219,14 @@ const ModalEditAddress = ({
             </div>
           </div>
 
-          <div className="float-right space-x-4">
+          <div>
             <Button
               variant="gray-6"
-              onClick={() => setOpenModalEditAddress(false)}
+              onClick={() => setOpenModalEditAnnouncement(false)}
             >
               Cancelar
             </Button>
+            <Button variant="alert-2">Excluir perfil</Button>
             <Button variant="brand-1" type="submit">
               Salvar alterações
             </Button>
@@ -187,4 +237,4 @@ const ModalEditAddress = ({
   );
 };
 
-export default ModalEditAddress;
+export default ModalEditAnnouncement;

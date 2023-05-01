@@ -4,17 +4,19 @@ import { Button } from "../Button";
 import { destroyCookie } from "nookies";
 import { Modal } from "../Modal";
 import ModalEditProfile from "../ModalEditProfile";
+import ModalEditAddress from "../ModalEditAddress";
 
 export const ProfileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openModalEditProfile, setOpenModalEditProfile] = useState(false);
-  const { user, setUser, setIsLoged } = useAuth();
+  const [openModalEditAddress, setOpenModalEditAddress] = useState(false);
+  const { user, setUser, setIsLogged: setIsLogged } = useAuth();
 
   const randomColor = useMemo(() => Math.floor(Math.random() * 11 + 1), []);
 
   const clearTokenCookie = () => {
     destroyCookie(null, "token", { path: "/" });
-    setIsLoged(false);
+    setIsLogged(false);
   };
 
   return (
@@ -22,6 +24,11 @@ export const ProfileMenu = () => {
       {openModalEditProfile && (
         <Modal setOpenModal={setOpenModalEditProfile}>
           <ModalEditProfile setOpenModalEditProfile={setOpenModalEditProfile} />
+        </Modal>
+      )}
+      {openModalEditAddress && (
+        <Modal setOpenModal={setOpenModalEditAddress}>
+          <ModalEditAddress setOpenModalEditAddress={setOpenModalEditAddress} />
         </Modal>
       )}
       {/* ----- Desktop ----- */}
@@ -43,7 +50,7 @@ export const ProfileMenu = () => {
             <button onClick={() => setOpenModalEditProfile(true)}>
               Editar perfil
             </button>
-            <button onClick={() => console.log("implemente maldito")}>
+            <button onClick={() => setOpenModalEditAddress(true)}>
               Editar endereço
             </button>
             {user!.is_seller && <button>Editar anúncios</button>}
@@ -65,10 +72,14 @@ export const ProfileMenu = () => {
           </span>
         </li>
         <li>
-          <button>Editar perfil</button>
+          <button onClick={() => setOpenModalEditProfile(true)}>
+            Editar perfil
+          </button>
         </li>
         <li>
-          <button>Editar endereço</button>
+          <button onClick={() => setOpenModalEditAddress(true)}>
+            Editar endereço
+          </button>
         </li>
         {user!.is_seller && (
           <li>

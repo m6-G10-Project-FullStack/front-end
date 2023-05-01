@@ -9,6 +9,7 @@ import { RxDragHandleDots1 } from "react-icons/rx";
 import api from "../../services/api";
 import { useAuth } from "../../contexts/authContext";
 import jwt_decode from "jwt-decode";
+import { destroyCookie } from "nookies";
 
 export interface iModalEditProfileProps {
   setOpenModalEditProfile: React.Dispatch<SetStateAction<boolean>>;
@@ -27,7 +28,7 @@ export interface iUserEditProfile {
 const ModalEditProfile = ({
   setOpenModalEditProfile,
 }: iModalEditProfileProps) => {
-  const { token, router } = useAuth();
+  const { token, router, setIsLogged: setIsLogged } = useAuth();
   const decodedToken: any = jwt_decode(token!);
 
   const FormSchema = yup.object().shape({
@@ -76,10 +77,24 @@ const ModalEditProfile = ({
     }
   };
 
+  const DeleteProfileAPI = async (id: string) => {
+    try {
+      console.log(id);
+      await api.delete(`/users/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      destroyCookie(null, "token", { path: "/" });
+      setIsLogged(false);
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="bg-gray10 w-full h-max max-h-[700px] max-w-custom344 flex flex-col content-center rounded-lg px-6 py-4 md:max-w-[520px] relative overflow-y-auto scrollbar-w-6 scrollbar-track-gray-100 scrollbar-thumb-gray-500 scrollbar-thumb-rounded-md">
       <div className="flex w-full justify-between items-center">
-        <p className="font-lex font-medium text-base text-gray1">
+        <p className="font-lex font-medium text-2xl text-gray1">
           Editar perfil
         </p>
         <button
@@ -91,7 +106,6 @@ const ModalEditProfile = ({
         </button>
       </div>
       <div className="flex flex-col max-w-2">
-        <h1 className="text-3xl font-semibold text-gray-800 m-2">Cadastro</h1>
         <h3 className="text-1xl font-semibold text-gray-800 m-2">
           Informações pessoais
         </h3>
@@ -172,14 +186,19 @@ const ModalEditProfile = ({
             </div>
           </div>
 
-          <div>
+          <div className="float-right flex space-x-2">
             <Button
               variant="gray-6"
               onClick={() => setOpenModalEditProfile(false)}
             >
               Cancelar
             </Button>
-            <Button variant="alert-2">Excluir perfil</Button>
+            <Button
+              onClick={() => DeleteProfileAPI(decodedToken.sub)}
+              variant="alert-2"
+            >
+              Excluir perfil
+            </Button>
             <Button variant="brand-1" type="submit">
               Salvar alterações
             </Button>
