@@ -6,9 +6,8 @@ interface iInputProps {
   register: Function;
   name: string;
   valor?: number;
+  type?: string;
 }
-
-
 
 const Input = ({
   label,

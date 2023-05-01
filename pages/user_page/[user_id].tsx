@@ -93,7 +93,6 @@ const Test = () => {
       headers: { Authorization: `Bearer ${token}` },
     });
     setSeller(data);
-    console.log(data);
     setCarList(data.cars);
   };
 

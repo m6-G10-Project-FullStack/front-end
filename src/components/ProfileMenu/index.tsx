@@ -5,18 +5,23 @@ import { destroyCookie } from "nookies";
 import { Modal } from "../Modal";
 import ModalEditProfile from "../ModalEditProfile";
 import ModalEditAddress from "../ModalEditAddress";
+import { setCookie, parseCookies } from "nookies";
 
 export const ProfileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openModalEditProfile, setOpenModalEditProfile] = useState(false);
   const [openModalEditAddress, setOpenModalEditAddress] = useState(false);
-  const { user, setUser, setIsLogged: setIsLogged } = useAuth();
+  const { user, setIsLogged: setIsLogged, router } = useAuth();
 
   const randomColor = useMemo(() => Math.floor(Math.random() * 11 + 1), []);
 
   const clearTokenCookie = () => {
     destroyCookie(null, "token", { path: "/" });
     setIsLogged(false);
+  };
+  const goToSellerPage = (id: string) => {
+    setCookie(null, "idSeller", id);
+    router.push(`/user_page/${id}`);
   };
 
   return (
@@ -58,7 +63,11 @@ export const ProfileMenu = () => {
             <button onClick={() => setOpenModalEditAddress(true)}>
               Editar endereço
             </button>
-            {user!.is_seller && <button>Editar anúncios</button>}
+            {user!.is_seller && (
+              <button onClick={() => goToSellerPage(user.id)}>
+                Editar anúncios
+              </button>
+            )}
             <button onClick={clearTokenCookie}>Sair</button>
           </menu>
         )}
@@ -91,9 +100,11 @@ export const ProfileMenu = () => {
             Editar endereço
           </button>
         </li>
-        {user!.is_seller && (
+        {user.is_seller && (
           <li>
-            <button>Editar anúncio</button>
+            <button onClick={() => goToSellerPage(user.id)}>
+              Editar anúncio
+            </button>
           </li>
         )}
         <li>

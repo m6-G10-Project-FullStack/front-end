@@ -262,6 +262,7 @@ export default function Register() {
 
                 <div className="m-2">
                   <Input
+                    type="password"
                     register={register}
                     label="Senha"
                     placeholder="Digitar senha"
@@ -270,6 +271,7 @@ export default function Register() {
                 </div>
                 <div className="m-2">
                   <Input
+                    type="password"
                     register={register}
                     label="Confirmar Senha"
                     placeholder="Digitar senha"
