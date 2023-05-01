@@ -40,7 +40,12 @@ export const ProfileMenu = () => {
           <div
             className={`rounded-full w-7 h-7 bg-random${randomColor} flex items-center justify-center text-sm`}
           >
-            <p className="text-whitefixed">RA</p>
+            {user.name && (
+              <p className="text-whitefixed">
+                {user.name.toUpperCase().split("")[0]}
+                {user.name.toUpperCase().split("")[1]}
+              </p>
+            )}
           </div>
           <p>{user!.name}</p>
         </button>
@@ -66,7 +71,12 @@ export const ProfileMenu = () => {
             <div
               className={`rounded-full w-7 h-7 bg-random${randomColor} flex items-center justify-center text-sm text-whitefixed`}
             >
-              RA
+              {user.name && (
+                <p className="text-whitefixed">
+                  {user.name.toUpperCase().split("")[1]}
+                  {user.name.toUpperCase().split("")[0]}
+                </p>
+              )}
             </div>
             <p>{user!.name}</p>
           </span>
