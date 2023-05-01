@@ -15,8 +15,8 @@ import api from "../services/api";
 import jwt_decode from "jwt-decode";
 
 interface iAuthContext {
-  isLoged: boolean;
-  setIsLoged: Dispatch<SetStateAction<boolean>>;
+  isLogged: boolean;
+  setIsLogged: Dispatch<SetStateAction<boolean>>;
   user: iUser | iUserResponse;
   setUser: Dispatch<SetStateAction<iUser>>;
   HandleFormLogin: (data: iLoginFormInputs) => void;
@@ -33,7 +33,7 @@ interface iAuthProvider {
 }
 
 export const AuthProvider = ({ children }: iAuthProvider) => {
-  const [isLoged, setIsLoged] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
   const [user, setUser] = useState<iUser>({});
   const cookies = parseCookies();
   const [token, setToken] = useState<string>(cookies["token"] || "");
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
         const localtoken = parseCookies();
         if (localtoken) {
           setToken(localtoken["token"]);
-          setIsLoged(true);
+          setIsLogged(true);
           router.push("/");
         }
       })
@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
     if (cookies["token"]) {
       setToken(cookies["token"]);
       const decodedToken: any = jwt_decode(cookies["token"]);
-      setIsLoged(true);
+      setIsLogged(true);
       getUserData(decodedToken.sub);
     }
   }, [token]);
@@ -81,8 +81,8 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
   return (
     <AuthContext.Provider
       value={{
-        isLoged,
-        setIsLoged,
+        isLogged: isLogged,
+        setIsLogged: setIsLogged,
         user,
         setUser,
         HandleFormLogin,
