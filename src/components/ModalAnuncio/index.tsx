@@ -85,6 +85,14 @@ const ModalAnuncio = ({
   const arrayModelos = cars;
   const arrayAnos = years;
   const arrayCombustivel = fuels;
+  const arrayColorsCars = [
+    "Branco",
+    "Preto",
+    "Prata",
+    "Vermelho",
+    "Azul",
+    "Outros",
+  ];
   const [inputCount, setInputCount] = useState([1, 2]);
   const { user, token } = useAuth();
 
@@ -263,13 +271,20 @@ const ModalAnuncio = ({
               />
             </div>
             <div className="flex flex-col w-[127px]">
-              <Input
+              <Select
+                register={register}
+                name="color"
+                label="Cor"
+                arrayValue={arrayColorsCars}
+              />
+            </div>
+            {/* <Input
                 register={register}
                 name="color"
                 label="Cor"
                 placeholder={"Ex.: Branco"}
               />
-            </div>
+            </div> */}
           </div>
           <div className="flex justify-between gap-4">
             <div className="flex flex-col w-[127px]">
