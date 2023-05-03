@@ -1,16 +1,13 @@
 import Head from "next/head";
-
 import { FilterList } from "../src/components/FilterList";
 import { Footer } from "../src/components/Footer";
 import { Header } from "../src/components/Header";
-
 import Car from "../src/assets/car.png";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CarCard } from "../src/components/CardCard/Carcard";
 import api from "../src/services/api";
 import { iCarResponse } from "../src/components/ModalAnuncio";
-import { useAuth } from "../src/contexts/authContext";
 
 export default function Home() {
   const [absoluteList, setAbsoluteList] = useState<iCarResponse[]>([]);
@@ -18,6 +15,16 @@ export default function Home() {
   const [brandList, setBrandList] = useState([]);
   const [modelList, setModelList] = useState([]);
   const [page, setPage] = useState(0);
+  const [isFiltered, setIsFiltered] = useState<boolean>(false);
+  const [brand, setBrand] = useState("");
+  const [model, setModel] = useState("");
+  const [color, setColor] = useState("");
+  const [year, setYear] = useState("");
+  const [fuel, setFuel] = useState("");
+  const [minKm, setMinKm] = useState(0);
+  const [maxKm, setMaxKm] = useState(0);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
 
   const prevPage = () => {
     window.scrollTo({ top: window.innerHeight - 80, behavior: "smooth" });
@@ -35,7 +42,6 @@ export default function Home() {
     const fetchData = async () => {
       await api.get(`/cars?page=${page}&limit=12`).then((res) => {
         setAbsoluteList(res.data);
-        setCarList(res.data);
         const models = res.data.map((car: iCarResponse) => car.model);
 
         setModelList(
@@ -52,6 +58,21 @@ export default function Home() {
 
     fetchData();
   }, [page]);
+
+  const searchList = async () => {
+    const newModel = model.replaceAll(" ", "%20");
+    await api
+      .get(
+        `/cars?page=${page}&limit=12&brand=${brand}&model=${newModel}&color=${color.toLowerCase()}&year=${year}&fuel=${fuel}`
+      )
+      .then((res) => {
+        console.log(res.data);
+        setCarList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -103,15 +124,59 @@ export default function Home() {
                 list={absoluteList}
                 setList={setCarList}
                 listaMarcas={brandList}
-                listaModelos={["m5", "m6", "m7"]}
-                listaCores={["Preto", "Branco", "Prata", "Colorido"]}
+                listaModelos={modelList}
+                listaCores={[
+                  "Preto",
+                  "Branco",
+                  "Prata",
+                  "Vermelho",
+                  "Azul",
+                  "Colorido",
+                ]}
                 listaAnos={["2019", "2020", "2021", "2022"]}
                 listaCombustivel={["Flex", "Elétrico", "Híbrido"]}
+                brand={brand}
+                setBrand={setBrand}
+                model={model}
+                setModel={setModel}
+                color={color}
+                setColor={setColor}
+                year={year}
+                setYear={setYear}
+                fuel={fuel}
+                setFuel={setFuel}
+                minKm={minKm}
+                setMinKm={setMinKm}
+                maxKm={maxKm}
+                setMaxKm={setMaxKm}
+                minPrice={minPrice}
+                setMinPrice={setMinKm}
+                maxPrice={maxPrice}
+                setMaxPrice={setMaxPrice}
+                searchList={searchList}
               />
 
-              {carList?.length ? (
+              {carList.length ? (
                 <ul className="w-full flex mt-4 gap-4 overflow-y-scroll md:flex-wrap md:justify-between md:gap-0 md:overflow-y-hidden">
                   {carList.map((car: iCarResponse, i) => (
+                    <CarCard
+                      key={i}
+                      carId={car.id}
+                      carName={car.model}
+                      carDescription={car.description}
+                      carImg={car.coverImage}
+                      carKm={car.km}
+                      carPrice={car.price}
+                      carSeller={car.userId}
+                      carYear={car.year}
+                      carSellerName={car.User.name}
+                      carIsPromo={car.is_promo}
+                    />
+                  ))}
+                </ul>
+              ) : absoluteList.length ? (
+                <ul className="w-full flex mt-4 gap-4 overflow-y-scroll md:flex-wrap md:justify-between md:gap-0 md:overflow-y-hidden">
+                  {absoluteList.map((car: iCarResponse, i) => (
                     <CarCard
                       key={i}
                       carId={car.id}
