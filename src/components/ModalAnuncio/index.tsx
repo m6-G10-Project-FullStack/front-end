@@ -14,7 +14,7 @@ import { error } from "console";
 interface iCarRegister {
   brand: string;
   model: string;
-  year: number;
+  year: string;
   km: number;
   fuel: string;
   color: string;
@@ -66,6 +66,7 @@ interface iModalAnuncioProps {
   fuels?: string[];
   setSelectFuel?: React.Dispatch<React.SetStateAction<string>>;
   fipe?: number;
+  setSelectColor?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const ModalAnuncio = ({
@@ -80,6 +81,7 @@ const ModalAnuncio = ({
   fuels,
   setSelectFuel,
   fipe,
+  setSelectColor,
 }: iModalAnuncioProps) => {
   const arrayMarcas = brands;
   const arrayModelos = cars;
@@ -91,7 +93,7 @@ const ModalAnuncio = ({
     "Prata",
     "Vermelho",
     "Azul",
-    "Outros",
+    "Colorido",
   ];
   const [inputCount, setInputCount] = useState([1, 2]);
   const { user, token } = useAuth();
@@ -105,7 +107,7 @@ const ModalAnuncio = ({
   const FormSchema: any = yup.object().shape({
     brand: yup.string().required(),
     model: yup.string().required(),
-    year: yup.number().required(),
+    year: yup.string().required(),
     fuel: yup.string().required(),
     km: yup.number().required(),
     color: yup.string().required(),
@@ -276,6 +278,7 @@ const ModalAnuncio = ({
                 name="color"
                 label="Cor"
                 arrayValue={arrayColorsCars}
+                setSelect={setSelectColor}
               />
             </div>
             {/* <Input
