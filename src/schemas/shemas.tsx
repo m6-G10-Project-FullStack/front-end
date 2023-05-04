@@ -34,3 +34,19 @@ export const SchemaRegisterUser = yup.object().shape({
   number: yup.string().required("Campo obrigatório"),
   complement: yup.string().nullable(),
 });
+
+export const confirmEmailSchema = yup.object().shape({
+  email: yup.string().required("Campo obrigatório").email("Email inválido"),
+});
+
+export const confirmPasswordSchema = yup.object().shape({
+  password: yup
+    .string()
+    .required("Campo obrigatório")
+    .min(8, "Mínimo de 8 dígitos"),
+  confirmPassword: yup
+    .string()
+    .required("Campo obrigatório")
+    .min(8, "Mínimo de 8 dígitos")
+    .oneOf([yup.ref("password")], "As senhas não coincidem"),
+});

@@ -6,6 +6,7 @@ import { AuthContext } from "../../src/contexts/authContext";
 import { useAuth } from "../../src/contexts/authContext";
 import { SchemaLogin } from "../../src/schemas/shemas";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Link from "next/link";
 export interface iLoginFormInputs {
   email: string;
   password: string;
@@ -53,7 +54,7 @@ const Login = () => {
             <span className="text-red-600">{errors.password.message}</span>
           )}
           <p className="text-right text-gray1">
-            <a href="#">Esqueci minha senha</a>
+            <Link href="/recover">Esqueci minha senha</Link>
           </p>
           <Button type="submit" variant="brand-1">
             Entrar
