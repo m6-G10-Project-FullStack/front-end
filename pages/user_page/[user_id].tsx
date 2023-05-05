@@ -26,6 +26,7 @@ const Test = () => {
   const [selectYear, setSelectYear] = useState("");
   const [fuels, setFuels] = useState<string[]>([""]);
   const [selectFuel, setSelectFuel] = useState("");
+  const [selectColor, setSelectColor] = useState("");
   const [fipe, setFipe] = useState<number>();
   const [carList, setCarList] = useState<iCarResponse[]>();
   const [seller, setSeller] = useState<iUser>();
@@ -173,6 +174,7 @@ const Test = () => {
                     fuels={fuels}
                     setSelectFuel={setSelectFuel}
                     fipe={fipe}
+                    setSelectColor={setSelectColor}
                   />
                 </Modal>
               )}
