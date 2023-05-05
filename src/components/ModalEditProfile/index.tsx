@@ -50,7 +50,6 @@ const ModalEditProfile = ({
   });
 
   const onSubmitForm = async (data: iUserEditProfile) => {
-    console.log(data);
     const filteredData = Object.entries(data).reduce<Record<string, string>>(
       (acc, [key, value]) => {
         if (value !== "") {
@@ -65,8 +64,6 @@ const ModalEditProfile = ({
     router.reload();
   };
 
-  console.log(decodedToken);
-
   const EditProfileAPI = async (data: iUserEditProfile) => {
     try {
       await api.patch(`/users/${decodedToken.sub}`, data, {
@@ -79,7 +76,6 @@ const ModalEditProfile = ({
 
   const DeleteProfileAPI = async (id: string) => {
     try {
-      console.log(id);
       await api.delete(`/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });

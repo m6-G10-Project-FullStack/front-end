@@ -46,7 +46,7 @@ export const confirmPasswordSchema = yup.object().shape({
     .min(8, "Mínimo de 8 dígitos"),
   confirmPassword: yup
     .string()
-    .required("Campo obrigatório")
+    .oneOf([yup.ref("password")], "As senhas não coincidem")
     .min(8, "Mínimo de 8 dígitos")
-    .oneOf([yup.ref("password")], "As senhas não coincidem"),
+    .required("Campo obrigatório"),
 });

@@ -48,7 +48,6 @@ const ModalEditAddress = ({
   });
 
   const onSubmitForm = async (data: iUserEditAddress) => {
-    console.log(data);
     const filteredData = Object.entries(data).reduce<Record<string, string>>(
       (acc, [key, value]) => {
         if (value !== "") {
@@ -62,8 +61,6 @@ const ModalEditAddress = ({
     EditProfileAPI(filteredData);
     router.reload();
   };
-
-  console.log(decodedToken);
 
   const EditProfileAPI = async (data: iUserEditAddress) => {
     try {

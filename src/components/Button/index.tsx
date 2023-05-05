@@ -27,7 +27,7 @@ export const Button = ({
   variant,
   ...props
 }: PropsWithChildren<iButtonProps>) => {
-  const classbutton = "";
+  
   return (
     <button className={`button ${variant}`} {...props}>
       {children}

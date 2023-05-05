@@ -1,29 +1,27 @@
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { VscLoading } from "react-icons/vsc";
-import { IoClose } from "react-icons/io5";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { IoClose } from "react-icons/io5";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { confirmEmailSchema } from "../../src/schemas/shemas";
-import { Header } from "../../src/components/Header";
-import { Button } from "../../src/components/Button";
-import api from "../../src/services/api";
-import { Modal } from "../../src/components/Modal";
+import { confirmPasswordSchema } from "../../../src/schemas/shemas";
+import { useRouter } from "next/router";
+import { Header } from "../../../src/components/Header";
+import { Button } from "../../../src/components/Button";
+import api from "../../../src/services/api";
 import { useState } from "react";
+import { Modal } from "../../../src/components/Modal";
+import { VscLoading } from "react-icons/vsc";
 
 interface iFormData {
-  email: string;
+  password: string;
+  confirmPassword: string;
 }
 
-const Recover = () => {
+const RecoverPassword = () => {
   const [loading, setLoading] = useState(false);
   const [openErrorModal, setOpenErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-
-  const router = useRouter();
 
   const {
     handleSubmit,
@@ -31,18 +29,26 @@ const Recover = () => {
     formState: { errors },
     reset,
   } = useForm<iFormData>({
-    resolver: yupResolver(confirmEmailSchema),
+    resolver: yupResolver(confirmPasswordSchema),
+    mode: "onBlur",
   });
 
+  const router = useRouter();
+
+  const { token } = router.query;
+
   const handleForm = async (data: iFormData) => {
+    const passwordData = {
+      password: data.password,
+    };
+
     setLoading(true);
+
     await api
-      .post("/users/resetPassword", data)
+      .patch(`/users/resetPassword/${token}`, passwordData)
       .then(() => {
         setOpenSuccessModal(true);
-        setSuccessMessage(
-          "Um email de confirmação foi enviado para o seu endereço, entre no link para prosseguir com o processo de troca de senha!"
-        );
+        setSuccessMessage("Sua senha foi atualizada com sucesso!");
       })
       .catch((err) => {
         console.error(err);
@@ -60,13 +66,13 @@ const Recover = () => {
 
   const closeSuccessModal = () => {
     setOpenSuccessModal(false);
-    router.push("/");
+    router.push("/login");
   };
 
   return (
     <>
       <Head>
-        <title>Motorsh Shop - Recupere sua senha</title>
+        <title>Motors Shop - Recupere sua senha</title>
       </Head>
 
       <Header />
@@ -76,37 +82,50 @@ const Recover = () => {
         style={{ height: "calc(100vh - 80px)" }}
       >
         <form
-          className="bg-whitefixed flex flex-col gap-4 max-w-md py-10 px-11 relative"
+          className="bg-whitefixed flex flex-col gap-4 max-w-md min-w-[440px] py-10 px-11 relative"
           onSubmit={handleSubmit(handleForm)}
         >
-          <h1 className="text-lg pb-4 font-bold">Recuperação de senha</h1>
-
-          <p className="text-center text-gray1">
-            Digite seu email cadastrado para que você receba nossa mensagem de
-            redefinição de senha!
-          </p>
+          <h1 className="text-lg pb-4 font-bold">Recupere sua senha!</h1>
 
           <div className="flex flex-col gap-4 pb-4">
-            <label className="font-bold" htmlFor="email">
-              Email
+            <label className="font-bold" htmlFor="password">
+              Senha
             </label>
             <input
-              {...register("email")}
-              id="email"
-              type="text"
-              placeholder="Digite seu email"
+              {...register("password")}
+              id="password"
+              type="password"
+              placeholder="Nova senha"
               className="p-3 border-2 border-gray6 rounded outline-none"
             />
-            {errors.email?.message && (
+            {errors.password?.message && (
               <span className="text-alert1 font-semibold">
-                {errors.email.message}
+                {errors.password.message}
+              </span>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-4 pb-4">
+            <label className="font-bold" htmlFor="confirm">
+              Confirme sua senha
+            </label>
+            <input
+              {...register("confirmPassword")}
+              id="confirm"
+              type="password"
+              placeholder="Confirmação da nova senha"
+              className="p-3 border-2 border-gray6 rounded outline-none"
+            />
+            {errors.confirmPassword?.message && (
+              <span className="text-alert1 font-semibold">
+                {errors.confirmPassword.message}
               </span>
             )}
           </div>
 
           {!loading ? (
             <Button type="submit" variant="brand-1">
-              Enviar
+              Confirmar
             </Button>
           ) : (
             <button
@@ -114,7 +133,7 @@ const Recover = () => {
               className="button disabled flex items-start justify-center gap-2"
             >
               <>
-                <VscLoading className="animate-spin text-xl" /> Enviando...
+                <VscLoading className="animate-spin text-xl" /> Confirmando...
               </>
             </button>
           )}
@@ -152,7 +171,7 @@ const Recover = () => {
       {openSuccessModal && (
         <Modal setOpenModal={setOpenSuccessModal}>
           <div className="bg-gray7 h-fit p-4 rounded relative">
-            <h2 className="text-3xl font-semibold text-gray1">Sucesso!</h2>
+            <h2 className="text-3xl font-semibold text-gray1">Prontinho!</h2>
             <div className="flex flex-col mt-4 justify-between h-[164px]">
               <p className="text-gray2">{successMessage}</p>
 
@@ -178,4 +197,4 @@ const Recover = () => {
   );
 };
 
-export default Recover;
+export default RecoverPassword;

@@ -16,7 +16,7 @@ export const ProfileMenu = () => {
   const randomColor = useMemo(() => Math.floor(Math.random() * 11 + 1), []);
 
   const clearTokenCookie = () => {
-    destroyCookie(null, "token", { path: "/" });
+    destroyCookie(null, "token");
     setIsLogged(false);
   };
   const goToSellerPage = (id: string) => {
@@ -37,9 +37,9 @@ export const ProfileMenu = () => {
         </Modal>
       )}
       {/* ----- Desktop ----- */}
-      <div className="relative hidden md:block">
+      <div className="relative hidden md:block md:min-w-[160px]">
         <button
-          className="font-lex font-semibold text-base py-1 px-3 rounded transition ease-in border-[1px] bg-gray10 border-gray10 text-gray2 flex items-center gap-2 hover:bg-gray0 hover:text-gray10 hover:border-gray0"
+          className="font-lex font-semibold text-base w-full py-1 px-3 rounded transition ease-in border bg-gray10 border-gray10 text-gray2 flex items-center gap-2 hover:bg-gray0 hover:text-gray10 hover:border-gray0"
           onClick={() => setIsOpen(!isOpen)}
         >
           <div
@@ -56,19 +56,27 @@ export const ProfileMenu = () => {
         </button>
 
         {isOpen && (
-          <menu className="absolute top-11 left-0 z-10 w-full bg-gray10 p-4 rounded flex flex-col items-start gap-1 text-gray2">
-            <button onClick={() => setOpenModalEditProfile(true)}>
+          <menu className="absolute top-11 left-0 z-10 w-full bg-gray10 p-4 rounded flex flex-col items-start gap-2 text-gray2">
+            <button
+              className="p-0"
+              onClick={() => setOpenModalEditProfile(true)}
+            >
               Editar perfil
             </button>
-            <button onClick={() => setOpenModalEditAddress(true)}>
+            <button
+              className="p-0"
+              onClick={() => setOpenModalEditAddress(true)}
+            >
               Editar endereço
             </button>
             {user!.is_seller && (
-              <button onClick={() => goToSellerPage(user.id)}>
+              <button className="p-0" onClick={() => goToSellerPage(user.id)}>
                 Editar anúncios
               </button>
             )}
-            <button onClick={clearTokenCookie}>Sair</button>
+            <button className="p-0" onClick={clearTokenCookie}>
+              Sair
+            </button>
           </menu>
         )}
       </div>

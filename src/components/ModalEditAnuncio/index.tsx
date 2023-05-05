@@ -61,7 +61,6 @@ const ModalEditAnnouncement = ({
   };
 
   const onSubmitForm = async (data: iUserEditAnnouncement) => {
-    console.log(data);
     const filteredData = Object.entries(data).reduce<Record<string, string>>(
       (acc, [key, value]) => {
         if (value !== "") {
@@ -75,8 +74,6 @@ const ModalEditAnnouncement = ({
     EditAnnouncementAPI(filteredData);
     router.reload();
   };
-
-  console.log(decodedToken);
 
   const EditAnnouncementAPI = async (data: iUserEditAnnouncement) => {
     try {

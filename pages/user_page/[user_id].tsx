@@ -192,6 +192,7 @@ const Test = () => {
             <ul className="w-full flex mt-4 gap-12 overflow-y-scroll md:flex-wrap md:overflow-y-hidden md:mt-2">
               {carList!.map((car, i) => (
                 <div key={i} className="flex flex-col">
+                  arrayColorsCars
                   <CarCardAnuncio
                     key={i}
                     carIsActive={car.is_active}
