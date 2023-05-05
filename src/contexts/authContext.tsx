@@ -9,7 +9,6 @@ import {
 import { iUser, iUserResponse } from "../@types";
 import { NextRouter, useRouter } from "next/router";
 import { setCookie, parseCookies } from "nookies";
-import Api from "../server/api";
 import { iLoginFormInputs } from "../../pages/login";
 import api from "../services/api";
 import jwt_decode from "jwt-decode";
@@ -34,7 +33,7 @@ interface iAuthProvider {
 
 export const AuthProvider = ({ children }: iAuthProvider) => {
   const [isLogged, setIsLogged] = useState(false);
-  const [user, setUser] = useState<iUser>({});
+  const [user, setUser] = useState<iUser>({} as iUser);
   const cookies = parseCookies();
   const [token, setToken] = useState<string>(cookies["token"] || "");
   const [idCar, setCarId] = useState<string>();
@@ -43,7 +42,6 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
   const router = useRouter();
 
   const HandleFormLogin = async (data: iLoginFormInputs) => {
-    console.log(data);
     const response = await api
       .post("/login", data)
       .then((res) => {

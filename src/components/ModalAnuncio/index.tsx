@@ -151,7 +151,6 @@ const ModalAnuncio = ({
       };
 
       const carId = await createCar(newCar);
-      console.log(carId);
 
       const {
         brand,
@@ -166,7 +165,6 @@ const ModalAnuncio = ({
         coverImage,
         ...gallery
       } = data;
-      console.log(gallery);
       const values = Object.values(gallery);
       for (let value of values) {
         let newPhoto = {
@@ -196,7 +194,6 @@ const ModalAnuncio = ({
   };
 
   const createCar = async (car: any) => {
-    console.log(token);
     try {
       const { data } = await api.post("/cars", car, {
         headers: { Authorization: `Bearer ${token}` },

@@ -20,7 +20,6 @@ const CardPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [photo, setPhoto] = useState("");
   const [car, setCar] = useState<iCarResponse>();
-  console.log(car);
 
   useEffect(() => {
     const id = parseCookies();
@@ -29,7 +28,6 @@ const CardPage = () => {
         .get(`/cars/${id}`)
         .then((res) => setCar(res.data))
         .catch((err) => console.log(err));
-      console.log(cars);
       return cars;
     };
     getCarById(id["idCar"]);
