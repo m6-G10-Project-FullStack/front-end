@@ -43,7 +43,7 @@ export const ProfileMenu = () => {
           onClick={() => setIsOpen(!isOpen)}
         >
           <div
-            className={`rounded-full w-7 h-7 bg-random${randomColor} flex items-center justify-center text-sm`}
+            className={`rounded-full w-7 h-7 bg-${user.color} flex items-center justify-center text-sm`}
           >
             {user.name && (
               <p className="text-whitefixed">
@@ -86,12 +86,12 @@ export const ProfileMenu = () => {
         <li>
           <span className="flex gap-2">
             <div
-              className={`rounded-full w-7 h-7 bg-random${randomColor} flex items-center justify-center text-sm text-whitefixed`}
+              className={`rounded-full w-7 h-7 bg-${user.color} flex items-center justify-center text-sm text-whitefixed`}
             >
               {user.name && (
                 <p className="text-whitefixed">
-                  {user.name.toUpperCase().split("")[1]}
                   {user.name.toUpperCase().split("")[0]}
+                  {user.name.toUpperCase().split("")[1]}
                 </p>
               )}
             </div>

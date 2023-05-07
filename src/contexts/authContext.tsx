@@ -13,6 +13,12 @@ import { iLoginFormInputs } from "../../pages/login";
 import api from "../services/api";
 import jwt_decode from "jwt-decode";
 
+interface iCarData {
+  carId: string;
+  carKm: number | null;
+  carPrice: number | null;
+}
+
 interface iAuthContext {
   isLogged: boolean;
   setIsLogged: Dispatch<SetStateAction<boolean>>;
@@ -23,6 +29,12 @@ interface iAuthContext {
   token?: string;
   idSeller: string;
   setIdSeller: Dispatch<SetStateAction<string>>;
+  carId: string;
+  setCarId: Dispatch<SetStateAction<string>>;
+  carData: iCarData;
+  setCarData: Dispatch<SetStateAction<iCarData>>;
+  fipe: number | null;
+  setFipe: Dispatch<SetStateAction<number | null>>;
 }
 
 export const AuthContext = createContext<iAuthContext>({} as iAuthContext);
@@ -36,8 +48,14 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
   const [user, setUser] = useState<iUser>({} as iUser);
   const cookies = parseCookies();
   const [token, setToken] = useState<string>(cookies["token"] || "");
-  const [idCar, setCarId] = useState<string>();
+  const [carId, setCarId] = useState<string>("");
   const [idSeller, setIdSeller] = useState<string>("");
+  const [carData, setCarData] = useState<iCarData>({
+    carId: "",
+    carKm: null,
+    carPrice: null,
+  });
+  const [fipe, setFipe] = useState<number | null>(null);
 
   const router = useRouter();
 
@@ -88,6 +106,12 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
         token,
         idSeller,
         setIdSeller,
+        setCarId,
+        carId,
+        carData,
+        setCarData,
+        fipe,
+        setFipe,
       }}
     >
       {children}

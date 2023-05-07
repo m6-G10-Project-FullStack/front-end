@@ -11,7 +11,7 @@ import api from "../../services/api";
 import { AuthContext, useAuth } from "../../contexts/authContext";
 import { error } from "console";
 
-interface iCarRegister {
+export interface iCarRegister {
   brand: string;
   model: string;
   year: string;
@@ -65,7 +65,7 @@ interface iModalAnuncioProps {
   setSelectYear?: React.Dispatch<React.SetStateAction<string>>;
   fuels?: string[];
   setSelectFuel?: React.Dispatch<React.SetStateAction<string>>;
-  fipe?: number;
+  fipe?: number | null;
   setSelectColor?: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -278,13 +278,6 @@ const ModalAnuncio = ({
                 setSelect={setSelectColor}
               />
             </div>
-            {/* <Input
-                register={register}
-                name="color"
-                label="Cor"
-                placeholder={"Ex.: Branco"}
-              />
-            </div> */}
           </div>
           <div className="flex justify-between gap-4">
             <div className="flex flex-col w-[127px]">

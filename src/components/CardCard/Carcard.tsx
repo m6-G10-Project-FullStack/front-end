@@ -83,7 +83,7 @@ export const CarCard = ({
               {carKm} Km
             </span>
             <span className="text-sm pl-2 pt-1 pr-2 pb-1 text-brand1 bg-brand4">
-              Ano{carYear}
+              {carYear}
             </span>
             <p>R$ {carPrice.toLocaleString()},00</p>
           </div>

@@ -11,39 +11,88 @@ import { useAuth } from "../../contexts/authContext";
 import jwt_decode from "jwt-decode";
 
 export interface iModalEditAnnouncementProps {
-  setOpenModalEditAnnouncement: React.Dispatch<SetStateAction<boolean>>;
+  setOpenModalEdit: React.Dispatch<SetStateAction<boolean>>;
 }
 
-export interface iUserEditAnnouncement {
+export interface iCarEditAnnouncement {
+  brand?: string;
   model?: string;
-  year?: number;
+  year?: string;
   km?: number;
-  fuel: string;
-  color: string;
-  fipe: number;
-  price: number;
-  description: string;
-  coverImage: string;
-  id: string;
-  is_promo: boolean;
-  is_active: boolean;
-  userId: string;
-  brandId: string;
+  fuel?: string;
+  color?: string;
+  fipe?: number;
+  price?: number;
+  description?: string;
+  coverImage?: string;
+  photos?: string[];
 }
 
-const ModalEditAnnouncement = ({
-  setOpenModalEditAnnouncement: setOpenModalEditAnnouncement,
-}: iModalEditAnnouncementProps) => {
-  const { token, router } = useAuth();
-  const decodedToken: any = jwt_decode(token!);
+interface iModalEditAnuncioProps {
+  setOpenModalEdit: React.Dispatch<React.SetStateAction<boolean>>;
+  brands?: string[];
+  setSelectBrand?: React.Dispatch<React.SetStateAction<string>>;
+  cars?: string[];
+  setSelectCar?: React.Dispatch<React.SetStateAction<string>>;
+  years?: string[];
+  setSelectYear?: React.Dispatch<React.SetStateAction<string>>;
+  fuels?: string[];
+  setSelectFuel?: React.Dispatch<React.SetStateAction<string>>;
+  fipe?: number | null;
+  setSelectColor?: React.Dispatch<React.SetStateAction<string>>;
+}
 
-  const FormSchema = yup.object().shape({
-    cep: yup.string().notRequired(),
-    city: yup.string().notRequired(),
-    state: yup.string().notRequired(),
-    street: yup.string().notRequired(),
-    number: yup.string().notRequired(),
-    complement: yup.string().notRequired(),
+const ModalEditAnuncio = ({
+  setOpenModalEdit,
+  brands,
+  setSelectBrand,
+  cars,
+  setSelectCar,
+  years,
+  setSelectYear,
+  fuels,
+  setSelectFuel,
+  fipe,
+  setSelectColor,
+}: iModalEditAnuncioProps) => {
+  const arrayMarcas = brands;
+  const arrayModelos = cars;
+  const arrayAnos = years;
+  const arrayCombustivel = fuels;
+  const arrayColorsCars = [
+    "Branco",
+    "Preto",
+    "Prata",
+    "Vermelho",
+    "Azul",
+    "Colorido",
+  ];
+  const [inputCount, setInputCount] = useState([1, 2]);
+  const { user, token, carId, carData, router } = useAuth();
+
+  const handleInputCount = () => {
+    if (inputCount.length < 6) {
+      setInputCount([...inputCount, inputCount.length + 1]);
+    }
+  };
+
+  const FormSchema: any = yup.object().shape({
+    brand: yup.string().notRequired(),
+    model: yup.string().notRequired(),
+    year: yup.string().notRequired(),
+    fuel: yup.string().notRequired(),
+    km: yup.number().nullable(),
+    color: yup.string().notRequired(),
+    fipe: yup.number().nullable(),
+    price: yup.number().nullable(),
+    description: yup.string().notRequired(),
+    coverImage: yup.string().notRequired(),
+    image1: yup.string().notRequired(),
+    image2: yup.string().notRequired(),
+    image3: yup.string().notRequired(),
+    image4: yup.string().notRequired(),
+    image5: yup.string().notRequired(),
+    image6: yup.string().notRequired(),
   });
 
   const {
@@ -51,187 +100,243 @@ const ModalEditAnnouncement = ({
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<iUserEditAnnouncement>({
+  } = useForm<iCarEditAnnouncement>({
     resolver: yupResolver(FormSchema),
   });
 
+  const onSubmitForm = async (data: iCarEditAnnouncement) => {
+    console.log(data);
+    try {
+      const filteredData = Object.entries(data).reduce<Record<string, string>>(
+        (acc, [key, value]) => {
+          if (value !== "Selecione") {
+            acc[key] = value;
+          }
 
-  const onSubmitForm = async (formData: IUserRegister) => {
-    registerUser({ ...formData, is_seller: isSeller });
-  };
+          return acc;
+        },
+        {}
+      );
 
-  const onSubmitForm = async (data: iUserEditAnnouncement) => {
-    const filteredData = Object.entries(data).reduce<Record<string, string>>(
-      (acc, [key, value]) => {
+      const lastFilteredData = Object.entries(filteredData).reduce<
+        Record<string, string>
+      >((acc, [key, value]) => {
         if (value !== "") {
           acc[key] = value;
         }
 
         return acc;
-      },
-      {}
-    );
-    EditAnnouncementAPI(filteredData);
-    router.reload();
-  };
+      }, {});
 
-  const EditAnnouncementAPI = async (data: iUserEditAnnouncement) => {
+      let brandId = "";
+      if (data.brand && data.brand !== "" && data.brand !== "Selecione") {
+        brandId = await getBrandId(data.brand);
+      }
+
+      if (brandId !== "") {
+        const newfilteredData = { ...lastFilteredData, brandId };
+        const carEdited = await editCarId(newfilteredData);
+      }
+      const carEdited = await editCarId(lastFilteredData);
+
+      // REMOVER FOTOS DA GALERIA //
+      // DESCOBRIR COMO PODER EDITAR //
+      const {
+        brand,
+        year,
+        fuel,
+        km,
+        color,
+        fipe,
+        price,
+        description,
+        model,
+        coverImage,
+        ...gallery
+      } = data;
+      const values = Object.values(gallery);
+      for (let value of values) {
+        let newPhoto = {
+          carId: carData.carId,
+          photo_link: value,
+        };
+        await api.post("/gallery", newPhoto, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      }
+
+      setOpenModalEdit(false);
+      router.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getBrandId = async (brand: string) => {
     try {
-      await api.patch(`/users/${decodedToken.sub}`, data, {
+      const { data } = await api.get(`/brands/${brand}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      return data.id;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const editCarId = async (payload: any) => {
+    try {
+      const { data } = await api.patch(`/cars/${carData.carId}`, payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log(data);
+      return data;
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className="bg-gray10 w-full h-max max-h-[700px] max-w-custom344 flex flex-col content-center rounded-lg px-6 py-4 md:max-w-[520px] relative overflow-y-auto scrollbar-w-6 scrollbar-track-gray-100 scrollbar-thumb-gray-500 scrollbar-thumb-rounded-md">
-      <div className="flex w-full justify-between items-center">
-        <div></div>
-        <p className="font-lex font-medium text-base text-gray1">
-          Editar anúncio
-        </p>
-        <button
-          className="h-10 flex border-none bg-transparent text-gray3 text-custom22 cursor-pointer"
-          onClick={() => setOpenModalEditAnnouncement(false)}
-          type="button"
+    <>
+      <div className="bg-gray10 w-full h-max max-h-[700px] max-w-custom344 flex flex-col content-center rounded-lg px-6 py-4 md:max-w-lg relative overflow-y-auto scrollbar-w-6 scrollbar-track-gray-100 scrollbar-thumb-gray-500 scrollbar-thumb-rounded-md">
+        <div className="flex w-full justify-between items-center">
+          <p className="font-lex font-medium text-base text-gray1">
+            Editar anúncio
+          </p>
+          <button
+            className="h-10 flex border-none bg-transparent text-gray3 text-custom22 cursor-pointer"
+            onClick={() => setOpenModalEdit(false)}
+            type="button"
+          >
+            x
+          </button>
+        </div>
+        <form
+          onSubmit={handleSubmit(onSubmitForm)}
+          className="flex flex-col w-full py-4 gap-2"
         >
-          x
-        </button>
-
-        <div>
-                <h5 className="font-bold mb-4">Tipo de conta</h5>
-                <div className="flex gap-2 mb-3 justify-center">
-                  <button
-                    type="button"
-                    className={`w-[138px] py-2 px-4 rounded border-[1px] ${
-                      !isAuction
-                        ? "bg-brand1  text-gray9"
-                        : "bg-gray9  text-gray1"
-                    }`}
-                    onClick={() => {
-                      setIsAuction(false);
-                    }}
-                  >
-                    Comprador
-                  </button>
-                  <button
-                    type="button"
-                    className={`w-[138px] py-2 px-4 rounded border-[1px] ${
-                      isAuction ? "bg-brand1  text-gray9" : "bg-gray9 text-gray1"
-                    }`}
-                    onClick={() => {
-                      setIsAuction(true);
-                    }}
-                  >
-                    Anunciante
-                  </button>
-                </div>
-
-        
-      </div>
-
-
-
-      <div className="flex flex-col max-w-2">
-        <h1 className="text-3xl font-semibold text-gray-800 m-2">Cadastro</h1>
-        <h3 className="text-1xl font-semibold text-gray-800 m-2">
-          Informações do veículo
-        </h3>
-        <form onSubmit={handleSubmit(onSubmitForm)}>
-          <div className="flex flex-col m-2">
-            <div>
-              <Input
-                brand={brand}
-                label="Título"
-                placeholder="Mercedes Benz A 200 CGI ADVANCE SEDAN Mercedes Benz"
-                name="brand"
-              />
-              {errors.cep && (
-                <span className="text-red-600">{errors.cep.message}</span>
-              )}
-            </div>
-
-            <div className="m-2">
-              <Input
-                year={year}
-                label="Ano"
-                placeholder="2018"
+          <h3 className="font-inter font-medium text-sm leading-6 text-gray1 mb-6">
+            Informações do veículo
+          </h3>
+          <Select
+            register={register}
+            name="brand"
+            label="Marca"
+            arrayValue={arrayMarcas}
+            setSelect={setSelectBrand}
+          />
+          <Select
+            register={register}
+            name="model"
+            label="Modelo"
+            arrayValue={arrayModelos}
+            setSelect={setSelectCar}
+          />
+          <div className="flex justify-between gap-4">
+            <div className="flex flex-col w-[127px]">
+              <Select
+                register={register}
                 name="year"
+                label="Ano"
+                arrayValue={arrayAnos}
+                setSelect={setSelectYear}
               />
-              {errors.state && (
-                <span className="text-red-600">{errors.state.message}</span>
-              )}
             </div>
-
-            <div className="m-2">
-              <Input
+            <div className="flex flex-col w-[127px]">
+              <Select
                 register={register}
-                label="Cidade"
-                placeholder="Rio Branco"
-                name="city"
+                name="fuel"
+                label="Combustível"
+                arrayValue={arrayCombustivel}
+                setSelect={setSelectFuel}
               />
-              {errors.city && (
-                <span className="text-red-600">{errors.city.message}</span>
-              )}
-            </div>
-
-            <div className="m-2">
-              <Input
-                register={register}
-                label="street"
-                placeholder="Avenida dos Dinossauros"
-                name="street"
-              />
-              {errors.street && (
-                <span className="text-red-600">{errors.street.message}</span>
-              )}
-            </div>
-
-            <div className="m-2">
-              <Input
-                register={register}
-                label="Número"
-                placeholder="1029r"
-                name="number"
-              />
-              {errors.number && (
-                <span className="text-red-600">{errors.number.message}</span>
-              )}
-            </div>
-
-            <div className="m-2">
-              <Input
-                register={register}
-                label="Complemento"
-                placeholder="Apart 12"
-                name="complement"
-              />
-              {errors.complement && (
-                <span className="text-red-600">
-                  {errors.complement.message}
-                </span>
-              )}
             </div>
           </div>
-
+          <div className="flex justify-between gap-4">
+            <div className="flex flex-col w-[127px]">
+              <Input
+                register={register}
+                name="km"
+                label="Quilometragem"
+                placeholder={"Ex.: 30.000"}
+                valor={carData.carKm!}
+              />
+            </div>
+            <div className="flex flex-col w-[127px]">
+              <Select
+                register={register}
+                name="color"
+                label="Cor"
+                arrayValue={arrayColorsCars}
+                setSelect={setSelectColor}
+              />
+            </div>
+          </div>
+          <div className="flex justify-between gap-4">
+            <div className="flex flex-col w-[127px]">
+              <Input
+                register={register}
+                name="fipe"
+                placeholder="R$ 48.000,00"
+                label="Preço tabela FIPE"
+                valor={fipe}
+              />
+            </div>
+            <div className="flex flex-col w-[127px]">
+              <Input
+                register={register}
+                name="price"
+                label="Preço"
+                placeholder={"Ex.: 50.000,00"}
+                valor={carData.carPrice!}
+              />
+            </div>
+          </div>
+          <Input
+            register={register}
+            name="description"
+            label="Descrição"
+            placeholder="Escreva detalhes do seu veículo"
+          />
+          <Input
+            register={register}
+            name="coverImage"
+            label="Imagem da capa"
+            placeholder={"Ex.: https://image.com"}
+          />
+          {inputCount.map((item) => (
+            <Input
+              register={register}
+              name={`image${item}`}
+              key={item}
+              label={`${item}ª Imagem da galeria`}
+              placeholder={"Ex.: https://image.com"}
+            />
+          ))}
+          <div className="m-w-[315px]">
+            <Button
+              type="button"
+              onClick={handleInputCount}
+              variant={inputCount.length == 6 ? "disabled" : "brand-4"}
+            >
+              Adicionar campo para imagem da galeria
+            </Button>
+          </div>
           <div>
             <Button
+              onClick={() => setOpenModalEdit(false)}
+              type="button"
               variant="gray-6"
-              onClick={() => setOpenModalEditAnnouncement(false)}
             >
               Cancelar
             </Button>
-            <Button variant="alert-2">Excluir perfil</Button>
-            <Button variant="brand-1" type="submit">
-              Salvar alterações
+
+            <Button type="submit" variant="brand-4">
+              Criar anúncio
             </Button>
           </div>
         </form>
       </div>
-    </div>
+    </>
   );
 };
 
-export default ModalEditAnnouncement;
+export default ModalEditAnuncio;
