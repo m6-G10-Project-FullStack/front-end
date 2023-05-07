@@ -18,7 +18,7 @@ const Input = ({
   valor,
   ...rest
 }: iInputProps) => {
-  const [value, setValue] = useState(valor);
+  const [value, setValue] = useState<any>(valor);
 
   const handleChange = (event: any) => {
     setValue(event.target.value);
@@ -35,7 +35,7 @@ const Input = ({
         {...rest}
         {...register(name)}
         value={value}
-        onChange={(e) => setValue(parseInt(e.target.value))}
+        onChange={(e) => setValue(e.target.value)}
         id={label}
         placeholder={placeholder}
         className="font-inter font-normal text-base text-gray3 p-2 rounded-s border-[2px] border-gray6 bg-gray10 cursor-pointer hover:border-brand2 focus:border-brand2 mb-2"
