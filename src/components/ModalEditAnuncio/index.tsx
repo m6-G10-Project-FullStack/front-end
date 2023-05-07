@@ -140,30 +140,35 @@ const ModalEditAnuncio = ({
       const carEdited = await editCarId(lastFilteredData);
 
       // REMOVER FOTOS DA GALERIA //
-      // DESCOBRIR COMO PODER EDITAR //
-      const {
-        brand,
-        year,
-        fuel,
-        km,
-        color,
-        fipe,
-        price,
-        description,
-        model,
-        coverImage,
-        ...gallery
-      } = data;
-      const values = Object.values(gallery);
-      for (let value of values) {
-        let newPhoto = {
-          carId: carData.carId,
-          photo_link: value,
-        };
-        await api.post("/gallery", newPhoto, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-      }
+
+      // const {
+      //   brand,
+      //   year,
+      //   fuel,
+      //   km,
+      //   color,
+      //   fipe,
+      //   price,
+      //   description,
+      //   model,
+      //   coverImage,
+      //   ...gallery
+      // } = data;
+      // const values = Object.values(gallery);
+      // if (values) {
+      //   for (let value of values) {
+      //     if(value !== ""){
+      //       let newPhoto = {
+      //         carId: carData.carId,
+      //         photo_link: value,
+      //       };
+      //       await api.post("/gallery", newPhoto, {
+      //         headers: { Authorization: `Bearer ${token}` },
+      //       });
+
+      //     }
+      //   }
+      // }
 
       setOpenModalEdit(false);
       router.reload();
@@ -330,7 +335,7 @@ const ModalEditAnuncio = ({
             </Button>
 
             <Button type="submit" variant="brand-4">
-              Criar anúncio
+              Atualizar anúncio
             </Button>
           </div>
         </form>
