@@ -14,10 +14,12 @@ import { parseCookies } from "nookies";
 import { CarCardAnuncio } from "../../src/components/CarCardAnuncio/CarCardAnuncio";
 import { ModalSuccess } from "../../src/components/ModalSuccess/ModalSuccess";
 import { ModalSuccessCarRegister } from "../../src/components/ModalSuccessCarRegister/ModalSuccessCarRegister";
+import ModalEditAnuncio from "../../src/components/ModalEditAnuncio";
 
 const Test = () => {
   const [openAnuncio, setOpenModalAnuncio] = useState(false);
   const [openModalSuccess, setOpenModalSuccess] = useState(false);
+  const [openModalEdit, setOpenModalEdit] = useState(false);
   const [brands, setBrands] = useState<string[]>([""]);
   const [selectBrand, setSelectBrand] = useState("");
   const [cars, setCars] = useState<string[]>([""]);
@@ -27,12 +29,11 @@ const Test = () => {
   const [fuels, setFuels] = useState<string[]>([""]);
   const [selectFuel, setSelectFuel] = useState("");
   const [selectColor, setSelectColor] = useState("");
-  const [fipe, setFipe] = useState<number>();
   const [carList, setCarList] = useState<iCarResponse[]>();
   const [seller, setSeller] = useState<iUser>();
 
-  const randomColor = useMemo(() => Math.floor(Math.random() * 11 + 1), []);
-  const { user, token } = useAuth();
+  // const randomColor = useMemo(() => Math.floor(Math.random() * 11 + 1), []);
+  const { user, token, setFipe, fipe } = useAuth();
 
   useEffect(() => {
     getBrands();
@@ -116,9 +117,47 @@ const Test = () => {
       </Head>
 
       <Header />
+
+      {openAnuncio && (
+        <Modal setOpenModal={setOpenModalAnuncio}>
+          <ModalAnuncio
+            setOpenModalAnuncio={setOpenModalAnuncio}
+            setOpenModalSuccess={setOpenModalSuccess}
+            brands={brands}
+            setSelectBrand={setSelectBrand}
+            cars={cars}
+            setSelectCar={setSelectCar}
+            years={years}
+            setSelectYear={setSelectYear}
+            fuels={fuels}
+            setSelectFuel={setSelectFuel}
+            fipe={fipe}
+            setSelectColor={setSelectColor}
+          />
+        </Modal>
+      )}
+
       {openModalSuccess && (
         <Modal setOpenModal={setOpenModalSuccess}>
           <ModalSuccessCarRegister setOpenModal={setOpenModalSuccess} />
+        </Modal>
+      )}
+
+      {openModalEdit && (
+        <Modal setOpenModal={setOpenModalAnuncio}>
+          <ModalEditAnuncio
+            setOpenModalEdit={setOpenModalEdit}
+            brands={brands}
+            setSelectBrand={setSelectBrand}
+            cars={cars}
+            setSelectCar={setSelectCar}
+            years={years}
+            setSelectYear={setSelectYear}
+            fuels={fuels}
+            setSelectFuel={setSelectFuel}
+            fipe={fipe}
+            setSelectColor={setSelectColor}
+          />
         </Modal>
       )}
 
@@ -159,25 +198,6 @@ const Test = () => {
               ) : (
                 <></>
               )}
-
-              {openAnuncio && (
-                <Modal setOpenModal={setOpenModalAnuncio}>
-                  <ModalAnuncio
-                    setOpenModalAnuncio={setOpenModalAnuncio}
-                    setOpenModalSuccess={setOpenModalSuccess}
-                    brands={brands}
-                    setSelectBrand={setSelectBrand}
-                    cars={cars}
-                    setSelectCar={setSelectCar}
-                    years={years}
-                    setSelectYear={setSelectYear}
-                    fuels={fuels}
-                    setSelectFuel={setSelectFuel}
-                    fipe={fipe}
-                    setSelectColor={setSelectColor}
-                  />
-                </Modal>
-              )}
             </div>
           </div>
           <div className="w-full h-[437px] absolute bg-brand1 z-0 top-0 left-0" />
@@ -194,9 +214,9 @@ const Test = () => {
             <ul className="w-full flex mt-4 gap-12 overflow-y-scroll md:flex-wrap md:overflow-y-hidden md:mt-2">
               {carList!.map((car, i) => (
                 <div key={i} className="flex flex-col">
-                  arrayColorsCars
                   <CarCardAnuncio
                     key={i}
+                    setOpenModalEdit={setOpenModalEdit}
                     carIsActive={car.is_active}
                     carName={car.model}
                     carDescription={car.description}
@@ -207,6 +227,7 @@ const Test = () => {
                     carYear={car.year}
                     carId={car.id}
                     seller={seller}
+                    carFipe={car.fipe}
                   />
                 </div>
               ))}
@@ -221,12 +242,12 @@ const Test = () => {
         </section>
 
         <div className="w-full flex flex-col items-center justify-center gap-6 mt-[125px] mb-[65px] md:mb-16">
-          <p className="text-xl text-gray4 font-semibold">
+          {/* <p className="text-xl text-gray4 font-semibold">
             <span className="text-gray3">1</span> de 2
           </p>
           <button className="text-brand2 font-semibold text-xl">
             Seguinte &gt;
-          </button>
+          </button> */}
         </div>
       </main>
 
