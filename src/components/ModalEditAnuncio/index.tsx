@@ -131,12 +131,10 @@ const ModalEditAnuncio = ({
       let brandId = "";
       if (data.brand && data.brand !== "" && data.brand !== "Selecione") {
         brandId = await getBrandId(data.brand);
-      }
-
-      if (brandId !== "") {
         const newfilteredData = { ...lastFilteredData, brandId };
         const carEdited = await editCarId(newfilteredData);
       }
+
       const carEdited = await editCarId(lastFilteredData);
 
       // REMOVER FOTOS DA GALERIA //
