@@ -22,7 +22,7 @@ const CardPage = () => {
   const [car, setCar] = useState<iCarResponse>();
 
   useEffect(() => {
-    const id = parseCookies();
+    const cookies = parseCookies();
     const getCarById = async (id: string) => {
       const cars = await api
         .get(`/cars/${id}`)
@@ -30,7 +30,7 @@ const CardPage = () => {
         .catch((err) => console.log(err));
       return cars;
     };
-    getCarById(id["idCar"]);
+    getCarById(cookies["idCar"]);
   }, []);
 
   return (
@@ -45,7 +45,7 @@ const CardPage = () => {
         <section className="flex flex-col gap-[10px] p-[10px] xl:p-[30px]  md:p-[15px] box-border w-full content-center md:flex-wrap md:m-[5px] xl:m-[10px]">
           <section className="box-border relative shadow-sm flex p-[60px] h-[355px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-center g-[32px] rounded">
             <Image
-              src={car?.coverImage}
+              src={car?.coverImage!}
               alt="Card"
               width={800}
               height={400}
@@ -59,19 +59,23 @@ const CardPage = () => {
             <div className="xl:flex mx:flex-col gap-3 text-center justify-center w-[200px] md:justify-between text-base ">
               <div className="flex justify-between items-center content-center w-[200px]  ">
                 <span className="bg-brand4 h-[32px] justify-center flex  w-[300px] rounded-lg ml-[5px] p-[4px] text-brand1 font-medium ">
-                  Ano:{car?.year}
+                  {car?.year}
                 </span>
                 <span className="bg-brand4 font-medium h-[32px] flex w-full rounded-lg ml-[15px] ] p-[4px]  text-brand1">
-                  KM:{car?.km.toLocaleString()}
+                  {car?.km.toLocaleString()} km
                 </span>
               </div>
               <p className="font-semibold flex w-full">
-                R$ {car?.price.toLocaleString()},00
+                {car?.price.toLocaleString("pt-BR", {
+                  currency: "BRL",
+                  style: "currency",
+                })}
               </p>
             </div>
             <Button
               className="xl:w-[20%] mt-3 w-[100px] min-w-[100px] rounded-lg p-2 bg-brand1 text-whitefixed"
               variant="brand-1"
+              disabled
             >
               Comprar
             </Button>
@@ -81,21 +85,30 @@ const CardPage = () => {
             <p className="text-justify">{car?.description}</p>
           </section>
           <div className="shadow-sm flex p-[30px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-start g-[32px] rounded-lg">
-            <CommentCard
+            {car?.comments.length ? (
+              car.comments.map((item, i) => (
+                <CommentCard
+                  key={i}
+                  cor={item.User.color}
+                  datetime={item.created_at}
+                  name={item.User.name}
+                  text={item.comment}
+                />
+              ))
+            ) : (
+              <p>Este anúncio não possui comentários</p>
+            )}
+            {/* <CommentCard
               cor={user.color}
               datetime="11/04/2023"
               name="Roberto"
               initial="RS"
               key="1"
               text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-            />
+            /> */}
           </div>
           <section className="shadow-sm flex p-[30px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-start g-[32px] rounded-lg">
-            <CommentInput
-              initials={user?.name}
-              name={user?.name}
-              cor={user?.color}
-            />
+            <CommentInput />
           </section>
         </section>
         <aside className="flex content-center md:mt-[0px] md:mr-[0px] md:ml-[0px] xl:mt-[40px] xl:mr-[55px] xl:ml-[-20px] md:w-[752px] md:p-0  md:justify-start items-start p-[10px] flex-col  h-[100%] gap-[15px] ">
@@ -108,15 +121,13 @@ const CardPage = () => {
           </div>
           <div className=" bg-whitefixed w-full flex rounded-lg flex-col items-center justify-center">
             <AsideProfile
-              name={user.name}
-              cor={user.color}
-              description={user.description}
-              initials={user.name}
+              name={car?.User?.name}
+              color={car?.User?.color}
+              description={car?.User?.description}
             />
           </div>
         </aside>
       </main>
-      {/* flex my-0 mx-auto flex-col gap-[10px] items-center  p-[30px] box-border w-[440px] xl:w-full content-center xl:flex-wrap md:m-1 */}
     </>
   );
 };

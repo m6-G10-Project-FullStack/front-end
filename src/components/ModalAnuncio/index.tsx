@@ -24,6 +24,17 @@ export interface iCarRegister {
   coverImage: string;
   photos?: string[];
 }
+interface iComment {
+  id: string;
+  created_at: string;
+  comment: string;
+  userId: string;
+  carId: string;
+  User: {
+    color: string;
+    name: string;
+  };
+}
 
 export interface iCarResponse {
   Brand: {
@@ -47,7 +58,10 @@ export interface iCarResponse {
   photos: iCarPhotos[];
   User: {
     name: string;
+    color: string;
+    description: string;
   };
+  comments: iComment[];
 }
 
 export interface iCarPhotos {
