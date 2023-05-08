@@ -12,37 +12,81 @@
 <h3 align="center">Índice:</h3>
 
 <blockquote>
-    <a href="#techs">Tecnologias</a>
-    <br/>
-    <a href="#pages">Pagínas</a>
-    <br/>
-    <a href="#funcs">Funcionalidades</a>
-    <br/>
-    <a href="#team">Time</a>
+  <a href="#init">Iniciando a aplicação</a>
+  <br />
+  <a href="#techs">Tecnologias</a>
+  <br/>
+  <a href="#pages">Pagínas</a>
+  <br/>
+  <a href="#funcs">Funcionalidades</a>
+  <br/>
+  <a href="#team">Time</a>
 </blockquote>
 
 <br/>
 
+<h2 align="center" id="init">Iniciando a aplicação</h2>
+
+<p>
+  Para iniciar a aplicação localmente primeiro é necessário ter a API do Motors Shop rodando e um banco de dados disponível, você pode encontrar mais informações no seguinte link:
+</p>
+
+<a href="https://github.com/m6-G10-Project-FullStack/back-end" target="_blank">Motors Shop API</a>
+
+<p>
+  Uma vez que a API estiver conectada com o banco de dados e estiver rodando, você pode seguir com os seguintes comandos para a instalação de dependências:
+</p>
+
+<h3>npm</h3>
+
+```bash
+npm install
+```
+
+<h3>yarn</h3>
+
+```bash
+yarn
+```
+
+<p>
+  Agora, basta apenas rodar mais um comando e a aplicação estará rodando localmente:
+</p>
+
+<h3>npm</h3>
+
+```bash
+npm run dev
+```
+
+<h3>yarn</h3>
+
+```bash
+yarn dev
+```
+
+<br />
+
 <h2 align="center" id="techs">Tecnologias</h3>
 
 <p>
-    Como citado anteriormente, o time de desenvolvimento escolheu algumas das tecnologias mais recentes e robustas do cenário para construção do projeto. Para instalar o Node.js e algum dos administradores de pacote, recomendamos as documentações oficiais:
+  Como citado anteriormente, o time de desenvolvimento escolheu algumas das tecnologias mais recentes e robustas do cenário para construção do projeto. Para instalar o Node.js e algum dos administradores de pacote, recomendamos as documentações oficiais:
 </p>
 
 <ul>
-    <li>
-        <a href="https://nodejs.org/pt-br" target="_blank">Node.js</a>
-    </li>
-    <li>
-        <a href="https://www.npmjs.com/" target="_blank">Npm</a>
-    </li>
-    <li>
-        <a href="https://yarnpkg.com/" target="_blank">Yarn</a>
-    </li>
+  <li>
+    <a href="https://nodejs.org/pt-br" target="_blank">Node.js</a>
+  </li>
+  <li>
+    <a href="https://www.npmjs.com/" target="_blank">Npm</a>
+  </li>
+  <li>
+    <a href="https://yarnpkg.com/" target="_blank">Yarn</a>
+  </li>
 </ul>
 
 <p>
-    Lista de tecnologias usadas para construção do projeto:
+  Lista de tecnologias usadas para construção do projeto:
 </p>
 
 <ul>
