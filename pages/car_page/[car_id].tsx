@@ -5,7 +5,6 @@ import { Button } from "../../src/components/Button";
 import { CommentCard } from "../../src/components/CommentCard";
 import CommentInput from "../../src/components/CommentInput";
 import { AsidePhotos } from "../../src/components/AsidePhotos";
-import { photos } from "./dataFotos";
 import AsideProfile from "../../src/components/AsideProfile";
 import { Modal } from "../../src/components/Modal";
 import { ModalPhoto } from "../../src/components/ModalPhoto";
@@ -13,13 +12,17 @@ import { useAuth } from "../../src/contexts/authContext";
 import api from "../../src/services/api";
 import { parseCookies } from "nookies";
 import { iCarResponse } from "../../src/components/ModalAnuncio";
-import { object } from "yup";
 import { Header } from "../../src/components/Header";
+
 const CardPage = () => {
   const { user } = useAuth();
   const [openModal, setOpenModal] = useState(false);
   const [photo, setPhoto] = useState("");
   const [car, setCar] = useState<iCarResponse>();
+
+  const message = encodeURIComponent(
+    `Olá ${car?.User.name}, vim por meio do Motors Shop para saber mais sobre o carro ${car?.model}. Você poderia me fornecer mais informações sobre o carro e talvez agendar uma visita para que eu possa vê-lo pessoalmente? Obrigado!`
+  );
 
   useEffect(() => {
     const cookies = parseCookies();
@@ -52,16 +55,16 @@ const CardPage = () => {
               style={{ objectFit: "fill", height: 335 }}
             />
           </section>
-          <section className=" shadow-sm flex p-[30px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-start g-[32px] rounded">
+          <section className=" shadow-sm flex p-[30px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-start gap-8 rounded">
             <h1 className="text-base font-semibold font-lex text-gray0">
               {car?.model}
             </h1>
-            <div className="xl:flex mx:flex-col gap-3 text-center justify-center w-[200px] md:justify-between text-base ">
-              <div className="flex justify-between items-center content-center w-[200px]  ">
-                <span className="bg-brand4 h-[32px] justify-center flex  w-[300px] rounded-lg ml-[5px] p-[4px] text-brand1 font-medium ">
+            <div className="xl:flex mx:flex-col text-center justify-center items-center mx:gap-8 md:gap-0 md:w-full md:justify-between text-base ">
+              <div className="flex justify-between items-center content-center w-fit">
+                <span className="bg-brand4 justify-center flex w-fit rounded-lg px-2 py-1 text-brand1 font-medium ">
                   {car?.year}
                 </span>
-                <span className="bg-brand4 font-medium h-[32px] flex w-full rounded-lg ml-[15px] ] p-[4px]  text-brand1">
+                <span className="bg-brand4 font-medium rounded-lg ml-[15px] w-fit px-2 py-1 text-brand1 text-center whitespace-nowrap">
                   {car?.km.toLocaleString()} km
                 </span>
               </div>
@@ -72,13 +75,23 @@ const CardPage = () => {
                 })}
               </p>
             </div>
-            <Button
-              className="xl:w-[20%] mt-3 w-[100px] min-w-[100px] rounded-lg p-2 bg-brand1 text-whitefixed"
-              variant="brand-1"
-              disabled
-            >
-              Comprar
-            </Button>
+            {user.name ? (
+              <Button
+                onClick={() =>
+                  window.open(
+                    `https://api.whatsapp.com/send?phone=+55${car?.User.phone}&text=${message}`
+                  )
+                }
+                className={`xl:w-[20%] mt-3 w-[100px] min-w-[100px] bg-brand1 rounded-lg p-2 text-whitefixed hover:bg-brand4 hover:text-brand1 transition-colors duration-300`}
+                variant="brand-1"
+              >
+                Comprar
+              </Button>
+            ) : (
+              <Button variant="disabled" disabled>
+                Comprar
+              </Button>
+            )}
           </section>
           <section className="shadow-sm flex p-[30px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-start g-[32px] rounded-lg ">
             <h2 className="font-semibold text-base">Descrição</h2>
@@ -98,14 +111,6 @@ const CardPage = () => {
             ) : (
               <p>Este anúncio não possui comentários</p>
             )}
-            {/* <CommentCard
-              cor={user.color}
-              datetime="11/04/2023"
-              name="Roberto"
-              initial="RS"
-              key="1"
-              text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-            /> */}
           </div>
           <section className="shadow-sm flex p-[30px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-start g-[32px] rounded-lg">
             <CommentInput />

@@ -9,7 +9,7 @@ interface iAsideProps {
 }
 
 const AsideProfile = ({ name, color, description }: iAsideProps) => {
-  const { idSeller, router } = useAuth();
+  const { user, router } = useAuth();
   return (
     <div className="bg-gray10 w-full  justify-center items-center flex flex-col rounded-lg p-3 md:w-full ">
       <div
@@ -25,7 +25,7 @@ const AsideProfile = ({ name, color, description }: iAsideProps) => {
         {description}
       </p>
       <Button
-        onClick={() => router.push(`/user_page/${idSeller}`)}
+        onClick={() => router.push(`/user_page/${user.id}`)}
         variant="gray-0"
       >
         Ver todos anúncios

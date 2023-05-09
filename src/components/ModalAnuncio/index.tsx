@@ -60,6 +60,7 @@ export interface iCarResponse {
     name: string;
     color: string;
     description: string;
+    phone: string;
   };
   comments: iComment[];
 }
