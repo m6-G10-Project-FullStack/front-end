@@ -197,6 +197,21 @@ const ModalEditAnuncio = ({
     }
   };
 
+  const handleExclude = async () => {
+    await api
+      .delete(`/cars/${carData.carId}/permanent`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <div className="bg-gray10 w-full h-max max-h-[700px] max-w-custom344 flex flex-col content-center rounded-lg px-6 py-4 md:max-w-lg relative overflow-y-auto scrollbar-w-6 scrollbar-track-gray-100 scrollbar-thumb-gray-500 scrollbar-thumb-rounded-md">
@@ -314,7 +329,7 @@ const ModalEditAnuncio = ({
               placeholder={"Ex.: https://image.com"}
             />
           ))}
-          <div className="m-w-[315px]">
+          <div className="m-w-[315px] self-center">
             <Button
               type="button"
               onClick={handleInputCount}
@@ -323,13 +338,13 @@ const ModalEditAnuncio = ({
               Adicionar campo para imagem da galeria
             </Button>
           </div>
-          <div>
+          <div className="flex justify-between items-center w-full mt-4">
             <Button
-              onClick={() => setOpenModalEdit(false)}
+              onClick={() => handleExclude()}
               type="button"
               variant="gray-6"
             >
-              Cancelar
+              Excluir carro
             </Button>
 
             <Button type="submit" variant="brand-4">

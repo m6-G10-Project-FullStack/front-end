@@ -186,7 +186,7 @@ const Test = () => {
 
                 <p>{seller?.description}</p>
               </div>
-              {user?.id == seller?.id ? (
+              {user?.id == seller?.id && (
                 <Button
                   onClick={() => {
                     setOpenModalAnuncio(true);
@@ -195,16 +195,12 @@ const Test = () => {
                 >
                   Criar anúncio
                 </Button>
-              ) : (
-                <></>
               )}
             </div>
           </div>
           <div className="w-full h-[437px] absolute bg-brand1 z-0 top-0 left-0" />
         </section>
-        {user?.id == seller?.id ? (
-          <></>
-        ) : (
+        {!(user?.id == seller?.id) && (
           <h3 className="font-lex font-semibold text-2xl text-gray0 leading-8 w-full max-w-[1600px] my-0 mx-auto p-4">
             Anúncios
           </h3>
@@ -241,14 +237,7 @@ const Test = () => {
           )}
         </section>
 
-        <div className="w-full flex flex-col items-center justify-center gap-6 mt-[125px] mb-[65px] md:mb-16">
-          {/* <p className="text-xl text-gray4 font-semibold">
-            <span className="text-gray3">1</span> de 2
-          </p>
-          <button className="text-brand2 font-semibold text-xl">
-            Seguinte &gt;
-          </button> */}
-        </div>
+        <div className="w-full flex flex-col items-center justify-center gap-6 mt-[125px] mb-[65px] md:mb-16" />
       </main>
 
       <Footer />

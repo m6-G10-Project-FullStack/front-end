@@ -51,7 +51,7 @@ const CommentInput = () => {
           </h3>
         </div>
         <textarea
-          className="flex-grow mt-7 pl-3 pr-4 w-full max-w-[284px] md:max-w-[672px] md:h-16 h-32"
+          className="flex-grow mt-7 pl-3 pr-4 w-full max-w-[284px] md:max-w-[672px] md:h-16 h-3 resize-none"
           placeholder={`O que você achou, ${user.name}?`}
           value={comment}
           onChange={handleCommentChange}
