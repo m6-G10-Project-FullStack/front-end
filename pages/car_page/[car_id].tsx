@@ -102,10 +102,11 @@ const CardPage = () => {
               car.comments.map((item, i) => (
                 <CommentCard
                   key={i}
-                  cor={item.User.color}
                   datetime={item.created_at}
                   name={item.User.name}
                   text={item.comment}
+                  sellerId={car.userId}
+                  commentOwnerId={item.User.id}
                 />
               ))
             ) : (
