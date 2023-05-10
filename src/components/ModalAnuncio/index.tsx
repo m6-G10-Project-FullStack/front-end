@@ -33,6 +33,7 @@ interface iComment {
   User: {
     color: string;
     name: string;
+    id: string;
   };
 }
 

@@ -1,21 +1,26 @@
 import React from "react";
 import pingo from "../../assets/Ellipse.png";
 import Image from "next/image";
+import { Button } from "../Button";
+import { useAuth } from "../../contexts/authContext";
 
 interface iCommentCardProps {
   initial?: string;
   name?: string;
   datetime?: string;
   text?: string;
-  cor?: string;
+  sellerId: string;
+  commentOwnerId: string;
 }
 
 export const CommentCard = ({
   name,
   datetime,
   text,
-  cor,
+  sellerId,
+  commentOwnerId,
 }: iCommentCardProps) => {
+  const { user, isLogged } = useAuth();
   const handleDate = () => {
     const now = new Date();
     const formatedDate = new Date(datetime!);
@@ -53,12 +58,14 @@ export const CommentCard = ({
   };
 
   handleDate();
-
+  // console.log(`userId= ${user.id}`);
+  // console.log(`sellerId= ${sellerId}`);
+  // console.log(`commentOwnerId= ${commentOwnerId}`);
   return (
-    <div className="w-full flex flex-col content-center mt-6 mb-11">
+    <div className="w-full flex flex-col content-center mt-6 mb-11 relative">
       <div className="flex w-full gap-2 items-center">
         <div
-          className={`flex rounded-full w-8 h-8 justify-center items-center text-gray10 font-inter font-semibold text-sm bg-${cor}`}
+          className={`flex rounded-full w-8 h-8 justify-center items-center text-gray10 font-inter font-semibold text-sm bg-brand1`}
         >
           <p className="text-whitefixed">
             {name?.toUpperCase().split("")[0]}
@@ -74,6 +81,18 @@ export const CommentCard = ({
       <p className="font-inter font-normal text-sm text-gray3 text-justify pt-4 max-w-[283px] md:max-w-[663px]">
         {text}
       </p>
+      <div className="flex flex-col justify-center items-center gap-2 max-w-[80px] absolute right-0 top-0">
+        {user.id === commentOwnerId ? (
+          <Button variant="success-2">Atualizar</Button>
+        ) : (
+          <></>
+        )}
+        {user.id === commentOwnerId || user.id === sellerId ? (
+          <Button variant="alert-2">Remover</Button>
+        ) : (
+          <></>
+        )}
+      </div>
     </div>
   );
 };
