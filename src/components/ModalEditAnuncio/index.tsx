@@ -1,78 +1,35 @@
-import React, { useState } from "react";
+import React, { SetStateAction, useState } from "react";
 import Select from "../Select";
 import { Button } from "../Button";
 import Input from "../Input";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Schema } from "inspector";
 import { RxDragHandleDots1 } from "react-icons/rx";
 import api from "../../services/api";
-import { AuthContext, useAuth } from "../../contexts/authContext";
-import { error } from "console";
+import { useAuth } from "../../contexts/authContext";
+import jwt_decode from "jwt-decode";
 
-export interface iCarRegister {
-  brand: string;
-  model: string;
-  year: string;
-  km: number;
-  fuel: string;
-  color: string;
-  fipe: number;
-  price: number;
-  description: string;
-  coverImage: string;
+export interface iModalEditAnnouncementProps {
+  setOpenModalEdit: React.Dispatch<SetStateAction<boolean>>;
+}
+
+export interface iCarEditAnnouncement {
+  brand?: string;
+  model?: string;
+  year?: string;
+  km?: number;
+  fuel?: string;
+  color?: string;
+  fipe?: number;
+  price?: number;
+  description?: string;
+  coverImage?: string;
   photos?: string[];
 }
-interface iComment {
-  id: string;
-  created_at: string;
-  comment: string;
-  userId: string;
-  carId: string;
-  User: {
-    color: string;
-    name: string;
-    id: string;
-  };
-}
 
-export interface iCarResponse {
-  Brand: {
-    id: number;
-    name: string;
-  };
-  model: string;
-  year: number;
-  km: number;
-  fuel: string;
-  color: string;
-  fipe: number;
-  price: number;
-  description: string;
-  coverImage: string;
-  id: string;
-  is_promo: boolean;
-  is_active: boolean;
-  userId: string;
-  brandId: string;
-  photos: iCarPhotos[];
-  User: {
-    name: string;
-    color: string;
-    description: string;
-    phone: string;
-  };
-  comments: iComment[];
-}
-
-export interface iCarPhotos {
-  photo_link: string;
-}
-
-interface iModalAnuncioProps {
-  setOpenModalAnuncio: React.Dispatch<React.SetStateAction<boolean>>;
-  setOpenModalSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+interface iModalEditAnuncioProps {
+  setOpenModalEdit: React.Dispatch<React.SetStateAction<boolean>>;
   brands?: string[];
   setSelectBrand?: React.Dispatch<React.SetStateAction<string>>;
   cars?: string[];
@@ -85,9 +42,8 @@ interface iModalAnuncioProps {
   setSelectColor?: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const ModalAnuncio = ({
-  setOpenModalAnuncio,
-  setOpenModalSuccess,
+const ModalEditAnuncio = ({
+  setOpenModalEdit,
   brands,
   setSelectBrand,
   cars,
@@ -98,7 +54,7 @@ const ModalAnuncio = ({
   setSelectFuel,
   fipe,
   setSelectColor,
-}: iModalAnuncioProps) => {
+}: iModalEditAnuncioProps) => {
   const arrayMarcas = brands;
   const arrayModelos = cars;
   const arrayAnos = years;
@@ -112,7 +68,7 @@ const ModalAnuncio = ({
     "Colorido",
   ];
   const [inputCount, setInputCount] = useState([1, 2]);
-  const { user, token } = useAuth();
+  const { user, token, carId, carData, router } = useAuth();
 
   const handleInputCount = () => {
     if (inputCount.length < 6) {
@@ -121,22 +77,22 @@ const ModalAnuncio = ({
   };
 
   const FormSchema: any = yup.object().shape({
-    brand: yup.string().required(),
-    model: yup.string().required(),
-    year: yup.string().required(),
-    fuel: yup.string().required(),
-    km: yup.number().required(),
-    color: yup.string().required(),
-    fipe: yup.number().required(),
-    price: yup.number().required(),
-    description: yup.string().required(),
-    coverImage: yup.string().required(),
-    image1: yup.string(),
-    image2: yup.string(),
-    image3: yup.string(),
-    image4: yup.string(),
-    image5: yup.string(),
-    image6: yup.string(),
+    brand: yup.string().notRequired(),
+    model: yup.string().notRequired(),
+    year: yup.string().notRequired(),
+    fuel: yup.string().notRequired(),
+    km: yup.number().nullable(),
+    color: yup.string().notRequired(),
+    fipe: yup.number().nullable(),
+    price: yup.number().nullable(),
+    description: yup.string().notRequired(),
+    coverImage: yup.string().notRequired(),
+    image1: yup.string().notRequired(),
+    image2: yup.string().notRequired(),
+    image3: yup.string().notRequired(),
+    image4: yup.string().notRequired(),
+    image5: yup.string().notRequired(),
+    image6: yup.string().notRequired(),
   });
 
   const {
@@ -144,56 +100,76 @@ const ModalAnuncio = ({
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<iCarRegister>({
+  } = useForm<iCarEditAnnouncement>({
     resolver: yupResolver(FormSchema),
   });
 
-  const onSubmitForm = async (data: iCarRegister) => {
+  const onSubmitForm = async (data: iCarEditAnnouncement) => {
+    console.log(data);
     try {
-      const brandId = await getBrandId(data.brand);
+      const filteredData = Object.entries(data).reduce<Record<string, string>>(
+        (acc, [key, value]) => {
+          if (value !== "Selecione") {
+            acc[key] = value;
+          }
 
-      const newCar = {
-        year: data.year,
-        fuel: data.fuel,
-        km: data.km,
-        color: data.color,
-        fipe: data.fipe,
-        price: data.price,
-        description: data.description,
-        model: data.model,
-        brandId: brandId,
-        coverImage: data.coverImage,
-        userId: user!.id,
-      };
+          return acc;
+        },
+        {}
+      );
 
-      const carId = await createCar(newCar);
+      const lastFilteredData = Object.entries(filteredData).reduce<
+        Record<string, string>
+      >((acc, [key, value]) => {
+        if (value !== "") {
+          acc[key] = value;
+        }
 
-      const {
-        brand,
-        year,
-        fuel,
-        km,
-        color,
-        fipe,
-        price,
-        description,
-        model,
-        coverImage,
-        ...gallery
-      } = data;
-      const values = Object.values(gallery);
-      for (let value of values) {
-        let newPhoto = {
-          carId: carId,
-          photo_link: value,
-        };
-        await api.post("/gallery", newPhoto, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        return acc;
+      }, {});
+
+      let brandId = "";
+      if (data.brand && data.brand !== "" && data.brand !== "Selecione") {
+        brandId = await getBrandId(data.brand);
+        const newfilteredData = { ...lastFilteredData, brandId };
+        const carEdited = await editCarId(newfilteredData);
       }
 
-      setOpenModalAnuncio(false);
-      setOpenModalSuccess(true);
+      const carEdited = await editCarId(lastFilteredData);
+
+      // REMOVER FOTOS DA GALERIA //
+
+      // const {
+      //   brand,
+      //   year,
+      //   fuel,
+      //   km,
+      //   color,
+      //   fipe,
+      //   price,
+      //   description,
+      //   model,
+      //   coverImage,
+      //   ...gallery
+      // } = data;
+      // const values = Object.values(gallery);
+      // if (values) {
+      //   for (let value of values) {
+      //     if(value !== ""){
+      //       let newPhoto = {
+      //         carId: carData.carId,
+      //         photo_link: value,
+      //       };
+      //       await api.post("/gallery", newPhoto, {
+      //         headers: { Authorization: `Bearer ${token}` },
+      //       });
+
+      //     }
+      //   }
+      // }
+
+      setOpenModalEdit(false);
+      router.reload();
     } catch (error) {
       console.log(error);
     }
@@ -209,15 +185,31 @@ const ModalAnuncio = ({
     }
   };
 
-  const createCar = async (car: any) => {
+  const editCarId = async (payload: any) => {
     try {
-      const { data } = await api.post("/cars", car, {
+      const { data } = await api.patch(`/cars/${carData.carId}`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      return data.id;
+      console.log(data);
+      return data;
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleExclude = async () => {
+    await api
+      .delete(`/cars/${carData.carId}/permanent`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -225,11 +217,11 @@ const ModalAnuncio = ({
       <div className="bg-gray10 w-full h-max max-h-[700px] max-w-custom344 flex flex-col content-center rounded-lg px-6 py-4 md:max-w-lg relative overflow-y-auto scrollbar-w-6 scrollbar-track-gray-100 scrollbar-thumb-gray-500 scrollbar-thumb-rounded-md">
         <div className="flex w-full justify-between items-center">
           <p className="font-lex font-medium text-base text-gray1">
-            Criar anúncio
+            Editar anúncio
           </p>
           <button
             className="h-10 flex border-none bg-transparent text-gray3 text-custom22 cursor-pointer"
-            onClick={() => setOpenModalAnuncio(false)}
+            onClick={() => setOpenModalEdit(false)}
             type="button"
           >
             x
@@ -283,6 +275,7 @@ const ModalAnuncio = ({
                 name="km"
                 label="Quilometragem"
                 placeholder={"Ex.: 30.000"}
+                valor={carData.carKm!}
               />
             </div>
             <div className="flex flex-col w-[127px]">
@@ -311,6 +304,7 @@ const ModalAnuncio = ({
                 name="price"
                 label="Preço"
                 placeholder={"Ex.: 50.000,00"}
+                valor={carData.carPrice!}
               />
             </div>
           </div>
@@ -335,7 +329,7 @@ const ModalAnuncio = ({
               placeholder={"Ex.: https://image.com"}
             />
           ))}
-          <div className="m-w-[315px]">
+          <div className="m-w-[315px] self-center">
             <Button
               type="button"
               onClick={handleInputCount}
@@ -344,17 +338,17 @@ const ModalAnuncio = ({
               Adicionar campo para imagem da galeria
             </Button>
           </div>
-          <div>
+          <div className="flex justify-between items-center w-full mt-4">
             <Button
-              onClick={() => setOpenModalAnuncio(false)}
+              onClick={() => handleExclude()}
               type="button"
               variant="gray-6"
             >
-              Cancelar
+              Excluir carro
             </Button>
 
             <Button type="submit" variant="brand-4">
-              Criar anúncio
+              Atualizar anúncio
             </Button>
           </div>
         </form>
@@ -363,4 +357,4 @@ const ModalAnuncio = ({
   );
 };
 
-export default ModalAnuncio;
+export default ModalEditAnuncio;

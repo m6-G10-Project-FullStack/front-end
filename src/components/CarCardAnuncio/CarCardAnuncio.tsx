@@ -15,8 +15,11 @@ interface iCarCardProps {
   carYear: number;
   carPrice: number;
   carId: string;
+  carFipe: number;
   seller?: iUser;
   carIsActive: boolean;
+  setOpenModalEdit: React.Dispatch<React.SetStateAction<boolean>>;
+
 }
 
 export const CarCardAnuncio = ({
@@ -28,11 +31,21 @@ export const CarCardAnuncio = ({
   carYear,
   carPrice,
   carId,
+  carFipe,
   seller,
   carIsActive,
+  setOpenModalEdit,
 }: iCarCardProps) => {
-  const { router, setIdSeller, user } = useAuth();
-  const [idCar, setCarId] = useState<string>();
+  const { router, setIdSeller, user, setCarId, setCarData, setFipe } =
+    useAuth();
+
+  const getCarData = (carId: string, carKm: number, carPrice: number) => {
+    setCarData({
+      carId: carId,
+      carKm: carKm,
+      carPrice: carPrice,
+    });
+  };
 
   const getCarId = (id: string) => {
     setCarId(id);
@@ -88,15 +101,24 @@ export const CarCardAnuncio = ({
               {carKm} Km
             </span>
             <span className="text-sm pl-2 pt-1 pr-2 pb-1 text-brand1 bg-brand4">
-              Ano{carYear}
+              {carYear}
             </span>
-            <p>R$ {carPrice}</p>
+            <p>R$ {carPrice.toLocaleString()},00</p>
           </div>
         </div>
       </div>
       {user?.id == seller?.id ? (
         <div className="flex gap-5 mt-3">
-          <Button variant="border-gray-10">Editar</Button>
+          <Button
+            onClick={() => {
+              setOpenModalEdit(true),
+                getCarData(carId, carKm, carPrice),
+                setFipe(carFipe);
+            }}
+            variant="border-gray-10"
+          >
+            Editar
+          </Button>
           <Button onClick={() => getCarId(carId)} variant="border-gray-10">
             Ver detalhes
           </Button>

@@ -65,13 +65,13 @@ export default function Register() {
       )}
       <Header />
       <main className="w-full flex justify-center items-center mt-[60px] bg-gray8 pb-[20px]">
-        <div className="flex flex-col justify-start w-[600px] md:w-[343px] shadow-md   rounded items-stretch px-11 py-12 min-w-[320px] gap-8 m-5 mt-[60px] bg-whitefixed">
+        <div className="flex flex-col justify-start w-full max-w-[600px] shadow-md   rounded items-stretch px-11 py-12 min-w-[320px] gap-8 m-5 mt-[60px] bg-whitefixed">
           <h1 className="text-3xl font-semibold text-gray-800 m-2">Cadastro</h1>
           <h3 className="text-1xl font-semibold text-gray-800 m-2">
             Informações pessoais
           </h3>
           <form onSubmit={handleSubmit(onSubmitForm)}>
-            <div className="flex flex-col m-2">
+            <div>
               <div>
                 <Input
                   register={register}
@@ -84,7 +84,7 @@ export default function Register() {
                 )}
               </div>
 
-              <div className="m-2">
+              <div>
                 <Input
                   register={register}
                   label="Email"
@@ -96,7 +96,7 @@ export default function Register() {
                 )}
               </div>
 
-              <div className="m-2">
+              <div>
                 <Input
                   register={register}
                   label="CPF"
@@ -108,7 +108,7 @@ export default function Register() {
                 )}
               </div>
 
-              <div className="m-2">
+              <div>
                 <Input
                   register={register}
                   label="Celular"
@@ -120,7 +120,7 @@ export default function Register() {
                 )}
               </div>
 
-              <div className="m-2">
+              <div>
                 <Input
                   register={register}
                   label="Data de nascimento"
@@ -134,7 +134,7 @@ export default function Register() {
                 )}
               </div>
 
-              <div className="m-2">
+              <div>
                 <Input
                   register={register}
                   label="Descrição"
@@ -148,7 +148,7 @@ export default function Register() {
                 )}
               </div>
 
-              <h3 className="text-1xl font-semibold text-gray-800 m-2">
+              <h3 className="text-1xl font-semibold text-gray-800">
                 Informações de endereço
               </h3>
               <div>
@@ -163,8 +163,8 @@ export default function Register() {
                 )}
               </div>
 
-              <div className="flex justify-between gap-4">
-                <div className="flex flex-col w-[127px]">
+              <div className="flex justify-between gap-4 flex-col md:flex-row">
+                <div>
                   <Input
                     register={register}
                     label="Estado"
@@ -176,7 +176,7 @@ export default function Register() {
                   )}
                 </div>
 
-                <div className="flex flex-col w-[127px]">
+                <div>
                   <Input
                     register={register}
                     label="Cidade"
@@ -189,7 +189,7 @@ export default function Register() {
                 </div>
               </div>
 
-              <div className="m-2">
+              <div>
                 <Input
                   register={register}
                   label="Rua"
@@ -201,8 +201,8 @@ export default function Register() {
                 )}
               </div>
 
-              <div className="flex justify-around gap-2">
-                <div className="flex flex-col w-[140px]">
+              <div className="flex justify-around gap-2 flex-col md:flex-row">
+                <div>
                   <Input
                     register={register}
                     label="Número"
@@ -216,7 +216,7 @@ export default function Register() {
                   )}
                 </div>
 
-                <div className="flex flex-col w-[140px]">
+                <div>
                   <Input
                     register={register}
                     label="Complemento"
@@ -233,7 +233,7 @@ export default function Register() {
 
               <div>
                 <h5 className="font-bold mb-4">Tipo de conta</h5>
-                <div className="flex gap-2 mb-3 justify-center">
+                <div className="flex gap-2 mb-3 justify-around">
                   <button
                     type="button"
                     className={`w-[138px] py-2 px-4 rounded border-[1px] ${
@@ -260,16 +260,18 @@ export default function Register() {
                   </button>
                 </div>
 
-                <div className="m-2">
+                <div>
                   <Input
+                    type="password"
                     register={register}
                     label="Senha"
                     placeholder="Digitar senha"
                     name="password"
                   />
                 </div>
-                <div className="m-2">
+                <div>
                   <Input
+                    type="password"
                     register={register}
                     label="Confirmar Senha"
                     placeholder="Digitar senha"
@@ -281,13 +283,14 @@ export default function Register() {
                     </span>
                   )}
                 </div>
-
-                <button
-                  type="submit"
-                  className="w-[276px] py-2 px-4 rounded border-[1px] bg-brand1 text-gray9"
-                >
-                  Finalizar cadastro
-                </button>
+                <div className="flex justify-end">
+                  <button
+                    type="submit"
+                    className="w-[276px] py-2 px-4 rounded border-[1px] bg-brand1 text-gray9"
+                  >
+                    Finalizar cadastro
+                  </button>
+                </div>
               </div>
             </div>
           </form>

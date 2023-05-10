@@ -6,6 +6,7 @@ import { AuthContext } from "../../src/contexts/authContext";
 import { useAuth } from "../../src/contexts/authContext";
 import { SchemaLogin } from "../../src/schemas/shemas";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Link from "next/link";
 export interface iLoginFormInputs {
   email: string;
   password: string;
@@ -27,7 +28,7 @@ const Login = () => {
       <main className="w-full flex justify-center items-center h-screen bg-gray8 pb-[20px] ">
         <form
           onSubmit={handleSubmit(HandleFormLogin)}
-          className="flex flex-col justify-center w-[412px] md:w-[343px] shadow-md   rounded items-stretch px-11 py-12 min-w-[320px] gap-8 m-5 mt-10 bg-whitefixed"
+          className="flex flex-col justify-center w-full max-w-[412px] shadow-md   rounded items-stretch px-11 py-12 gap-8 m-5 mt-10 bg-whitefixed"
         >
           <h1 className="text-left font-lex font-semibold">Login</h1>
           <label htmlFor="email" className="font-semibold">
@@ -53,7 +54,7 @@ const Login = () => {
             <span className="text-red-600">{errors.password.message}</span>
           )}
           <p className="text-right text-gray1">
-            <a href="#">Esqueci minha senha</a>
+            <Link href="/recover">Esqueci minha senha</Link>
           </p>
           <Button type="submit" variant="brand-1">
             Entrar

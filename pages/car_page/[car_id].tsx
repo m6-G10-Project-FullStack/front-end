@@ -5,7 +5,6 @@ import { Button } from "../../src/components/Button";
 import { CommentCard } from "../../src/components/CommentCard";
 import CommentInput from "../../src/components/CommentInput";
 import { AsidePhotos } from "../../src/components/AsidePhotos";
-import { photos } from "./dataFotos";
 import AsideProfile from "../../src/components/AsideProfile";
 import { Modal } from "../../src/components/Modal";
 import { ModalPhoto } from "../../src/components/ModalPhoto";
@@ -13,26 +12,28 @@ import { useAuth } from "../../src/contexts/authContext";
 import api from "../../src/services/api";
 import { parseCookies } from "nookies";
 import { iCarResponse } from "../../src/components/ModalAnuncio";
-import { object } from "yup";
 import { Header } from "../../src/components/Header";
+
 const CardPage = () => {
   const { user } = useAuth();
   const [openModal, setOpenModal] = useState(false);
   const [photo, setPhoto] = useState("");
   const [car, setCar] = useState<iCarResponse>();
-  console.log(car);
+
+  const message = encodeURIComponent(
+    `Olá ${car?.User.name}, vim por meio do Motors Shop para saber mais sobre o carro ${car?.model}. Você poderia me fornecer mais informações sobre o carro e talvez agendar uma visita para que eu possa vê-lo pessoalmente? Obrigado!`
+  );
 
   useEffect(() => {
-    const id = parseCookies();
+    const cookies = parseCookies();
     const getCarById = async (id: string) => {
       const cars = await api
         .get(`/cars/${id}`)
         .then((res) => setCar(res.data))
         .catch((err) => console.log(err));
-      console.log(cars);
       return cars;
     };
-    getCarById(id["idCar"]);
+    getCarById(cookies["idCar"]);
   }, []);
 
   return (
@@ -73,12 +74,23 @@ const CardPage = () => {
                 </div>
               </div>
             </div>
-            <Button
-              className="xl:w-[20%] mt-3 w-[100px] min-w-[100px] rounded-lg p-2 bg-brand1 text-whitefixed"
-              variant="brand-1"
-            >
-              Comprar
-            </Button>
+            {user.name ? (
+              <Button
+                onClick={() =>
+                  window.open(
+                    `https://api.whatsapp.com/send?phone=+55${car?.User.phone}&text=${message}`
+                  )
+                }
+                className={`xl:w-[20%] mt-3 w-[100px] min-w-[100px] bg-brand1 rounded-lg p-2 text-whitefixed hover:bg-brand4 hover:text-brand1 transition-colors duration-300`}
+                variant="brand-1"
+              >
+                Comprar
+              </Button>
+            ) : (
+              <Button variant="disabled" disabled>
+                Comprar
+              </Button>
+            )}
           </section>
           <section className="shadow-sm flex p-[30px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-start g-[32px] rounded-lg ">
             <h2 className="font-semibold text-base">Descrição</h2>
@@ -120,7 +132,6 @@ const CardPage = () => {
           </div>
         </aside>
       </main>
-      {/* flex my-0 mx-auto flex-col gap-[10px] items-center  p-[30px] box-border w-[440px] xl:w-full content-center xl:flex-wrap md:m-1 */}
     </>
   );
 };

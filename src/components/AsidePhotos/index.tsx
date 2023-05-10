@@ -14,7 +14,6 @@ export const AsidePhotos = ({
   setPhoto,
 }: iPhotosAsideProps) => {
   const openPhoto = (photo: string) => {
-    console.log(photo);
     setOpenModal(true);
     setPhoto(photo);
   };

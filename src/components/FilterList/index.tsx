@@ -10,6 +10,25 @@ interface iProps {
   listaCores: string[];
   listaAnos: string[];
   listaCombustivel: string[];
+  brand: string;
+  setBrand: Dispatch<SetStateAction<string>>;
+  model: string;
+  setModel: Dispatch<SetStateAction<string>>;
+  color: string;
+  setColor: Dispatch<SetStateAction<string>>;
+  year: string;
+  setYear: Dispatch<SetStateAction<string>>;
+  fuel: string;
+  setFuel: Dispatch<SetStateAction<string>>;
+  minKm: number;
+  setMinKm: Dispatch<SetStateAction<number>>;
+  maxKm: number;
+  setMaxKm: Dispatch<SetStateAction<number>>;
+  minPrice: number;
+  setMinPrice: Dispatch<SetStateAction<number>>;
+  maxPrice: number;
+  setMaxPrice: Dispatch<SetStateAction<number>>;
+  searchList: any;
 }
 
 export const FilterList = ({
@@ -20,17 +39,27 @@ export const FilterList = ({
   listaCores,
   listaModelos,
   listaCombustivel,
+  brand,
+  setBrand,
+  model,
+  setModel,
+  color,
+  setColor,
+  year,
+  setYear,
+  fuel,
+  setFuel,
+  minKm,
+  setMinKm,
+  maxKm,
+  setMaxKm,
+  minPrice,
+  setMinPrice,
+  maxPrice,
+  setMaxPrice,
+  searchList,
 }: iProps) => {
   const [isOpen, setIsOpen] = useState(true);
-  const [brand, setBrand] = useState("");
-  const [model, setModel] = useState("");
-  const [color, setColor] = useState("");
-  const [year, setYear] = useState("");
-  const [fuel, setFuel] = useState("");
-  const [minKm, setMinKm] = useState(0);
-  const [maxKm, setMaxKm] = useState(0);
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(0);
 
   const clearFilters = () => {
     setBrand("");
@@ -44,48 +73,6 @@ export const FilterList = ({
     setMaxPrice(0);
 
     setList(list);
-  };
-
-  const handleFilter = () => {
-    let filteredCars = list;
-
-    if (brand) {
-      filteredCars = filteredCars.filter((car) => car.Brand.name === brand);
-    }
-
-    if (model) {
-      filteredCars = filteredCars.filter((car) => car.model === model);
-    }
-
-    if (color) {
-      filteredCars = filteredCars.filter((car) => car.color === color);
-    }
-
-    if (year) {
-      filteredCars = filteredCars.filter((car) => car.year === +year);
-    }
-
-    if (fuel) {
-      filteredCars = filteredCars.filter((car) => car.fuel === fuel);
-    }
-
-    if (minKm) {
-      filteredCars = filteredCars.filter((car) => car.km >= minKm);
-    }
-
-    if (maxKm) {
-      filteredCars = filteredCars.filter((car) => car.km <= maxKm);
-    }
-
-    if (minPrice) {
-      filteredCars = filteredCars.filter((car) => car.price >= minPrice);
-    }
-
-    if (maxPrice) {
-      filteredCars = filteredCars.filter((car) => car.price <= maxPrice);
-    }
-
-    setList(filteredCars);
   };
 
   return (
@@ -266,7 +253,7 @@ export const FilterList = ({
                 Limpar filtros
               </Button>
             )}
-            <Button onClick={handleFilter} variant="brand-2">
+            <Button onClick={searchList} variant="brand-2">
               Ver anúncios
             </Button>
           </div>

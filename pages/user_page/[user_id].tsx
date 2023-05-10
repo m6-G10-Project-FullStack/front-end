@@ -14,10 +14,12 @@ import { parseCookies } from "nookies";
 import { CarCardAnuncio } from "../../src/components/CarCardAnuncio/CarCardAnuncio";
 import { ModalSuccess } from "../../src/components/ModalSuccess/ModalSuccess";
 import { ModalSuccessCarRegister } from "../../src/components/ModalSuccessCarRegister/ModalSuccessCarRegister";
+import ModalEditAnuncio from "../../src/components/ModalEditAnuncio";
 
 const Test = () => {
   const [openAnuncio, setOpenModalAnuncio] = useState(false);
   const [openModalSuccess, setOpenModalSuccess] = useState(false);
+  const [openModalEdit, setOpenModalEdit] = useState(false);
   const [brands, setBrands] = useState<string[]>([""]);
   const [selectBrand, setSelectBrand] = useState("");
   const [cars, setCars] = useState<string[]>([""]);
@@ -26,12 +28,12 @@ const Test = () => {
   const [selectYear, setSelectYear] = useState("");
   const [fuels, setFuels] = useState<string[]>([""]);
   const [selectFuel, setSelectFuel] = useState("");
-  const [fipe, setFipe] = useState<number>();
+  const [selectColor, setSelectColor] = useState("");
   const [carList, setCarList] = useState<iCarResponse[]>();
   const [seller, setSeller] = useState<iUser>();
 
-  const randomColor = useMemo(() => Math.floor(Math.random() * 11 + 1), []);
-  const { user, token } = useAuth();
+  // const randomColor = useMemo(() => Math.floor(Math.random() * 11 + 1), []);
+  const { user, token, setFipe, fipe } = useAuth();
 
   useEffect(() => {
     getBrands();
@@ -93,7 +95,6 @@ const Test = () => {
       headers: { Authorization: `Bearer ${token}` },
     });
     setSeller(data);
-    console.log(data);
     setCarList(data.cars);
   };
 
@@ -116,9 +117,47 @@ const Test = () => {
       </Head>
 
       <Header />
+
+      {openAnuncio && (
+        <Modal setOpenModal={setOpenModalAnuncio}>
+          <ModalAnuncio
+            setOpenModalAnuncio={setOpenModalAnuncio}
+            setOpenModalSuccess={setOpenModalSuccess}
+            brands={brands}
+            setSelectBrand={setSelectBrand}
+            cars={cars}
+            setSelectCar={setSelectCar}
+            years={years}
+            setSelectYear={setSelectYear}
+            fuels={fuels}
+            setSelectFuel={setSelectFuel}
+            fipe={fipe}
+            setSelectColor={setSelectColor}
+          />
+        </Modal>
+      )}
+
       {openModalSuccess && (
         <Modal setOpenModal={setOpenModalSuccess}>
           <ModalSuccessCarRegister setOpenModal={setOpenModalSuccess} />
+        </Modal>
+      )}
+
+      {openModalEdit && (
+        <Modal setOpenModal={setOpenModalAnuncio}>
+          <ModalEditAnuncio
+            setOpenModalEdit={setOpenModalEdit}
+            brands={brands}
+            setSelectBrand={setSelectBrand}
+            cars={cars}
+            setSelectCar={setSelectCar}
+            years={years}
+            setSelectYear={setSelectYear}
+            fuels={fuels}
+            setSelectFuel={setSelectFuel}
+            fipe={fipe}
+            setSelectColor={setSelectColor}
+          />
         </Modal>
       )}
 
@@ -147,7 +186,7 @@ const Test = () => {
 
                 <p>{seller?.description}</p>
               </div>
-              {user?.id == seller?.id ? (
+              {user?.id == seller?.id && (
                 <Button
                   onClick={() => {
                     setOpenModalAnuncio(true);
@@ -156,34 +195,12 @@ const Test = () => {
                 >
                   Criar anúncio
                 </Button>
-              ) : (
-                <></>
-              )}
-
-              {openAnuncio && (
-                <Modal setOpenModal={setOpenModalAnuncio}>
-                  <ModalAnuncio
-                    setOpenModalAnuncio={setOpenModalAnuncio}
-                    setOpenModalSuccess={setOpenModalSuccess}
-                    brands={brands}
-                    setSelectBrand={setSelectBrand}
-                    cars={cars}
-                    setSelectCar={setSelectCar}
-                    years={years}
-                    setSelectYear={setSelectYear}
-                    fuels={fuels}
-                    setSelectFuel={setSelectFuel}
-                    fipe={fipe}
-                  />
-                </Modal>
               )}
             </div>
           </div>
           <div className="w-full h-[437px] absolute bg-brand1 z-0 top-0 left-0" />
         </section>
-        {user?.id == seller?.id ? (
-          <></>
-        ) : (
+        {!(user?.id == seller?.id) && (
           <h3 className="font-lex font-semibold text-2xl text-gray0 leading-8 w-full max-w-[1600px] my-0 mx-auto p-4">
             Anúncios
           </h3>
@@ -195,6 +212,7 @@ const Test = () => {
                 <div key={i} className="flex flex-col">
                   <CarCardAnuncio
                     key={i}
+                    setOpenModalEdit={setOpenModalEdit}
                     carIsActive={car.is_active}
                     carName={car.model}
                     carDescription={car.description}
@@ -205,6 +223,7 @@ const Test = () => {
                     carYear={car.year}
                     carId={car.id}
                     seller={seller}
+                    carFipe={car.fipe}
                   />
                 </div>
               ))}
@@ -218,14 +237,7 @@ const Test = () => {
           )}
         </section>
 
-        <div className="w-full flex flex-col items-center justify-center gap-6 mt-[125px] mb-[65px] md:mb-16">
-          <p className="text-xl text-gray4 font-semibold">
-            <span className="text-gray3">1</span> de 2
-          </p>
-          <button className="text-brand2 font-semibold text-xl">
-            Seguinte &gt;
-          </button>
-        </div>
+        <div className="w-full flex flex-col items-center justify-center gap-6 mt-[125px] mb-[65px] md:mb-16" />
       </main>
 
       <Footer />
