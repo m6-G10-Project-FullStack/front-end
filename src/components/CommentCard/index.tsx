@@ -68,8 +68,7 @@ export const CommentCard = ({
           className={`flex rounded-full w-8 h-8 justify-center items-center text-gray10 font-inter font-semibold text-sm bg-brand1`}
         >
           <p className="text-whitefixed">
-            {name?.toUpperCase().split("")[0]}
-            {name?.toUpperCase().split("")[1]}
+            {name?.toUpperCase().substring(0, 2)}
           </p>
         </div>
         <Image src={pingo} alt="um pontinho para enfeitar" />

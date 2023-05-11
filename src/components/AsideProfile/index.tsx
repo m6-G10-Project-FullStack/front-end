@@ -15,10 +15,7 @@ const AsideProfile = ({ name, color, description }: iAsideProps) => {
       <div
         className={`flex justify-center items-center w-20 h-20 rounded-full text-gray10 font-medium text-2xl bg-${color}`}
       >
-        <p className="text-whitefixed">
-          {name?.toUpperCase().split("")[0]}
-          {name?.toUpperCase().split("")[1]}
-        </p>
+        <p className="text-whitefixed">{name?.toUpperCase().substring(0, 2)}</p>
       </div>
       <h3 className="font-lex font-semibold text-xl text-gray1 mb-7">{name}</h3>
       <p className="font-inter font-normal text-base text-justify mb-7 text-gray2">

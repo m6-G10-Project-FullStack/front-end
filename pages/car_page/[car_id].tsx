@@ -48,32 +48,34 @@ const CardPage = () => {
         <section className="flex flex-col gap-[10px] p-[10px] xl:p-[30px]  md:p-[15px] box-border w-full content-center md:flex-wrap md:m-[5px] xl:m-[10px]">
           <section className="box-border relative shadow-sm flex p-[60px] h-[355px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-center g-[32px] rounded">
             <Image
-              src={car?.coverImage!}
-              alt="Card"
-              width={800}
-              height={400}
-              style={{ objectFit: "fill", height: 335 }}
+              src={car?.coverImage}
+              alt={car?.model}
+              width={460}
+              height={200}
+              style={{ objectFit: "none", width: 720, height: 320, flex: 1 }}
             />
           </section>
-          <section className=" shadow-sm flex p-[30px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-start gap-8 rounded">
-            <h1 className="text-base font-semibold font-lex text-gray0">
-              {car?.model}
-            </h1>
-            <div className="xl:flex mx:flex-col text-center justify-center items-center mx:gap-8 md:gap-0 md:w-full md:justify-between text-base ">
-              <div className="flex justify-between items-center content-center w-fit">
-                <span className="bg-brand4 justify-center flex w-fit rounded-lg px-2 py-1 text-brand1 font-medium ">
-                  {car?.year}
-                </span>
-                <span className="bg-brand4 font-medium rounded-lg ml-[15px] w-fit px-2 py-1 text-brand1 text-center whitespace-nowrap">
-                  {car?.km.toLocaleString()} km
-                </span>
+          <section className=" shadow-sm flex p-[30px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-start g-[32px] rounded">
+            <div className="flex flex-col w-full">
+              <h1 className="text-base font-semibold font-lex text-gray0">
+                {car?.model}
+              </h1>
+              <div className="xl:flex  gap-3 text-center justify-between w-full  text-base ">
+                <div className="flex space-evenly items-center content-center w-full ">
+                  <span className="bg-brand4 h-[32px] justify-center flex  w-[150px] rounded-lg ml-[5px] p-[4px] text-brand1 font-bold ">
+                    {car?.year}
+                  </span>
+                  <span className="bg-brand4 font-bold h-[32px] flex w-[150px] rounded-lg ml-[15px] ] p-[4px]  text-brand1">
+                    {car?.km.toLocaleString()}
+                  </span>
+                  <p className="font-semibold flex w-full justify-end">
+                    {car?.price.toLocaleString("pt-BR", {
+                      currency: "BRL",
+                      style: "currency",
+                    })}
+                  </p>
+                </div>
               </div>
-              <p className="font-semibold flex w-full">
-                {car?.price.toLocaleString("pt-BR", {
-                  currency: "BRL",
-                  style: "currency",
-                })}
-              </p>
             </div>
             {user.name ? (
               <Button
@@ -98,23 +100,21 @@ const CardPage = () => {
             <p className="text-justify">{car?.description}</p>
           </section>
           <div className="shadow-sm flex p-[30px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-start g-[32px] rounded-lg">
-            {car?.comments.length ? (
-              car.comments.map((item, i) => (
-                <CommentCard
-                  key={i}
-                  datetime={item.created_at}
-                  name={item.User.name}
-                  text={item.comment}
-                  sellerId={car.userId}
-                  commentOwnerId={item.User.id}
-                />
-              ))
-            ) : (
-              <p>Este anúncio não possui comentários</p>
-            )}
+            <CommentCard
+              cor={user.color}
+              datetime="11/04/2023"
+              name={user.name}
+              initial={user.name?.toUpperCase().substring(0, 2)}
+              key="1"
+              text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+            />
           </div>
-          <section className="shadow-sm flex p-[30px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-start g-[32px] rounded-lg">
-            <CommentInput />
+          <section className="shadow-sm flex p-[5px] md:w-[751px] bg-whitefixed w-full flex-col justify-center items-start g-[32px] rounded-lg">
+            <CommentInput
+              initials={user.name?.toUpperCase().substring(0, 2)}
+              name={user?.name}
+              cor={user?.color}
+            />
           </section>
         </section>
         <aside className="flex content-center md:mt-[0px] md:mr-[0px] md:ml-[0px] xl:mt-[40px] xl:mr-[55px] xl:ml-[-20px] md:w-[752px] md:p-0  md:justify-start items-start p-[10px] flex-col  h-[100%] gap-[15px] ">
@@ -127,9 +127,10 @@ const CardPage = () => {
           </div>
           <div className=" bg-whitefixed w-full flex rounded-lg flex-col items-center justify-center">
             <AsideProfile
-              name={car?.User?.name}
-              color={car?.User?.color}
-              description={car?.User?.description}
+              name={user.name}
+              cor={user.color}
+              description={user.description}
+              initials={user.name?.toUpperCase().substring(0, 2)}
             />
           </div>
         </aside>
