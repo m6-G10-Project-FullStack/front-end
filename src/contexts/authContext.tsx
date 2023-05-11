@@ -12,6 +12,8 @@ import { setCookie, parseCookies } from "nookies";
 import { iLoginFormInputs } from "../../pages/login";
 import api from "../services/api";
 import jwt_decode from "jwt-decode";
+import { iCarPhotos } from "../components/ModalAnuncio";
+import { AsidePhotos } from "../components/AsidePhotos";
 
 interface iCarData {
   carId: string;
@@ -32,8 +34,12 @@ interface iAuthContext {
   carId: string;
   setCarId: Dispatch<SetStateAction<string>>;
   carData: iCarData;
+  photos: iCarPhotos[];
+  setPhotos: Dispatch<SetStateAction<iCarPhotos[]>>;
   setCarData: Dispatch<SetStateAction<iCarData>>;
   fipe: number | null;
+  imageAtual: iCarPhotos;
+  setImagemAtual: Dispatch<SetStateAction<iCarPhotos>>;
   setFipe: Dispatch<SetStateAction<number | null>>;
 }
 
@@ -56,7 +62,8 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
     carPrice: null,
   });
   const [fipe, setFipe] = useState<number | null>(null);
-
+  const [photos, setPhotos] = useState<iCarPhotos[]>([]);
+  const [imageAtual, setImagemAtual] = useState<iCarPhotos>({} as iCarPhotos);
   const router = useRouter();
 
   const HandleFormLogin = async (data: iLoginFormInputs) => {
@@ -85,12 +92,26 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
     }
   };
 
+  const getGalery = async () => {
+    await api
+      .get<iCarPhotos[]>(`/gallery`, {
+        headers: { Authorization: `Bearer ${cookies["token"]}` },
+      })
+      .then((res) => {
+        setPhotos(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     if (cookies["token"]) {
       setToken(cookies["token"]);
       const decodedToken: any = jwt_decode(cookies["token"]);
       setIsLogged(true);
       getUserData(decodedToken.sub);
+      getGalery();
     }
   }, [token]);
 
@@ -112,6 +133,10 @@ export const AuthProvider = ({ children }: iAuthProvider) => {
         setCarData,
         fipe,
         setFipe,
+        photos,
+        setPhotos,
+        imageAtual,
+        setImagemAtual,
       }}
     >
       {children}

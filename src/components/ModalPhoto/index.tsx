@@ -1,6 +1,7 @@
 import CustomImage from "../CustomImage/customImage";
-import imgX from "../../assets/x.png";
-import Image from "next/image";
+import { SlClose } from "react-icons/sl";
+import { ButtonNextPhoto } from "../ButtonNextPhoto";
+import { useAuth } from "../../contexts/authContext";
 
 interface iModalPhotoProps {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -8,26 +9,35 @@ interface iModalPhotoProps {
 }
 
 export const ModalPhoto = ({ setOpenModal, carImg }: iModalPhotoProps) => {
+  const { imageAtual } = useAuth();
+  const { photo_link } = imageAtual;
+  console.log(imageAtual.photo_link);
   return (
-    <div className="bg-gray10 w-full max-w-custom344 h-custom365 flex flex-col content-center rounded-lg md:max-w-lg">
-      <div className="flex justify-between px-4 py-8 items-center">
-        <h6 className="font-lex font-medium text-base">Imagem do veículo</h6>
+    <div className="bg-gray10  flex flex-col content-end rounded-lg ">
+      <div className="flex justify-center content-center items-center">
         <button
+          type="button"
           className="h-10 border-none cursor-pointer"
           onClick={() => setOpenModal(false)}
         >
-          <Image src={imgX} alt="botão fechar" width={24} height={24} />
+          <SlClose size={20} color="" />
         </button>
       </div>
-      <div className="flex w-full max-w-custom344 h-60 justify-center items-center md:max-w-full">
+      <div className="flex w-full  justify-center items-center ">
         <CustomImage
-          className="w-[466px] h-[240px]"
-          style={{ objectFit: "fill" }}
-          src={carImg}
+          className="w-full"
+          style={{
+            objectFit: "none",
+            borderBottomRightRadius: 8,
+            borderBottomLeftRadius: 8,
+            boxShadow: "inherit",
+          }}
+          src={imageAtual.photo_link}
           alt="Imagem do veículo"
-          width={260}
-          height={239}
+          width={400}
+          height={200}
         />
+        <ButtonNextPhoto />
       </div>
     </div>
   );

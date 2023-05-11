@@ -63,13 +63,16 @@ const CardPage = () => {
               <div className="xl:flex  gap-3 text-center justify-between w-full  text-base ">
                 <div className="flex space-evenly items-center content-center w-full ">
                   <span className="bg-brand4 h-[32px] justify-center flex  w-[150px] rounded-lg ml-[5px] p-[4px] text-brand1 font-bold ">
-                    Ano:{car?.year}
+                    {car?.year}
                   </span>
                   <span className="bg-brand4 font-bold h-[32px] flex w-[150px] rounded-lg ml-[15px] ] p-[4px]  text-brand1">
-                    KM:{car?.km.toLocaleString()}
+                    {car?.km.toLocaleString()}
                   </span>
                   <p className="font-semibold flex w-full justify-end">
-                    R$ {car?.price.toLocaleString()},00
+                    {car?.price.toLocaleString("pt-BR", {
+                      currency: "BRL",
+                      style: "currency",
+                    })}
                   </p>
                 </div>
               </div>

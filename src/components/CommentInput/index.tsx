@@ -42,8 +42,7 @@ const CommentInput = () => {
             className={`flex justify-center items-center w-8 h-8 rounded-full text-gray10 font-inter font-semibold text-sm bg-${user.color}`}
           >
             <p className="text-whitefixed">
-              {user.name?.toUpperCase().split("")[0]}
-              {user.name?.toUpperCase().split("")[1]}
+              {user.name?.toUpperCase().substring(0, 2)}
             </p>
           </div>
           <h3 className="ml-2 font-medium text-sm leading-6 text-gray2">
